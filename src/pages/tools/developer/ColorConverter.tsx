@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from '../../../utils/converters/color';
@@ -46,6 +47,8 @@ export default function ColorConverter() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Color Converter</h1>
         <p className="text-muted-foreground">

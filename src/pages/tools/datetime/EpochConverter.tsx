@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
@@ -78,6 +79,8 @@ export default function EpochConverter() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Epoch Converter</h1>
         <p className="text-muted-foreground">

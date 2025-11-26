@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Calculator } from 'lucide-react';
 
@@ -81,6 +82,8 @@ export default function PercentageCalculator() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Percentage Calculator</h1>
         <p className="text-muted-foreground">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { countText } from '../../../utils/text/counter';
 import { AlignLeft, FileText, List, Clock } from 'lucide-react';
@@ -27,6 +28,8 @@ export default function TextCounter() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Text Counter</h1>
         <p className="text-muted-foreground">

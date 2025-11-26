@@ -54,7 +54,7 @@ export default function Category() {
         <div className="flex-1">
           <h1 className="text-5xl font-bold tracking-tight mb-3 text-white">{categoryInfo.name}</h1>
           <p className="text-lg text-white/70 mb-3">{categoryInfo.description}</p>
-          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${colors.badge} bg-opacity-10 border border-white/10`}>
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10`}>
             <span className={`text-sm font-medium bg-gradient-to-r ${colors.badge} bg-clip-text text-transparent`}>
               {tools.length} {tools.length === 1 ? 'tool' : 'tools'} available
             </span>

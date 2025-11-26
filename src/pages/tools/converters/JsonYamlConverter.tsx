@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToYaml, yamlToJson } from '../../../utils/converters/yaml';
@@ -51,6 +52,8 @@ export default function JsonYamlConverter() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">JSON ↔ YAML Converter</h1>
         <p className="text-muted-foreground">

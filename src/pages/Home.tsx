@@ -27,11 +27,8 @@ export default function Home() {
           </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-          <span className="bg-gradient-to-br from-white via-white to-white/70 bg-clip-text text-transparent">
-            Developer Tools{' '}
-          </span>
           <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Made Beautiful
+            Developer Tools Hub{' '}
           </span>
         </h1>
         <p className="text-base text-muted-foreground max-w-2xl mx-auto">
@@ -52,15 +49,15 @@ export default function Home() {
               to={`/category/${category.id}`}
               className="group relative"
             >
-              <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${colors.from} ${colors.to} backdrop-blur-sm border border-white/10 p-8 transition-all duration-300 hover:shadow-2xl hover:${colors.glow} hover:border-white/20 hover:-translate-y-1`}>
+              <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${colors.from} ${colors.to} backdrop-blur-sm border border-white/10 p-6 transition-all duration-300 hover:shadow-2xl hover:${colors.glow} hover:border-white/20 hover:-translate-y-1`}>
                 {/* Icon */}
-                <div className={`mb-6 inline-flex p-4 rounded-2xl ${colors.iconBg} text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                  <Icon className="h-8 w-8" strokeWidth={2} />
+                <div className={`mb-4 inline-flex p-3 rounded-2xl ${colors.iconBg} text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                  <Icon className="h-7 w-7" strokeWidth={2} />
                 </div>
 
                 {/* Content */}
-                <div className="space-y-2 mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight text-white">
+                <div className="space-y-1.5 mb-4">
+                  <h3 className="text-xl font-semibold tracking-tight text-white">
                     {category.name}
                   </h3>
                   <p className="text-sm text-white/70 leading-relaxed">

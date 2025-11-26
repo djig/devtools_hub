@@ -3,6 +3,7 @@ import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
 import { Textarea } from '../../../components/ui/Textarea';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { generateLoremWords, generateLoremSentences, generateLoremParagraphs } from '../../../utils/text/lorem';
@@ -40,6 +41,8 @@ export default function LoremIpsum() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Lorem Ipsum Generator</h1>
         <p className="text-muted-foreground">

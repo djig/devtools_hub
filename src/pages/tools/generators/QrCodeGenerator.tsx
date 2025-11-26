@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Textarea } from '../../../components/ui/Textarea';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { QRCodeSVG } from 'qrcode.react';
 import { Download } from 'lucide-react';
@@ -46,6 +47,8 @@ export default function QrCodeGenerator() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">QR Code Generator</h1>
         <p className="text-muted-foreground">
