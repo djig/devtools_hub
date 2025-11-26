@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://devtools-hub.vercel.app/sitemap.xml
+Sitemap: https://engtoolshub.com/sitemap.xml
 
 # Google Bots
 User-agent: Googlebot

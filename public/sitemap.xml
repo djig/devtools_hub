@@ -6,7 +6,7 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://devtools-hub.vercel.app/</loc>
+    <loc>https://engtoolshub.com/</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -14,55 +14,55 @@
 
   <!-- Category Pages -->
   <url>
-    <loc>https://devtools-hub.vercel.app/category/formatters</loc>
+    <loc>https://engtoolshub.com/category/formatters</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/converters</loc>
+    <loc>https://engtoolshub.com/category/converters</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/encoders</loc>
+    <loc>https://engtoolshub.com/category/encoders</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/text</loc>
+    <loc>https://engtoolshub.com/category/text</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/generators</loc>
+    <loc>https://engtoolshub.com/category/generators</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/datetime</loc>
+    <loc>https://engtoolshub.com/category/datetime</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/calculators</loc>
+    <loc>https://engtoolshub.com/category/calculators</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/developer</loc>
+    <loc>https://engtoolshub.com/category/developer</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/category/network</loc>
+    <loc>https://engtoolshub.com/category/network</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -70,31 +70,31 @@
 
   <!-- Tool Pages - Formatters -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/json-formatter</loc>
+    <loc>https://engtoolshub.com/tools/json-formatter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/xml-formatter</loc>
+    <loc>https://engtoolshub.com/tools/xml-formatter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/yaml-formatter</loc>
+    <loc>https://engtoolshub.com/tools/yaml-formatter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/sql-formatter</loc>
+    <loc>https://engtoolshub.com/tools/sql-formatter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/json-diff</loc>
+    <loc>https://engtoolshub.com/tools/json-diff</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -102,19 +102,19 @@
 
   <!-- Tool Pages - Converters -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/json-yaml-converter</loc>
+    <loc>https://engtoolshub.com/tools/json-yaml-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/json-xml-converter</loc>
+    <loc>https://engtoolshub.com/tools/json-xml-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/json-csv-converter</loc>
+    <loc>https://engtoolshub.com/tools/json-csv-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -122,37 +122,37 @@
 
   <!-- Tool Pages - Encoders -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/base64-encoder</loc>
+    <loc>https://engtoolshub.com/tools/base64-encoder</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/jwt-decoder</loc>
+    <loc>https://engtoolshub.com/tools/jwt-decoder</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/url-encoder</loc>
+    <loc>https://engtoolshub.com/tools/url-encoder</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/html-encoder</loc>
+    <loc>https://engtoolshub.com/tools/html-encoder</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/number-base-converter</loc>
+    <loc>https://engtoolshub.com/tools/number-base-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/unicode-converter</loc>
+    <loc>https://engtoolshub.com/tools/unicode-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -160,43 +160,43 @@
 
   <!-- Tool Pages - Text Tools -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/case-converter</loc>
+    <loc>https://engtoolshub.com/tools/case-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/text-counter</loc>
+    <loc>https://engtoolshub.com/tools/text-counter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/lorem-ipsum</loc>
+    <loc>https://engtoolshub.com/tools/lorem-ipsum</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/line-sorter</loc>
+    <loc>https://engtoolshub.com/tools/line-sorter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/regex-tester</loc>
+    <loc>https://engtoolshub.com/tools/regex-tester</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/text-diff</loc>
+    <loc>https://engtoolshub.com/tools/text-diff</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/markdown-editor</loc>
+    <loc>https://engtoolshub.com/tools/markdown-editor</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -204,25 +204,25 @@
 
   <!-- Tool Pages - Generators -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/uuid-generator</loc>
+    <loc>https://engtoolshub.com/tools/uuid-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/qr-code-generator</loc>
+    <loc>https://engtoolshub.com/tools/qr-code-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/hash-generator</loc>
+    <loc>https://engtoolshub.com/tools/hash-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/random-data-generator</loc>
+    <loc>https://engtoolshub.com/tools/random-data-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -230,25 +230,25 @@
 
   <!-- Tool Pages - Date & Time -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/epoch-converter</loc>
+    <loc>https://engtoolshub.com/tools/epoch-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/date-calculator</loc>
+    <loc>https://engtoolshub.com/tools/date-calculator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/timezone-converter</loc>
+    <loc>https://engtoolshub.com/tools/timezone-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/duration-calculator</loc>
+    <loc>https://engtoolshub.com/tools/duration-calculator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -256,19 +256,19 @@
 
   <!-- Tool Pages - Calculators -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/percentage-calculator</loc>
+    <loc>https://engtoolshub.com/tools/percentage-calculator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/unit-converter</loc>
+    <loc>https://engtoolshub.com/tools/unit-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/aspect-ratio-calculator</loc>
+    <loc>https://engtoolshub.com/tools/aspect-ratio-calculator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -276,55 +276,55 @@
 
   <!-- Tool Pages - Developer Tools -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/color-converter</loc>
+    <loc>https://engtoolshub.com/tools/color-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/css-minifier</loc>
+    <loc>https://engtoolshub.com/tools/css-minifier</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/js-minifier</loc>
+    <loc>https://engtoolshub.com/tools/js-minifier</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/html-minifier</loc>
+    <loc>https://engtoolshub.com/tools/html-minifier</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/http-status-codes</loc>
+    <loc>https://engtoolshub.com/tools/http-status-codes</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/cron-parser</loc>
+    <loc>https://engtoolshub.com/tools/cron-parser</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/user-agent-parser</loc>
+    <loc>https://engtoolshub.com/tools/user-agent-parser</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/image-base64-converter</loc>
+    <loc>https://engtoolshub.com/tools/image-base64-converter</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/meta-tag-generator</loc>
+    <loc>https://engtoolshub.com/tools/meta-tag-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -332,25 +332,25 @@
 
   <!-- Tool Pages - Network & Security -->
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/ip-info</loc>
+    <loc>https://engtoolshub.com/tools/ip-info</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/cidr-calculator</loc>
+    <loc>https://engtoolshub.com/tools/cidr-calculator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/ssl-decoder</loc>
+    <loc>https://engtoolshub.com/tools/ssl-decoder</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/tools/csp-generator</loc>
+    <loc>https://engtoolshub.com/tools/csp-generator</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -358,13 +358,13 @@
 
   <!-- Favorites and Recent (Optional) -->
   <url>
-    <loc>https://devtools-hub.vercel.app/favorites</loc>
+    <loc>https://engtoolshub.com/favorites</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://devtools-hub.vercel.app/recent</loc>
+    <loc>https://engtoolshub.com/recent</loc>
     <lastmod>2025-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
