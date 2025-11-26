@@ -17,27 +17,25 @@ const categoryColors: Record<string, { from: string; to: string; iconBg: string;
 
 export default function Home() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       {/* Hero Section */}
-      <div className="text-center space-y-6 py-16">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 mb-4">
-          <Sparkles className="h-4 w-4 text-blue-400" />
-          <span className="text-sm font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+      <div className="text-center space-y-4 py-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+          <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+          <span className="text-xs font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             47+ Tools, All Free & Private
           </span>
         </div>
-        <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
           <span className="bg-gradient-to-br from-white via-white to-white/70 bg-clip-text text-transparent">
-            Developer Tools
+            Developer Tools{' '}
           </span>
-          <br />
           <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             Made Beautiful
           </span>
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-2xl mx-auto">
           A stunning collection of developer utilities that run entirely in your browser.
-          Fast, secure, and completely private.
         </p>
       </div>
 
