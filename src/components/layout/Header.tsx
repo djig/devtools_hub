@@ -33,7 +33,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 w-full border-b border-white/20 dark:border-border/40 bg-white/70 dark:bg-background/70 backdrop-blur-2xl shadow-lg shadow-black/5">
         <div className="container flex h-16 items-center justify-between">
           {/* Left: Hamburger Menu + Logo */}
           <div className="flex items-center gap-2">
@@ -57,11 +57,11 @@ export function Header() {
           <div className="hidden md:flex flex-1 max-w-md mx-8">
             <button
               onClick={() => setIsCommandOpen(true)}
-              className="w-full flex items-center gap-3 px-4 py-2 rounded-xl border border-border/50 bg-muted/30 hover:bg-muted/50 transition-colors text-sm text-muted-foreground"
+              className="w-full flex items-center gap-3 px-4 py-2 rounded-xl border border-white/20 dark:border-border/50 bg-white/40 dark:bg-muted/30 hover:bg-white/60 dark:hover:bg-muted/50 backdrop-blur-xl transition-all duration-300 text-sm text-muted-foreground shadow-lg hover:shadow-xl hover:scale-[1.02]"
             >
               <Search className="h-4 w-4" />
               <span>Search tools...</span>
-              <kbd className="ml-auto hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-background border border-border text-xs font-mono">
+              <kbd className="ml-auto hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/50 dark:bg-background border border-white/30 dark:border-border text-xs font-mono backdrop-blur-sm">
                 ⌘K
               </kbd>
             </button>

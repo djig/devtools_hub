@@ -48,13 +48,14 @@ export default function Category() {
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center gap-6">
-        <div className={`p-5 rounded-2xl ${colors.iconBg} text-white shadow-2xl inline-flex`}>
-          <Icon className="h-14 w-14" strokeWidth={2} />
+        <div className={`p-5 rounded-3xl ${colors.iconBg} text-white shadow-2xl shadow-primary/30 inline-flex backdrop-blur-sm relative overflow-hidden group`}>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-50" />
+          <Icon className="h-14 w-14 relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6" strokeWidth={2.5} />
         </div>
         <div className="flex-1">
-          <h1 className="text-5xl font-bold tracking-tight mb-3 text-foreground">{categoryInfo.name}</h1>
-          <p className="text-lg text-muted-foreground mb-3">{categoryInfo.description}</p>
-          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted border border-border`}>
+          <h1 className="text-5xl font-bold tracking-tight mb-3 text-foreground drop-shadow-sm">{categoryInfo.name}</h1>
+          <p className="text-lg text-muted-foreground mb-4">{categoryInfo.description}</p>
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 dark:bg-muted/30 border border-border backdrop-blur-xl shadow-lg`}>
             <span className={`text-sm font-medium bg-gradient-to-r ${colors.badge} bg-clip-text text-transparent`}>
               {tools.length} {tools.length === 1 ? 'tool' : 'tools'} available
             </span>

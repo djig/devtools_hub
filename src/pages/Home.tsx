@@ -20,7 +20,7 @@ export default function Home() {
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-4 py-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 backdrop-blur-xl shadow-lg shadow-blue-500/10">
           <Sparkles className="h-3.5 w-3.5 text-blue-400" />
           <span className="text-xs font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             47+ Tools, All Free & Private
@@ -49,15 +49,18 @@ export default function Home() {
               to={`/category/${category.id}`}
               className="group relative"
             >
-              <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${colors.from} ${colors.to} backdrop-blur-sm border border-white/10 p-6 transition-all duration-300 hover:shadow-2xl hover:${colors.glow} hover:border-white/20 hover:-translate-y-1`}>
+              <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${colors.from} ${colors.to} backdrop-blur-2xl border border-white/20 dark:border-white/10 p-6 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:border-white/40 dark:hover:border-white/20 hover:-translate-y-2 hover:scale-[1.02] bg-white/30 dark:bg-black/20`}>
+                {/* Glass shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-50 rounded-3xl pointer-events-none" />
+
                 {/* Icon */}
-                <div className={`mb-4 inline-flex p-3 rounded-2xl ${colors.iconBg} text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                  <Icon className="h-7 w-7" strokeWidth={2} />
+                <div className={`mb-4 inline-flex p-3 rounded-2xl ${colors.iconBg} text-white shadow-2xl shadow-primary/30 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-primary/50 backdrop-blur-sm`}>
+                  <Icon className="h-7 w-7" strokeWidth={2.5} />
                 </div>
 
                 {/* Content */}
-                <div className="space-y-1.5 mb-4">
-                  <h3 className="text-xl font-semibold tracking-tight text-foreground dark:text-white">
+                <div className="space-y-1.5 mb-4 relative z-10">
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground dark:text-white drop-shadow-sm">
                     {category.name}
                   </h3>
                   <p className="text-sm text-muted-foreground dark:text-white/70 leading-relaxed">
@@ -66,15 +69,15 @@ export default function Home() {
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-muted-foreground dark:text-white/60">
+                <div className="flex items-center justify-between relative z-10">
+                  <span className="text-xs font-medium text-muted-foreground dark:text-white/60 backdrop-blur-sm px-2 py-1 rounded-full bg-white/10 dark:bg-black/10">
                     {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
                   </span>
-                  <ArrowRight className="h-4 w-4 text-foreground dark:text-white transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 text-foreground dark:text-white transition-all duration-500 group-hover:translate-x-2 group-hover:scale-110" />
                 </div>
 
                 {/* Animated gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-2xl pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 rounded-3xl pointer-events-none" />
               </div>
             </Link>
           );
