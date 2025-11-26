@@ -15,7 +15,7 @@ export function Layout({ children }: LayoutProps) {
       <div className="flex flex-1">
         <Sidebar />
         <main className="flex-1">
-          <div className="container py-8 md:py-12">
+          <div className="container py-8 md:py-12 pl-4 md:pl-8 pr-4 md:pr-8">
             {children}
           </div>
         </main>
