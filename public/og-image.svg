@@ -1,0 +1,99 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="150" cy="150" r="100" fill="#0ea5e9" opacity="0.05"/>
+  <circle cx="1050" cy="480" r="120" fill="#8b5cf6" opacity="0.05"/>
+  <circle cx="950" cy="100" r="80" fill="#3b82f6" opacity="0.08"/>
+
+  <!-- Logo (scaled up) -->
+  <g transform="translate(250, 165)">
+    <!-- Hexagon Shape -->
+    <path d="M150 37.5 L232.5 88.125 L232.5 189.375 L150 240 L67.5 189.375 L67.5 88.125 Z"
+          fill="none"
+          stroke="url(#logoGrad)"
+          stroke-width="4"
+          filter="url(#glow)"/>
+
+    <!-- Code Brackets -->
+    <g transform="translate(150, 150)">
+      <!-- Left Bracket -->
+      <path d="M-52.5 -37.5 L-67.5 -37.5 L-67.5 37.5 L-52.5 37.5"
+            stroke="#0ea5e9"
+            stroke-width="6"
+            stroke-linecap="round"
+            fill="none"/>
+
+      <!-- Right Bracket -->
+      <path d="M52.5 -37.5 L67.5 -37.5 L67.5 37.5 L52.5 37.5"
+            stroke="#0ea5e9"
+            stroke-width="6"
+            stroke-linecap="round"
+            fill="none"/>
+
+      <!-- Center Slash -->
+      <line x1="-22.5" y1="45" x2="22.5" y2="-45"
+            stroke="url(#logoGrad)"
+            stroke-width="6"
+            stroke-linecap="round"/>
+    </g>
+
+    <!-- Connection Nodes -->
+    <circle cx="150" cy="37.5" r="9" fill="#0ea5e9"/>
+    <circle cx="232.5" cy="88.125" r="9" fill="#3b82f6"/>
+    <circle cx="232.5" cy="189.375" r="9" fill="#8b5cf6"/>
+    <circle cx="150" cy="240" r="9" fill="#a855f7"/>
+    <circle cx="67.5" cy="189.375" r="9" fill="#06b6d4"/>
+    <circle cx="67.5" cy="88.125" r="9" fill="#0ea5e9"/>
+
+    <!-- Center Highlight -->
+    <circle cx="150" cy="150" r="12" fill="url(#logoGrad)"/>
+  </g>
+
+  <!-- Title Text -->
+  <text x="550" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="white">
+    DevTools Hub
+  </text>
+
+  <!-- Subtitle -->
+  <text x="550" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="36" fill="#94a3b8">
+    47+ Free Developer Tools
+  </text>
+
+  <!-- Features -->
+  <text x="550" y="405" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#64748b">
+    ✓ JSON Formatter  ✓ Base64 Encoder  ✓ UUID Generator
+  </text>
+  <text x="550" y="445" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#64748b">
+    ✓ Regex Tester  ✓ Hash Generator  ✓ QR Code Generator
+  </text>
+
+  <!-- Call to Action -->
+  <g transform="translate(550, 490)">
+    <rect x="0" y="0" width="280" height="60" rx="30" fill="url(#logoGrad)" opacity="0.9"/>
+    <text x="140" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="white" text-anchor="middle">
+      Try it Free
+    </text>
+  </g>
+</svg>

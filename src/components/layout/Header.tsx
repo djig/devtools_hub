@@ -46,6 +46,7 @@ export function Header() {
               <Menu className="h-5 w-5" />
             </Button>
             <Link to="/" className="flex items-center space-x-2 group">
+              <img src="/logo.svg" alt="DevTools Hub" className="h-8 w-8" />
               <div className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 DevTools Hub
               </div>
