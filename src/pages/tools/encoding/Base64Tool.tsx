@@ -3,6 +3,7 @@ import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { encodeBase64, decodeBase64 } from '../../../utils/converters/base64';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle } from 'lucide-react';
@@ -49,6 +50,8 @@ export default function Base64Tool() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Base64 Encoder/Decoder</h1>
         <p className="text-muted-foreground">

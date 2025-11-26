@@ -3,6 +3,7 @@ import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { formatJson, minifyJson, validateJson } from '../../../utils/formatters/json';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle } from 'lucide-react';
@@ -68,6 +69,8 @@ export default function JsonFormatter() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">JSON Formatter</h1>
         <p className="text-muted-foreground">

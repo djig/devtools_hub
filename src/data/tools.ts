@@ -572,6 +572,10 @@ export function getCategoryInfo(category: ToolCategory): CategoryInfo | undefine
   return categories.find((cat) => cat.id === category);
 }
 
+export function getToolByPath(path: string): Tool | undefined {
+  return tools.find((tool) => tool.path === path);
+}
+
 export function searchTools(query: string): Tool[] {
   const lowerQuery = query.toLowerCase();
   return tools.filter(

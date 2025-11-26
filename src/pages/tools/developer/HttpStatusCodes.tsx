@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Search } from 'lucide-react';
 
@@ -132,6 +133,8 @@ export default function HttpStatusCodes() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">HTTP Status Codes</h1>
         <p className="text-muted-foreground">

@@ -5,7 +5,7 @@ import type { AppState } from '../types';
 const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      theme: 'system',
+      theme: 'dark',
       sidebarOpen: true,
       recentTools: [],
       favoriteTools: [],

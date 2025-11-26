@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
+import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { addDays, addMonths, addYears, differenceInDays, format, parseISO } from 'date-fns';
 
@@ -62,6 +63,8 @@ export default function DateCalculator() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb />
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Date Calculator</h1>
         <p className="text-muted-foreground">
