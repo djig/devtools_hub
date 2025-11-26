@@ -1,81 +1,89 @@
-import { useState } from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import { ToolCard } from '../components/shared/ToolCard';
-import { tools, categories } from '../data/tools';
-import { useDebounce } from '../hooks/useDebounce';
-import { searchTools } from '../data/tools';
+import { Link } from 'react-router-dom';
+import { categories, tools } from '../data/tools';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const debouncedSearch = useDebounce(searchQuery, 300);
-
-  const filteredTools = debouncedSearch ? searchTools(debouncedSearch) : tools;
-
   return (
-    <div className="space-y-8">
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Developer Tools Hub</h1>
-          <p className="text-muted-foreground">
-            A collection of 40+ developer utilities, all running locally in your browser
-          </p>
-        </div>
-
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search tools..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
+    <div className="space-y-12">
+      {/* Hero Section */}
+      <div className="text-center space-y-4 py-12">
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+          Developer Tools Hub
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          A beautiful collection of 47+ developer utilities.
+          <br />
+          Fast, secure, and completely private.
+        </p>
       </div>
 
-      {debouncedSearch ? (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            Search Results ({filteredTools.length})
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
-          </div>
-          {filteredTools.length === 0 && (
-            <p className="text-center py-8 text-muted-foreground">
-              No tools found matching "{debouncedSearch}"
-            </p>
-          )}
-        </div>
-      ) : (
-        <>
-          {categories.map((category) => {
-            const categoryTools = tools.filter((tool) => tool.category === category.id);
-            const Icon = category.icon;
+      {/* Category Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {categories.map((category) => {
+          const categoryTools = tools.filter((tool) => tool.category === category.id);
+          const Icon = category.icon;
 
-            return (
-              <div key={category.id}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-semibold">{category.name}</h2>
-                    <p className="text-sm text-muted-foreground">{category.description}</p>
-                  </div>
+          return (
+            <Link
+              key={category.id}
+              to={`/category/${category.id}`}
+              className="group relative"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card to-card/50 border border-border/50 p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/20 hover:-translate-y-1">
+                {/* Icon */}
+                <div className="mb-6 inline-flex p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 text-primary transition-transform duration-300 group-hover:scale-110">
+                  <Icon className="h-8 w-8" strokeWidth={1.5} />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {categoryTools.map((tool) => (
-                    <ToolCard key={tool.id} tool={tool} />
-                  ))}
+
+                {/* Content */}
+                <div className="space-y-2 mb-6">
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {category.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {category.description}
+                  </p>
                 </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-muted-foreground">
+                    {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-primary transition-transform duration-300 group-hover:translate-x-1" />
+                </div>
+
+                {/* Hover gradient effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-2xl pointer-events-none" />
               </div>
-            );
-          })}
-        </>
-      )}
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Stats Section */}
+      <div className="border-t border-border/50 pt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
+          <div className="space-y-2">
+            <div className="text-4xl font-bold bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent">
+              47+
+            </div>
+            <div className="text-sm text-muted-foreground">Developer Tools</div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-4xl font-bold bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent">
+              100%
+            </div>
+            <div className="text-sm text-muted-foreground">Private & Secure</div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-4xl font-bold bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent">
+              0ms
+            </div>
+            <div className="text-sm text-muted-foreground">Server Latency</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

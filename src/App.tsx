@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import Home from './pages/Home';
 import Category from './pages/Category';
+import Favorites from './pages/Favorites';
+import Recent from './pages/Recent';
 import { tools } from './data/tools';
 
 function LoadingFallback() {
@@ -24,6 +26,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<Category />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/recent" element={<Recent />} />
             {tools.map((tool) => {
               const Component = tool.component;
               return <Route key={tool.id} path={tool.path} element={<Component />} />;

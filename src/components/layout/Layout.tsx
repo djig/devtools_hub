@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Header } from './Header';
-import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 
 interface LayoutProps {
@@ -9,16 +8,13 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 lg:pl-64">
-          <div className="container py-6">
-            {children}
-          </div>
-        </main>
-      </div>
+      <main className="flex-1">
+        <div className="container py-8 md:py-12">
+          {children}
+        </div>
+      </main>
       <Footer />
     </div>
   );
