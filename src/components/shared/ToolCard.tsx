@@ -48,7 +48,7 @@ export function ToolCard({ tool }: ToolCardProps) {
 
   return (
     <Link to={tool.path} className="group">
-      <div className={`relative h-full rounded-xl bg-gradient-to-br ${cardGradient} backdrop-blur-sm border border-white/10 p-5 transition-all duration-300 hover:shadow-xl hover:border-white/20 hover:-translate-y-0.5`}>
+      <div className={`relative h-full rounded-xl bg-gradient-to-br ${cardGradient} backdrop-blur-sm border border-border p-5 transition-all duration-300 hover:shadow-xl hover:border-primary/30 hover:-translate-y-0.5`}>
         {/* Icon */}
         <div className={`mb-4 inline-flex p-3 rounded-xl bg-gradient-to-br ${iconGradient} text-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
           <Icon className="h-5 w-5" strokeWidth={2} />
@@ -56,10 +56,10 @@ export function ToolCard({ tool }: ToolCardProps) {
 
         {/* Content */}
         <div className="space-y-2">
-          <h3 className="font-semibold text-lg tracking-tight leading-tight text-white">
+          <h3 className="font-semibold text-lg tracking-tight leading-tight text-foreground dark:text-white">
             {tool.name}
           </h3>
-          <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
+          <p className="text-sm text-muted-foreground dark:text-white/70 leading-relaxed line-clamp-2">
             {tool.description}
           </p>
         </div>
@@ -74,14 +74,14 @@ export function ToolCard({ tool }: ToolCardProps) {
             'absolute top-4 right-4 p-1.5 rounded-lg transition-all duration-200 backdrop-blur-sm',
             isFavorite
               ? 'text-yellow-400 hover:text-yellow-300 bg-yellow-400/20 border border-yellow-400/30'
-              : 'text-white/40 hover:text-white hover:bg-white/10 border border-white/10 opacity-0 group-hover:opacity-100'
+              : 'text-muted-foreground dark:text-white/40 hover:text-foreground dark:hover:text-white hover:bg-accent border border-border opacity-0 group-hover:opacity-100'
           )}
         >
           <Star className={cn('h-4 w-4', isFavorite && 'fill-current')} />
         </button>
 
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-xl pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-xl pointer-events-none" />
       </div>
     </Link>
   );

@@ -37,13 +37,13 @@ export default function Category() {
   return (
     <div className="space-y-8">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-white/60">
-        <Link to="/" className="flex items-center gap-1 hover:text-white transition-colors">
+      <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Link to="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
           <Home className="h-4 w-4" />
           Home
         </Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-white font-medium">{categoryInfo.name}</span>
+        <span className="text-foreground font-medium">{categoryInfo.name}</span>
       </nav>
 
       {/* Header */}
@@ -52,9 +52,9 @@ export default function Category() {
           <Icon className="h-14 w-14" strokeWidth={2} />
         </div>
         <div className="flex-1">
-          <h1 className="text-5xl font-bold tracking-tight mb-3 text-white">{categoryInfo.name}</h1>
-          <p className="text-lg text-white/70 mb-3">{categoryInfo.description}</p>
-          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10`}>
+          <h1 className="text-5xl font-bold tracking-tight mb-3 text-foreground">{categoryInfo.name}</h1>
+          <p className="text-lg text-muted-foreground mb-3">{categoryInfo.description}</p>
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted border border-border`}>
             <span className={`text-sm font-medium bg-gradient-to-r ${colors.badge} bg-clip-text text-transparent`}>
               {tools.length} {tools.length === 1 ? 'tool' : 'tools'} available
             </span>

@@ -57,20 +57,20 @@ export default function Home() {
 
                 {/* Content */}
                 <div className="space-y-1.5 mb-4">
-                  <h3 className="text-xl font-semibold tracking-tight text-white">
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground dark:text-white">
                     {category.name}
                   </h3>
-                  <p className="text-sm text-white/70 leading-relaxed">
+                  <p className="text-sm text-muted-foreground dark:text-white/70 leading-relaxed">
                     {category.description}
                   </p>
                 </div>
 
                 {/* Footer */}
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-white/60">
+                  <span className="text-xs font-medium text-muted-foreground dark:text-white/60">
                     {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
                   </span>
-                  <ArrowRight className="h-4 w-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 text-foreground dark:text-white transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
 
                 {/* Animated gradient overlay */}
@@ -82,25 +82,25 @@ export default function Home() {
       </div>
 
       {/* Stats Section */}
-      <div className="border-t border-white/10 pt-12">
+      <div className="border-t border-border pt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
           <div className="space-y-2">
             <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               47+
             </div>
-            <div className="text-sm text-white/60">Developer Tools</div>
+            <div className="text-sm text-muted-foreground dark:text-white/60">Developer Tools</div>
           </div>
           <div className="space-y-2">
             <div className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               100%
             </div>
-            <div className="text-sm text-white/60">Private & Secure</div>
+            <div className="text-sm text-muted-foreground dark:text-white/60">Private & Secure</div>
           </div>
           <div className="space-y-2">
             <div className="text-5xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
               0ms
             </div>
-            <div className="text-sm text-white/60">Server Latency</div>
+            <div className="text-sm text-muted-foreground dark:text-white/60">Server Latency</div>
           </div>
         </div>
       </div>
