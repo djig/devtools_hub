@@ -11,26 +11,28 @@ export default function Recent() {
   return (
     <div className="space-y-8">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Link to="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
+      <nav className="flex items-center gap-2 text-sm text-white/60">
+        <Link to="/" className="flex items-center gap-1 hover:text-white transition-colors">
           <Home className="h-4 w-4" />
           Home
         </Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-foreground font-medium">Recent</span>
+        <span className="text-white font-medium">Recent</span>
       </nav>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center gap-6">
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 text-primary inline-flex">
-          <Clock className="h-12 w-12" strokeWidth={1.5} />
+        <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-2xl inline-flex">
+          <Clock className="h-14 w-14" strokeWidth={2} />
         </div>
         <div className="flex-1">
-          <h1 className="text-4xl font-bold tracking-tight mb-2">Recent Tools</h1>
-          <p className="text-lg text-muted-foreground">Tools you've recently used</p>
-          <p className="text-sm text-muted-foreground mt-2">
-            Last {recentToolsList.length} {recentToolsList.length === 1 ? 'tool' : 'tools'} accessed
-          </p>
+          <h1 className="text-5xl font-bold tracking-tight mb-3 text-white">Recent Tools</h1>
+          <p className="text-lg text-white/70 mb-3">Tools you've recently used</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-400/10 to-purple-400/10 border border-white/10">
+            <span className="text-sm font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Last {recentToolsList.length} {recentToolsList.length === 1 ? 'tool' : 'tools'} accessed
+            </span>
+          </div>
         </div>
       </div>
 

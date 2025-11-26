@@ -11,26 +11,28 @@ export default function Favorites() {
   return (
     <div className="space-y-8">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Link to="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
+      <nav className="flex items-center gap-2 text-sm text-white/60">
+        <Link to="/" className="flex items-center gap-1 hover:text-white transition-colors">
           <Home className="h-4 w-4" />
           Home
         </Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-foreground font-medium">Favorites</span>
+        <span className="text-white font-medium">Favorites</span>
       </nav>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center gap-6">
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 text-yellow-600 dark:text-yellow-500 inline-flex">
-          <Star className="h-12 w-12" strokeWidth={1.5} fill="currentColor" />
+        <div className="p-5 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-500 text-white shadow-2xl inline-flex">
+          <Star className="h-14 w-14" strokeWidth={2} fill="currentColor" />
         </div>
         <div className="flex-1">
-          <h1 className="text-4xl font-bold tracking-tight mb-2">Favorite Tools</h1>
-          <p className="text-lg text-muted-foreground">Quick access to your most used tools</p>
-          <p className="text-sm text-muted-foreground mt-2">
-            {favoriteToolsList.length} {favoriteToolsList.length === 1 ? 'tool' : 'tools'} favorited
-          </p>
+          <h1 className="text-5xl font-bold tracking-tight mb-3 text-white">Favorite Tools</h1>
+          <p className="text-lg text-white/70 mb-3">Quick access to your most used tools</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-400/10 to-amber-400/10 border border-white/10">
+            <span className="text-sm font-medium bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
+              {favoriteToolsList.length} {favoriteToolsList.length === 1 ? 'tool' : 'tools'} favorited
+            </span>
+          </div>
         </div>
       </div>
 
