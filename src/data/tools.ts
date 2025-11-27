@@ -142,6 +142,16 @@ export const tools: Tool[] = [
     keywords: ['sql', 'format', 'query', 'database'],
     component: lazy(() => import('../pages/tools/formatters/SqlFormatter')),
   },
+  {
+    id: 'json-schema-validator',
+    name: 'JSON Schema Validator',
+    description: 'Validate JSON data against JSON Schema',
+    category: 'formatters',
+    path: '/tools/json-schema-validator',
+    icon: Shield,
+    keywords: ['json', 'schema', 'validate', 'validation'],
+    component: lazy(() => import('../pages/tools/formatters/JsonSchemaValidator')),
+  },
 
   // ========== CONVERTERS ==========
   {
@@ -173,6 +183,16 @@ export const tools: Tool[] = [
     icon: Repeat,
     keywords: ['json', 'csv', 'convert', 'spreadsheet'],
     component: lazy(() => import('../pages/tools/converters/JsonCsvConverter')),
+  },
+  {
+    id: 'json-to-schema-converter',
+    name: 'JSON → Schema Converter',
+    description: 'Generate JSON Schema from JSON data',
+    category: 'converters',
+    path: '/tools/json-to-schema-converter',
+    icon: Shield,
+    keywords: ['json', 'schema', 'generate', 'convert'],
+    component: lazy(() => import('../pages/tools/converters/JsonToSchemaConverter')),
   },
 
   // ========== ENCODERS/DECODERS ==========
@@ -498,12 +518,12 @@ export const tools: Tool[] = [
   },
   {
     id: 'image-base64-converter',
-    name: 'Image to Base64',
-    description: 'Convert images to Base64 strings',
+    name: 'Image ↔ Base64',
+    description: 'Convert between images and Base64 strings',
     category: 'developer',
     path: '/tools/image-base64-converter',
     icon: Image,
-    keywords: ['image', 'base64', 'convert', 'encode'],
+    keywords: ['image', 'base64', 'convert', 'encode', 'decode'],
     component: lazy(() => import('../pages/tools/developer/ImageBase64Converter')),
   },
   {
