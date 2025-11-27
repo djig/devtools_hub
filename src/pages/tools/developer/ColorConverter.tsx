@@ -5,6 +5,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from '../../../utils/converters/color';
+import { Pipette } from 'lucide-react';
 
 export default function ColorConverter() {
   const [hexInput, setHexInput] = useState('#3B82F6');
@@ -52,34 +53,65 @@ export default function ColorConverter() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Color Converter</h1>
         <p className="text-muted-foreground">
-          Convert between HEX, RGB, and HSL color formats
+          Convert between HEX, RGB, and HSL color formats with live preview
         </p>
       </div>
 
-      <Card className="p-6">
-        <div className="flex flex-col md:flex-row gap-6 items-center">
-          <div
-            className="w-32 h-32 rounded-lg border-2 border-border shadow-sm"
-            style={{ backgroundColor: hexInput }}
-          />
-          <div className="flex-1 w-full">
-            <label className="text-sm font-medium mb-2 block">Color Picker</label>
-            <input
-              type="color"
-              value={hexInput}
-              onChange={(e) => {
-                setHexInput(e.target.value);
-                updateFromHex(e.target.value);
-              }}
-              className="w-full h-12 rounded cursor-pointer"
-            />
+      {/* Main Color Preview Card */}
+      <Card className="p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
+        <div className="flex flex-col md:flex-row gap-8 items-center relative z-10">
+          {/* Large Color Preview */}
+          <div className="relative group">
+            <div
+              className="w-48 h-48 rounded-3xl border-4 border-white/20 dark:border-white/10 shadow-2xl transition-all duration-300 group-hover:scale-105 group-hover:shadow-3xl relative overflow-hidden"
+              style={{ backgroundColor: hexInput }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/10 pointer-events-none" />
+            </div>
+            <div className="absolute -top-2 -right-2 bg-gradient-to-br from-blue-500 to-purple-500 text-white p-2 rounded-full shadow-lg">
+              <Pipette className="h-4 w-4" />
+            </div>
+          </div>
+
+          {/* Color Picker Input */}
+          <div className="flex-1 w-full space-y-4">
+            <div>
+              <label className="text-sm font-semibold mb-3 block flex items-center gap-2">
+                <Pipette className="h-4 w-4" />
+                Pick a Color
+              </label>
+              <div className="relative">
+                <input
+                  type="color"
+                  value={hexInput}
+                  onChange={(e) => {
+                    setHexInput(e.target.value);
+                    updateFromHex(e.target.value);
+                  }}
+                  className="w-full h-16 rounded-xl cursor-pointer border-2 border-border hover:border-primary transition-colors"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="text-center p-3 rounded-lg bg-muted/50 backdrop-blur-sm">
+                <div className="text-xs text-muted-foreground mb-1">Brightness</div>
+                <div className="text-lg font-bold">{hsl.l}%</div>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-muted/50 backdrop-blur-sm">
+                <div className="text-xs text-muted-foreground mb-1">Saturation</div>
+                <div className="text-lg font-bold">{hsl.s}%</div>
+              </div>
+            </div>
           </div>
         </div>
       </Card>
 
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-semibold text-muted-foreground">HEX</h3>
+      {/* HEX Card */}
+      <Card className="p-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative z-10">
+          <h3 className="text-lg font-bold">HEX</h3>
           <CopyButton text={hexInput} />
         </div>
         <Input
@@ -88,92 +120,164 @@ export default function ColorConverter() {
             setHexInput(e.target.value);
             updateFromHex(e.target.value);
           }}
-          className="font-mono"
+          className="font-mono text-lg h-12"
           placeholder="#000000"
         />
       </Card>
 
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-semibold text-muted-foreground">RGB</h3>
+      {/* RGB Card */}
+      <Card className="p-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-transparent pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative z-10">
+          <h3 className="text-lg font-bold">RGB</h3>
           <CopyButton text={`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`} />
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">R</label>
-            <Input
-              type="number"
-              min={0}
-              max={255}
-              value={rgb.r}
-              onChange={(e) => updateFromRgb(Number(e.target.value), rgb.g, rgb.b)}
-            />
+        <div className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="text-sm font-medium text-red-600 dark:text-red-400 block mb-2">Red</label>
+              <Input
+                type="number"
+                min={0}
+                max={255}
+                value={rgb.r}
+                onChange={(e) => updateFromRgb(Number(e.target.value), rgb.g, rgb.b)}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={255}
+                value={rgb.r}
+                onChange={(e) => updateFromRgb(Number(e.target.value), rgb.g, rgb.b)}
+                className="w-full mt-2 accent-red-500"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-green-600 dark:text-green-400 block mb-2">Green</label>
+              <Input
+                type="number"
+                min={0}
+                max={255}
+                value={rgb.g}
+                onChange={(e) => updateFromRgb(rgb.r, Number(e.target.value), rgb.b)}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={255}
+                value={rgb.g}
+                onChange={(e) => updateFromRgb(rgb.r, Number(e.target.value), rgb.b)}
+                className="w-full mt-2 accent-green-500"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-blue-600 dark:text-blue-400 block mb-2">Blue</label>
+              <Input
+                type="number"
+                min={0}
+                max={255}
+                value={rgb.b}
+                onChange={(e) => updateFromRgb(rgb.r, rgb.g, Number(e.target.value))}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={255}
+                value={rgb.b}
+                onChange={(e) => updateFromRgb(rgb.r, rgb.g, Number(e.target.value))}
+                className="w-full mt-2 accent-blue-500"
+              />
+            </div>
           </div>
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">G</label>
-            <Input
-              type="number"
-              min={0}
-              max={255}
-              value={rgb.g}
-              onChange={(e) => updateFromRgb(rgb.r, Number(e.target.value), rgb.b)}
-            />
+          <div className="p-4 rounded-xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm font-mono text-lg font-semibold text-center border border-border">
+            rgb({rgb.r}, {rgb.g}, {rgb.b})
           </div>
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">B</label>
-            <Input
-              type="number"
-              min={0}
-              max={255}
-              value={rgb.b}
-              onChange={(e) => updateFromRgb(rgb.r, rgb.g, Number(e.target.value))}
-            />
-          </div>
-        </div>
-        <div className="mt-2 p-2 rounded bg-muted/50 font-mono text-sm">
-          rgb({rgb.r}, {rgb.g}, {rgb.b})
         </div>
       </Card>
 
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-semibold text-muted-foreground">HSL</h3>
+      {/* HSL Card */}
+      <Card className="p-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative z-10">
+          <h3 className="text-lg font-bold">HSL</h3>
           <CopyButton text={`hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`} />
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">H</label>
-            <Input
-              type="number"
-              min={0}
-              max={360}
-              value={hsl.h}
-              onChange={(e) => updateFromHsl(Number(e.target.value), hsl.s, hsl.l)}
-            />
+        <div className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="text-sm font-medium text-orange-600 dark:text-orange-400 block mb-2">Hue</label>
+              <Input
+                type="number"
+                min={0}
+                max={360}
+                value={hsl.h}
+                onChange={(e) => updateFromHsl(Number(e.target.value), hsl.s, hsl.l)}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={360}
+                value={hsl.h}
+                onChange={(e) => updateFromHsl(Number(e.target.value), hsl.s, hsl.l)}
+                className="w-full mt-2 accent-orange-500"
+                style={{
+                  background: `linear-gradient(to right,
+                    hsl(0, 100%, 50%),
+                    hsl(60, 100%, 50%),
+                    hsl(120, 100%, 50%),
+                    hsl(180, 100%, 50%),
+                    hsl(240, 100%, 50%),
+                    hsl(300, 100%, 50%),
+                    hsl(360, 100%, 50%))`
+                }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-pink-600 dark:text-pink-400 block mb-2">Saturation</label>
+              <Input
+                type="number"
+                min={0}
+                max={100}
+                value={hsl.s}
+                onChange={(e) => updateFromHsl(hsl.h, Number(e.target.value), hsl.l)}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={hsl.s}
+                onChange={(e) => updateFromHsl(hsl.h, Number(e.target.value), hsl.l)}
+                className="w-full mt-2 accent-pink-500"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-indigo-600 dark:text-indigo-400 block mb-2">Lightness</label>
+              <Input
+                type="number"
+                min={0}
+                max={100}
+                value={hsl.l}
+                onChange={(e) => updateFromHsl(hsl.h, hsl.s, Number(e.target.value))}
+                className="text-center font-bold"
+              />
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={hsl.l}
+                onChange={(e) => updateFromHsl(hsl.h, hsl.s, Number(e.target.value))}
+                className="w-full mt-2 accent-indigo-500"
+              />
+            </div>
           </div>
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">S</label>
-            <Input
-              type="number"
-              min={0}
-              max={100}
-              value={hsl.s}
-              onChange={(e) => updateFromHsl(hsl.h, Number(e.target.value), hsl.l)}
-            />
+          <div className="p-4 rounded-xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm font-mono text-lg font-semibold text-center border border-border">
+            hsl({hsl.h}, {hsl.s}%, {hsl.l}%)
           </div>
-          <div>
-            <label className="text-xs text-muted-foreground block mb-1">L</label>
-            <Input
-              type="number"
-              min={0}
-              max={100}
-              value={hsl.l}
-              onChange={(e) => updateFromHsl(hsl.h, hsl.s, Number(e.target.value))}
-            />
-          </div>
-        </div>
-        <div className="mt-2 p-2 rounded bg-muted/50 font-mono text-sm">
-          hsl({hsl.h}, {hsl.s}%, {hsl.l}%)
         </div>
       </Card>
     </div>
