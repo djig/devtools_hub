@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { Layout } from './components/layout/Layout';
 import Home from './pages/Home';
 import Category from './pages/Category';
@@ -21,6 +22,7 @@ function LoadingFallback() {
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" richColors />
       <Layout>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>

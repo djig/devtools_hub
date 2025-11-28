@@ -1,35 +1,53 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
+import { Input } from '../../../components/ui/Input';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, User, Mail, MapPin, CreditCard, Hash } from 'lucide-react';
+import { Shuffle, Plus, X, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface RandomData {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  country: string;
-  zipCode: string;
-  company: string;
-  jobTitle: string;
-  creditCard: string;
-  ssn: string;
-  uuid: string;
-  ipAddress: string;
-  username: string;
-  password: string;
-  birthdate: string;
+  [key: string]: string | number;
 }
+
+interface SchemaField {
+  id: string;
+  name: string;
+  type: 'firstName' | 'lastName' | 'fullName' | 'email' | 'phone' | 'address' | 'city' | 'country' | 'zipCode' | 'company' | 'jobTitle' | 'creditCard' | 'ssn' | 'uuid' | 'ipAddress' | 'username' | 'password' | 'birthdate' | 'number' | 'boolean' | 'custom';
+  customValue?: string;
+  min?: number;
+  max?: number;
+}
+
+const DEFAULT_SCHEMA: SchemaField[] = [
+  { id: '1', name: 'name', type: 'fullName' },
+  { id: '2', name: 'email', type: 'email' },
+  { id: '3', name: 'phone', type: 'phone' },
+  { id: '4', name: 'address', type: 'address' },
+  { id: '5', name: 'city', type: 'city' },
+  { id: '6', name: 'country', type: 'country' },
+  { id: '7', name: 'zipCode', type: 'zipCode' },
+  { id: '8', name: 'company', type: 'company' },
+  { id: '9', name: 'jobTitle', type: 'jobTitle' },
+  { id: '10', name: 'creditCard', type: 'creditCard' },
+  { id: '11', name: 'ssn', type: 'ssn' },
+  { id: '12', name: 'uuid', type: 'uuid' },
+  { id: '13', name: 'ipAddress', type: 'ipAddress' },
+  { id: '14', name: 'username', type: 'username' },
+  { id: '15', name: 'password', type: 'password' },
+  { id: '16', name: 'birthdate', type: 'birthdate' },
+];
 
 export default function RandomDataGenerator() {
   const { addRecentTool } = useAppStore();
   const [data, setData] = useState<RandomData | null>(null);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(10);
   const [batchData, setBatchData] = useState<RandomData[]>([]);
+  const [schema, setSchema] = useState<SchemaField[]>(DEFAULT_SCHEMA);
+  const [useCustomSchema, setUseCustomSchema] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     addRecentTool('random-data-generator');
@@ -77,64 +95,76 @@ export default function RandomDataGenerator() {
   const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
   const randomItem = <T,>(arr: T[]) => arr[random(0, arr.length - 1)];
 
-  const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = Math.random() * 16 | 0;
-      const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  };
+  const generateFieldValue = (field: SchemaField): string | number => {
+    const firstName = randomItem(firstNames);
+    const lastName = randomItem(lastNames);
 
-  const generateCreditCard = () => {
-    const digits = Array.from({ length: 16 }, () => random(0, 9));
-    return digits.join('').match(/.{1,4}/g)?.join(' ') || '';
-  };
-
-  const generateSSN = () => {
-    return `${random(100, 999)}-${random(10, 99)}-${random(1000, 9999)}`;
-  };
-
-  const generateIP = () => {
-    return `${random(1, 255)}.${random(0, 255)}.${random(0, 255)}.${random(0, 255)}`;
-  };
-
-  const generatePassword = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
-    return Array.from({ length: 12 }, () => chars[random(0, chars.length - 1)]).join('');
-  };
-
-  const generateBirthdate = () => {
-    const year = random(1950, 2005);
-    const month = random(1, 12);
-    const day = random(1, 28);
-    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    switch (field.type) {
+      case 'firstName':
+        return firstName;
+      case 'lastName':
+        return lastName;
+      case 'fullName':
+        return `${firstName} ${lastName}`;
+      case 'email':
+        return `${firstName.toLowerCase()}${lastName.toLowerCase()}${random(1, 999)}@example.com`;
+      case 'phone':
+        return `+1 (${random(200, 999)}) ${random(100, 999)}-${random(1000, 9999)}`;
+      case 'address':
+        return `${random(100, 9999)} ${randomItem(streets)}`;
+      case 'city':
+        return randomItem(cities);
+      case 'country':
+        return 'United States';
+      case 'zipCode':
+        return String(random(10000, 99999));
+      case 'company':
+        return randomItem(companies);
+      case 'jobTitle':
+        return randomItem(jobTitles);
+      case 'creditCard':
+        return Array.from({ length: 16 }, () => random(0, 9)).join('').match(/.{1,4}/g)?.join(' ') || '';
+      case 'ssn':
+        return `${random(100, 999)}-${random(10, 99)}-${random(1000, 9999)}`;
+      case 'uuid':
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+          const r = Math.random() * 16 | 0;
+          const v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      case 'ipAddress':
+        return `${random(1, 255)}.${random(0, 255)}.${random(0, 255)}.${random(0, 255)}`;
+      case 'username':
+        return `${firstName.toLowerCase()}${lastName.toLowerCase()}${random(1, 999)}`;
+      case 'password':
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+        return Array.from({ length: 12 }, () => chars[random(0, chars.length - 1)]).join('');
+      case 'birthdate':
+        const year = random(1950, 2005);
+        const month = random(1, 12);
+        const day = random(1, 28);
+        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      case 'number':
+        return random(field.min || 0, field.max || 1000);
+      case 'boolean':
+        return Math.random() > 0.5 ? 'true' : 'false';
+      case 'custom':
+        return field.customValue || 'N/A';
+      default:
+        return 'N/A';
+    }
   };
 
   const generateRandomData = (): RandomData => {
-    const firstName = randomItem(firstNames);
-    const lastName = randomItem(lastNames);
-    const name = `${firstName} ${lastName}`;
-    const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${random(1, 999)}`;
-    const email = `${username}@example.com`;
+    const data: RandomData = {};
+    schema.forEach(field => {
+      data[field.name] = generateFieldValue(field);
+    });
+    return data;
+  };
 
-    return {
-      name,
-      email,
-      phone: `+1 (${random(200, 999)}) ${random(100, 999)}-${random(1000, 9999)}`,
-      address: `${random(100, 9999)} ${randomItem(streets)}`,
-      city: randomItem(cities),
-      country: 'United States',
-      zipCode: String(random(10000, 99999)),
-      company: randomItem(companies),
-      jobTitle: randomItem(jobTitles),
-      creditCard: generateCreditCard(),
-      ssn: generateSSN(),
-      uuid: generateUUID(),
-      ipAddress: generateIP(),
-      username,
-      password: generatePassword(),
-      birthdate: generateBirthdate(),
-    };
+  const calculateDataSize = (data: RandomData[]): number => {
+    return new Blob([JSON.stringify(data)]).size;
   };
 
   const handleGenerate = () => {
@@ -142,10 +172,56 @@ export default function RandomDataGenerator() {
     setBatchData([]);
   };
 
-  const handleGenerateBatch = () => {
-    const batch = Array.from({ length: Math.min(count, 100) }, generateRandomData);
-    setBatchData(batch);
+  const handleGenerateBatch = async () => {
+    const actualCount = Math.min(count, 100000); // Allow up to 100k records
+
+    // Show warning for large batches
+    if (actualCount > 5000) {
+      toast.warning('Large Dataset Warning', {
+        description: `Generating ${actualCount.toLocaleString()} records. This may take a moment...`,
+      });
+    }
+
+    setGenerating(true);
     setData(null);
+
+    // Use setTimeout to allow UI to update
+    setTimeout(() => {
+      try {
+        const batch: RandomData[] = [];
+        const batchSize = 1000;
+
+        for (let i = 0; i < actualCount; i += batchSize) {
+          const remaining = Math.min(batchSize, actualCount - i);
+          for (let j = 0; j < remaining; j++) {
+            batch.push(generateRandomData());
+          }
+        }
+
+        const dataSize = calculateDataSize(batch);
+        const dataSizeMB = dataSize / (1024 * 1024);
+
+        setBatchData(batch);
+
+        if (dataSizeMB > 2) {
+          toast.error('Large Data Size Warning', {
+            description: `Generated data is ${dataSizeMB.toFixed(2)} MB. Export may be slow. Consider reducing the record count.`,
+            duration: 5000,
+          });
+        } else {
+          toast.success('Data Generated Successfully', {
+            description: `Generated ${actualCount.toLocaleString()} records (${dataSizeMB.toFixed(2)} MB)`,
+          });
+        }
+      } catch (error) {
+        toast.error('Generation Failed', {
+          description: 'Failed to generate data. Please try with fewer records.',
+        });
+        setBatchData([]);
+      } finally {
+        setGenerating(false);
+      }
+    }, 100);
   };
 
   const exportAsJSON = () => {
@@ -164,6 +240,33 @@ export default function RandomDataGenerator() {
     return [headers, ...rows].join('\n');
   };
 
+  const addSchemaField = () => {
+    const newField: SchemaField = {
+      id: Date.now().toString(),
+      name: `field${schema.length + 1}`,
+      type: 'fullName',
+    };
+    setSchema([...schema, newField]);
+  };
+
+  const removeSchemaField = (id: string) => {
+    setSchema(schema.filter(field => field.id !== id));
+  };
+
+  const updateSchemaField = (id: string, updates: Partial<SchemaField>) => {
+    setSchema(schema.map(field => field.id === id ? { ...field, ...updates } : field));
+  };
+
+  const loadDefaultSchema = () => {
+    setSchema(DEFAULT_SCHEMA);
+    toast.success('Schema Loaded', { description: 'Default schema has been loaded' });
+  };
+
+  const clearSchema = () => {
+    setSchema([]);
+    toast.success('Schema Cleared', { description: 'All fields have been removed' });
+  };
+
   return (
     <div className="space-y-6">
       <Breadcrumb />
@@ -171,30 +274,152 @@ export default function RandomDataGenerator() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Random Data Generator</h1>
         <p className="text-muted-foreground">
-          Generate realistic fake data for testing and development purposes
+          Generate realistic fake data with custom schemas for testing and development
         </p>
       </div>
+
+      {/* Schema Toggle */}
+      <Card className="p-4">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={useCustomSchema}
+            onChange={(e) => setUseCustomSchema(e.target.checked)}
+            className="w-4 h-4 rounded border-border"
+          />
+          <span className="text-sm font-medium">Use Custom Schema</span>
+        </label>
+      </Card>
+
+      {/* Schema Editor */}
+      {useCustomSchema && (
+        <Card className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold">Define Schema</h3>
+            <div className="flex gap-2">
+              <Button onClick={loadDefaultSchema} variant="outline" size="sm">
+                Load Default
+              </Button>
+              <Button onClick={clearSchema} variant="ghost" size="sm">
+                Clear All
+              </Button>
+              <Button onClick={addSchemaField} size="sm" className="gap-2">
+                <Plus className="h-4 w-4" />
+                Add Field
+              </Button>
+            </div>
+          </div>
+
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {schema.map((field) => (
+              <div key={field.id} className="flex gap-2 items-start p-3 rounded-lg bg-muted/50">
+                <div className="flex-1 grid gap-2 sm:grid-cols-3">
+                  <Input
+                    placeholder="Field name"
+                    value={field.name}
+                    onChange={(e) => updateSchemaField(field.id, { name: e.target.value })}
+                    className="text-sm"
+                  />
+                  <select
+                    value={field.type}
+                    onChange={(e) => updateSchemaField(field.id, { type: e.target.value as any })}
+                    className="px-3 py-2 text-sm rounded border border-border bg-background"
+                  >
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="fullName">Full Name</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone</option>
+                    <option value="address">Address</option>
+                    <option value="city">City</option>
+                    <option value="country">Country</option>
+                    <option value="zipCode">Zip Code</option>
+                    <option value="company">Company</option>
+                    <option value="jobTitle">Job Title</option>
+                    <option value="creditCard">Credit Card</option>
+                    <option value="ssn">SSN</option>
+                    <option value="uuid">UUID</option>
+                    <option value="ipAddress">IP Address</option>
+                    <option value="username">Username</option>
+                    <option value="password">Password</option>
+                    <option value="birthdate">Birthdate</option>
+                    <option value="number">Number</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="custom">Custom Value</option>
+                  </select>
+                  {field.type === 'custom' && (
+                    <Input
+                      placeholder="Custom value"
+                      value={field.customValue || ''}
+                      onChange={(e) => updateSchemaField(field.id, { customValue: e.target.value })}
+                      className="text-sm"
+                    />
+                  )}
+                  {field.type === 'number' && (
+                    <div className="flex gap-2">
+                      <Input
+                        type="number"
+                        placeholder="Min"
+                        value={field.min || 0}
+                        onChange={(e) => updateSchemaField(field.id, { min: parseInt(e.target.value) })}
+                        className="text-sm"
+                      />
+                      <Input
+                        type="number"
+                        placeholder="Max"
+                        value={field.max || 1000}
+                        onChange={(e) => updateSchemaField(field.id, { max: parseInt(e.target.value) })}
+                        className="text-sm"
+                      />
+                    </div>
+                  )}
+                </div>
+                <Button
+                  onClick={() => removeSchemaField(field.id)}
+                  variant="ghost"
+                  size="sm"
+                  className="shrink-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            {schema.length === 0 && (
+              <div className="text-center py-8 text-muted-foreground text-sm">
+                No fields defined. Click "Add Field" to create your schema.
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
 
       {/* Controls */}
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          <Button onClick={handleGenerate} className="gap-2">
+          <Button onClick={handleGenerate} className="gap-2" disabled={generating || schema.length === 0}>
             <Shuffle className="h-4 w-4" />
             Generate Single
           </Button>
           <div className="flex gap-2 items-center">
-            <input
+            <Input
               type="number"
               min="1"
-              max="100"
+              max="100000"
               value={count}
-              onChange={(e) => setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
-              className="w-20 px-3 py-2 text-sm rounded border border-border bg-background"
+              onChange={(e) => setCount(Math.max(1, Math.min(100000, parseInt(e.target.value) || 1)))}
+              className="w-28 text-sm"
+              disabled={generating}
             />
-            <Button onClick={handleGenerateBatch} variant="outline">
-              Generate {count} Records
+            <Button onClick={handleGenerateBatch} variant="outline" disabled={generating || schema.length === 0}>
+              {generating ? 'Generating...' : `Generate ${count.toLocaleString()}`}
             </Button>
           </div>
+          {count > 5000 && (
+            <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400">
+              <AlertTriangle className="h-4 w-4" />
+              <span>Large batch - may take time</span>
+            </div>
+          )}
           {(data || batchData.length > 0) && (
             <>
               <div className="flex-1" />
@@ -208,6 +433,7 @@ export default function RandomDataGenerator() {
                   a.href = url;
                   a.download = 'random-data.json';
                   a.click();
+                  toast.success('Exported', { description: 'Data exported as JSON' });
                 }}
               >
                 Export JSON
@@ -222,6 +448,7 @@ export default function RandomDataGenerator() {
                   a.href = url;
                   a.download = 'random-data.csv';
                   a.click();
+                  toast.success('Exported', { description: 'Data exported as CSV' });
                 }}
               >
                 Export CSV
@@ -233,113 +460,71 @@ export default function RandomDataGenerator() {
 
       {/* Single Record Display */}
       {data && (
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <User className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Personal Information</h3>
-            </div>
-            <div className="space-y-3">
-              <DataRow label="Full Name" value={data.name} />
-              <DataRow label="Username" value={data.username} />
-              <DataRow label="Birthdate" value={data.birthdate} />
-              <DataRow label="SSN" value={data.ssn} />
-            </div>
-          </Card>
-
-          <Card className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Mail className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Contact Information</h3>
-            </div>
-            <div className="space-y-3">
-              <DataRow label="Email" value={data.email} />
-              <DataRow label="Phone" value={data.phone} />
-            </div>
-          </Card>
-
-          <Card className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <MapPin className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Address</h3>
-            </div>
-            <div className="space-y-3">
-              <DataRow label="Street" value={data.address} />
-              <DataRow label="City" value={data.city} />
-              <DataRow label="Zip Code" value={data.zipCode} />
-              <DataRow label="Country" value={data.country} />
-            </div>
-          </Card>
-
-          <Card className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <CreditCard className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Professional</h3>
-            </div>
-            <div className="space-y-3">
-              <DataRow label="Company" value={data.company} />
-              <DataRow label="Job Title" value={data.jobTitle} />
-            </div>
-          </Card>
-
-          <Card className="p-4 md:col-span-2">
-            <div className="flex items-center gap-2 mb-3">
-              <Hash className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Technical Data</h3>
-            </div>
-            <div className="grid gap-3 md:grid-cols-2">
-              <DataRow label="UUID" value={data.uuid} />
-              <DataRow label="IP Address" value={data.ipAddress} />
-              <DataRow label="Credit Card" value={data.creditCard} />
-              <DataRow label="Password" value={data.password} />
-            </div>
-          </Card>
-        </div>
+        <Card className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold">Generated Record</h3>
+            <CopyButton text={JSON.stringify(data, null, 2)} />
+          </div>
+          <div className="space-y-2">
+            {Object.entries(data).map(([key, value]) => (
+              <DataRow key={key} label={key} value={String(value)} />
+            ))}
+          </div>
+        </Card>
       )}
 
       {/* Batch Display */}
       {batchData.length > 0 && (
         <Card className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Generated {batchData.length} Records</h3>
+            <h3 className="font-semibold">
+              Generated {batchData.length.toLocaleString()} Records
+              {' '}({(calculateDataSize(batchData) / (1024 * 1024)).toFixed(2)} MB)
+            </h3>
             <CopyButton text={exportAsJSON()} />
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-2 px-2 font-medium">Name</th>
-                  <th className="text-left py-2 px-2 font-medium">Email</th>
-                  <th className="text-left py-2 px-2 font-medium">Phone</th>
-                  <th className="text-left py-2 px-2 font-medium">City</th>
-                  <th className="text-left py-2 px-2 font-medium">Company</th>
+                  {Object.keys(batchData[0]).map((key) => (
+                    <th key={key} className="text-left py-2 px-2 font-medium">
+                      {key}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {batchData.map((item, idx) => (
+                {batchData.slice(0, 100).map((item, idx) => (
                   <tr key={idx} className="border-b border-border last:border-0">
-                    <td className="py-2 px-2">{item.name}</td>
-                    <td className="py-2 px-2 font-mono text-xs">{item.email}</td>
-                    <td className="py-2 px-2 font-mono text-xs">{item.phone}</td>
-                    <td className="py-2 px-2">{item.city}</td>
-                    <td className="py-2 px-2">{item.company}</td>
+                    {Object.values(item).map((value, vidx) => (
+                      <td key={vidx} className="py-2 px-2 font-mono text-xs">
+                        {String(value)}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
             </table>
+            {batchData.length > 100 && (
+              <p className="text-center py-3 text-sm text-muted-foreground">
+                Showing first 100 of {batchData.length.toLocaleString()} records. Export to see all data.
+              </p>
+            )}
           </div>
         </Card>
       )}
 
       {/* Info */}
       <Card className="p-4 bg-muted/50">
-        <h3 className="font-semibold mb-2">About Random Data</h3>
+        <h3 className="font-semibold mb-2">About Random Data Generator</h3>
         <div className="text-sm text-muted-foreground space-y-1">
           <p>• All generated data is completely fake and randomly created</p>
-          <p>• Data should be used for testing and development purposes only</p>
-          <p>• Credit cards, SSNs, and other sensitive data are not real</p>
-          <p>• You can generate up to 100 records at once</p>
+          <p>• Define custom schemas with multiple field types</p>
+          <p>• Generate up to 100,000 records at once</p>
+          <p>• Warning displayed for batches over 5,000 records or 2MB of data</p>
           <p>• Export data as JSON or CSV for easy integration</p>
+          <p>• Table preview shows first 100 records for large batches</p>
         </div>
       </Card>
     </div>
@@ -349,7 +534,7 @@ export default function RandomDataGenerator() {
 function DataRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-2 py-2 border-b border-border last:border-0">
-      <span className="text-sm text-muted-foreground">{label}:</span>
+      <span className="text-sm text-muted-foreground font-medium">{label}:</span>
       <div className="flex items-center gap-2">
         <code className="text-sm font-mono">{value}</code>
         <CopyButton text={value} />
