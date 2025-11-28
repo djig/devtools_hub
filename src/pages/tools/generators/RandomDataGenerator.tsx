@@ -931,41 +931,152 @@ export default function RandomDataGenerator() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Hero Section with Breadcrumb & Integrated Controls */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold tracking-tight">Random Data Generator</h1>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full h-8 w-8"
-            onClick={handleOpenInfo}
-            title="About this tool"
-          >
-            <Info className="h-5 w-5" />
-          </Button>
+          {/* Single Row: Title & Action Buttons */}
+          <div className="flex items-center justify-between px-6 pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                <Shuffle className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Random Data Generator</h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Generate realistic fake data with custom schemas. All processing happens locally.
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              {/* Large Batch Warning */}
+              {count > 5000 && (
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                  <AlertTriangle className="h-3 w-3 text-orange-600 dark:text-orange-400" />
+                  <span className="text-xs text-orange-800 dark:text-orange-200">Large batch</span>
+                </div>
+              )}
+              {/* Schema Configuration */}
+              <div className="flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-violet-500/10 to-purple-500/10 border border-violet-500/20 rounded-lg">
+                <Settings className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
+                <div className="hidden sm:block">
+                  <p className="text-xs font-medium text-violet-900 dark:text-violet-100">
+                    {schema.length} field{schema.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+                <Button
+                  onClick={openSchemaModal}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 px-2 hover:bg-violet-500/10 hover:text-violet-600 dark:hover:text-violet-400 transition-all"
+                >
+                  Configure
+                </Button>
+              </div>
+              {/* Generation Controls */}
+              <Button
+                onClick={handleGenerate}
+                className="gap-2 shadow-sm hover:shadow transition-shadow"
+                size="sm"
+                disabled={generating || schema.length === 0}
+              >
+                <Shuffle className="h-3.5 w-3.5" />
+                Single
+              </Button>
+              <Input
+                type="number"
+                min="1"
+                max={isMobile ? 10000 : undefined}
+                value={count}
+                onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
+                className="w-24 text-sm h-9"
+                disabled={generating}
+              />
+              <Button
+                onClick={handleGenerateBatch}
+                variant="outline"
+                size="sm"
+                className="gap-2 shadow-sm hover:shadow transition-shadow"
+                disabled={generating || schema.length === 0}
+              >
+                <Shuffle className="h-3.5 w-3.5" />
+                {generating ? 'Generating...' : `Generate ${count.toLocaleString()}`}
+              </Button>
+              {/* Info Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors"
+                onClick={handleOpenInfo}
+                title="About this tool"
+              >
+                <Info className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
-        <p className="text-muted-foreground">
-          Generate realistic fake data with custom schemas for testing and development
-        </p>
       </div>
 
-      {/* Schema Button */}
-      <Card className="p-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="font-semibold mb-1">Data Schema</h3>
-            <p className="text-xs text-muted-foreground">
-              {schema.length} fields defined
-            </p>
+      {/* Export Controls - Appears only when data exists */}
+      {(data || batchData.length > 0) && (
+        <Card className="overflow-hidden border-border/50 shadow-sm">
+          <div className="flex flex-wrap items-center gap-2 p-4">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-lg">
+              <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-medium">{dataSize}</span>
+            </div>
+            <div className="h-4 w-px bg-border" />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 h-8 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20 dark:hover:text-blue-400 transition-all"
+              onClick={() => handleExportClick('json')}
+              disabled={exporting}
+            >
+              <FileJson className="h-3.5 w-3.5" />
+              <span className="text-xs">JSON</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 h-8 hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-950/20 dark:hover:text-green-400 transition-all"
+              onClick={() => handleExportClick('csv')}
+              disabled={exporting}
+            >
+              <FileSpreadsheet className="h-3.5 w-3.5" />
+              <span className="text-xs">CSV</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 h-8 hover:bg-purple-50 hover:text-purple-600 dark:hover:bg-purple-950/20 dark:hover:text-purple-400 transition-all"
+              onClick={() => handleExportClick('zip')}
+              disabled={exporting}
+            >
+              <Archive className="h-3.5 w-3.5" />
+              <span className="text-xs">ZIP</span>
+            </Button>
+            <div className="h-4 w-px bg-border ml-auto" />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 h-8 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all"
+              onClick={handleClearData}
+              disabled={exporting || generating}
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              <span className="text-xs">Clear</span>
+            </Button>
           </div>
-          <Button onClick={openSchemaModal} variant="outline" className="gap-2">
-            <Settings className="h-4 w-4" />
-            Edit Schema
-          </Button>
-        </div>
-      </Card>
+        </Card>
+      )}
 
       {/* Schema Modal */}
       <Modal
@@ -1458,145 +1569,94 @@ export default function RandomDataGenerator() {
         </div>
       </Modal>
 
-      {/* Mobile Warning Banner */}
+      {/* Mobile Warning Banner - Compact */}
       {isMobile && (
-        <Card className="p-4 bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-            <div className="space-y-1">
-              <p className="font-semibold text-amber-900 dark:text-amber-100">Mobile Device Detected</p>
-              <p className="text-sm text-amber-800 dark:text-amber-200">
-                To ensure optimal performance on mobile devices:
-              </p>
-              <ul className="text-sm text-amber-800 dark:text-amber-200 list-disc list-inside space-y-1 ml-2">
-                <li>Maximum 10,000 records per generation</li>
-                <li>Maximum 5MB export size</li>
-                <li>Web Workers disabled (not supported on all mobile browsers)</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-      )}
-
-      {/* Controls */}
-      <Card className="p-4">
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          <Button onClick={handleGenerate} className="gap-2" disabled={generating || schema.length === 0}>
-            <Shuffle className="h-4 w-4" />
-            Generate Single
-          </Button>
-          <div className="flex gap-2 items-center">
-            <Input
-              type="number"
-              min="1"
-              max={isMobile ? 10000 : undefined}
-              value={count}
-              onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-28 text-sm"
-              disabled={generating}
-            />
-            <Button onClick={handleGenerateBatch} variant="outline" disabled={generating || schema.length === 0}>
-              {generating ? 'Generating...' : `Generate ${count.toLocaleString()}`}
-            </Button>
-          </div>
-          {(data || batchData.length > 0) && (
-            <>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-md text-sm font-medium">
-                <span>Size: {dataSize}</span>
+        <Card className="overflow-hidden border-amber-200 dark:border-amber-800 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 shadow-sm">
+          <div className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex-shrink-0">
+                <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2"
-                onClick={() => handleExportClick('json')}
-                disabled={exporting}
-              >
-                <FileJson className="h-4 w-4" />
-                Export JSON
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2"
-                onClick={() => handleExportClick('csv')}
-                disabled={exporting}
-              >
-                <FileSpreadsheet className="h-4 w-4" />
-                Export CSV
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2"
-                onClick={() => handleExportClick('zip')}
-                disabled={exporting}
-              >
-                <Archive className="h-4 w-4" />
-                Export ZIP
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/20"
-                onClick={handleClearData}
-                disabled={exporting || generating}
-              >
-                <Trash2 className="h-4 w-4" />
-                Clear Data
-              </Button>
-            </>
-          )}
-          {count > 5000 && (
-            <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400">
-              <AlertTriangle className="h-4 w-4" />
-              <span>Large batch - may take time</span>
+              <div className="flex-1">
+                <p className="font-semibold text-sm text-amber-900 dark:text-amber-100">Mobile Limits</p>
+                <div className="flex items-center gap-3 mt-1 text-xs text-amber-800 dark:text-amber-200">
+                  <span>Max: 10K records</span>
+                  <span>•</span>
+                  <span>5MB export</span>
+                  <span>•</span>
+                  <span>No workers</span>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      </Card>
-
-      {/* Single Record Display */}
-      {data && (
-        <Card className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Generated Record</h3>
-            <CopyButton text={JSON.stringify(data, null, 2)} />
-          </div>
-          <div className="space-y-2">
-            {Object.entries(data).map(([key, value]) => {
-              const displayValue = typeof value === 'object'
-                ? JSON.stringify(value, null, 2)
-                : String(value);
-              return <DataRow key={key} label={key} value={displayValue} />;
-            })}
           </div>
         </Card>
       )}
 
-      {/* Batch Display */}
+      {/* Single Record Display - Compact */}
+      {data && (
+        <Card className="overflow-hidden border-border/50 shadow-sm">
+          <div className="bg-gradient-to-r from-emerald-50/50 to-teal-50/50 dark:from-emerald-950/20 dark:to-teal-950/20 px-5 py-3 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/40">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-base">Generated Record</h3>
+                  <p className="text-xs text-muted-foreground">Single data entry</p>
+                </div>
+              </div>
+              <CopyButton text={JSON.stringify(data, null, 2)} />
+            </div>
+          </div>
+          <div className="p-4">
+            <div className="space-y-0.5 bg-muted/30 rounded-lg p-3 border border-border/50">
+              {Object.entries(data).map(([key, value]) => {
+                const displayValue = typeof value === 'object'
+                  ? JSON.stringify(value, null, 2)
+                  : String(value);
+                return <DataRow key={key} label={key} value={displayValue} />;
+              })}
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Batch Display - Compact */}
       {batchData.length > 0 && (
-        <Card className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">
-              Generated {batchData.length.toLocaleString()} Records
-              {' '}({(calculateDataSize(batchData) / (1024 * 1024)).toFixed(2)} MB)
-            </h3>
-            <CopyButton text={exportAsJSON()} />
+        <Card className="overflow-hidden border-border/50 shadow-sm">
+          <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 px-5 py-3 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/40">
+                  <FileJson className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-base">
+                    {batchData.length.toLocaleString()} Records
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    {(calculateDataSize(batchData) / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                </div>
+              </div>
+              <CopyButton text={exportAsJSON()} />
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border">
+              <thead className="bg-muted/30 sticky top-0">
+                <tr className="border-b border-border/50">
                   {Object.keys(batchData[0]).map((key) => (
-                    <th key={key} className="text-left py-2 px-2 font-medium">
+                    <th key={key} className="text-left py-2 px-3 font-semibold text-xs uppercase tracking-wider">
                       {key}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-border/30">
                 {batchData.slice(0, 100).map((item, idx) => (
-                  <tr key={idx} className="border-b border-border last:border-0">
+                  <tr key={idx} className="hover:bg-muted/20 transition-colors">
                     {Object.values(item).map((value, vidx) => {
                       const displayValue = typeof value === 'object'
                         ? JSON.stringify(value)
@@ -1604,7 +1664,7 @@ export default function RandomDataGenerator() {
                       return (
                         <td
                           key={vidx}
-                          className="py-2 px-2 font-mono text-xs max-w-xs"
+                          className="py-2 px-3 font-mono text-xs max-w-xs"
                           title={displayValue}
                         >
                           <div className="truncate">
@@ -1618,43 +1678,80 @@ export default function RandomDataGenerator() {
               </tbody>
             </table>
             {batchData.length > 100 && (
-              <p className="text-center py-3 text-sm text-muted-foreground">
-                Showing first 100 of {batchData.length.toLocaleString()} records. Export to see all data.
-              </p>
+              <div className="px-5 py-3 text-center bg-muted/20 border-t border-border/50">
+                <p className="text-xs text-muted-foreground">
+                  Showing first 100 of {batchData.length.toLocaleString()} records. Export to see all.
+                </p>
+              </div>
             )}
           </div>
         </Card>
       )}
 
-      {/* Info */}
-      <Card className="p-4 bg-muted/50">
-        <h3 className="font-semibold mb-2">About Random Data Generator</h3>
-        <div className="text-sm text-muted-foreground space-y-1">
-          <p>• All generated data is completely fake and randomly created</p>
-          <p>• Define custom schemas using JSON with primitive types (string, number, boolean, etc.)</p>
-          <p>• Support for nested objects and arrays in schema definition</p>
-          <p>• Import and export custom schemas as JSON files</p>
-          {isMobile ? (
-            <>
-              <p>• <strong>Mobile:</strong> Maximum 10,000 records per generation</p>
-              <p>• <strong>Mobile:</strong> Maximum 5MB export size</p>
-              <p>• <strong>Mobile:</strong> Web Workers disabled for compatibility</p>
-            </>
-          ) : (
-            <>
-              <p>• Generate any number of records (confirmation required for &gt;100,000)</p>
-              <p>• Web Workers used for generating &gt;10,000 records with progress tracking</p>
-              <p>• Web Workers used for exporting datasets &gt;5MB to prevent browser freezing</p>
-              <p>• Export warning dialog shown for datasets &gt;10MB</p>
-            </>
-          )}
-          <p>• Large batch generation depends on your device's hardware capabilities</p>
-          <p>• Warning displayed for batches over 5,000 records or 2MB of data</p>
-          <p>• Export data as JSON, CSV, or compressed ZIP archive</p>
-          <p>• ZIP export includes JSON, CSV, and schema files with DEFLATE compression</p>
-          <p>• Recommended to use ZIP export for datasets larger than 5MB</p>
-          <p>• Table preview shows first 100 records for large batches</p>
-          <p>• "Clear Data" button available to manually free up memory after operations</p>
+      {/* Info Section - Compact */}
+      <Card className="overflow-hidden border-border/50 shadow-sm bg-gradient-to-br from-muted/30 to-muted/10">
+        <div className="px-5 py-3 border-b border-border/50">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
+              <Info className="h-4 w-4 text-primary" />
+            </div>
+            <h3 className="font-semibold text-base">Features & Capabilities</h3>
+          </div>
+        </div>
+        <div className="p-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Completely fake, randomly generated data</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Custom JSON schemas with nested objects & arrays</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Import/export schemas as JSON files</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Export as JSON, CSV, or compressed ZIP</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {isMobile ? (
+                <>
+                  <div className="flex items-start gap-2">
+                    <div className="mt-0.5 h-1 w-1 rounded-full bg-amber-500 flex-shrink-0" />
+                    <p className="text-muted-foreground"><strong className="text-amber-600 dark:text-amber-400">Mobile:</strong> Max 10K records, 5MB exports</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="mt-0.5 h-1 w-1 rounded-full bg-amber-500 flex-shrink-0" />
+                    <p className="text-muted-foreground"><strong className="text-amber-600 dark:text-amber-400">Mobile:</strong> Web Workers disabled</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-start gap-2">
+                    <div className="mt-0.5 h-1 w-1 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <p className="text-muted-foreground">Web Workers for 10K+ records & 5MB+ exports</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="mt-0.5 h-1 w-1 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <p className="text-muted-foreground">Progress tracking for large operations</p>
+                  </div>
+                </>
+              )}
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Preview first 100 records in table view</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-muted-foreground">Manual memory cleanup available</p>
+              </div>
+            </div>
+          </div>
         </div>
       </Card>
     </div>
@@ -1663,10 +1760,10 @@ export default function RandomDataGenerator() {
 
 function DataRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-2 py-2 border-b border-border last:border-0">
-      <span className="text-sm text-muted-foreground font-medium">{label}:</span>
-      <div className="flex items-center gap-2">
-        <code className="text-sm font-mono">{value}</code>
+    <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors px-2 rounded">
+      <span className="text-xs font-semibold text-foreground/80 min-w-[100px]">{label}</span>
+      <div className="flex items-center gap-2 flex-1 justify-end">
+        <code className="text-xs font-mono bg-muted/50 px-2 py-0.5 rounded border border-border/50 max-w-md truncate">{value}</code>
         <CopyButton text={value} />
       </div>
     </div>

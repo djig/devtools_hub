@@ -5,6 +5,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { convertBase } from '../../../utils/converters/numberBase';
+import { Binary } from 'lucide-react';
 
 export default function NumberBaseConverter() {
   const [input, setInput] = useState('');
@@ -44,41 +45,60 @@ export default function NumberBaseConverter() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb & Actions */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
+        </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Number Base Converter</h1>
-        <p className="text-muted-foreground">
-          Convert between Binary, Decimal, Octal, and Hexadecimal
-        </p>
+        {/* Single Row: Title, Icon & Action Buttons */}
+          <div className="flex items-center justify-between gap-4 px-6 pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                <Binary className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Number Base Converter</h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Convert between Binary, Decimal, Octal, and Hexadecimal
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <div className="flex items-center gap-2">
+                <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Input:</label>
+                <Input
+                  placeholder="Enter number..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  className="font-mono h-9 text-sm w-32"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Base:</label>
+                <select
+                  value={fromBase}
+                  onChange={(e) => setFromBase(Number(e.target.value))}
+                  className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+                >
+                  <option value={2}>Binary (2)</option>
+                  <option value={8}>Octal (8)</option>
+                  <option value={10}>Decimal (10)</option>
+                  <option value={16}>Hex (16)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Card className="p-4">
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">Input Number</label>
-              <Input
-                placeholder="Enter number..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="font-mono"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium mb-2 block">Input Base</label>
-              <select
-                value={fromBase}
-                onChange={(e) => setFromBase(Number(e.target.value))}
-                className="w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-              >
-                <option value={2}>Binary (Base 2)</option>
-                <option value={8}>Octal (Base 8)</option>
-                <option value={10}>Decimal (Base 10)</option>
-                <option value={16}>Hexadecimal (Base 16)</option>
-              </select>
-            </div>
-          </div>
 
           {error && (
             <div className="text-sm text-destructive">{error}</div>

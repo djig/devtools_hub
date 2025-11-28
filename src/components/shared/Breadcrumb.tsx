@@ -15,20 +15,20 @@ export function Breadcrumb() {
   if (!categoryInfo) return null;
 
   return (
-    <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+    <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
       <Link to="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
-        <Home className="h-4 w-4" />
-        Home
+        <Home className="h-3 w-3" />
+        <span className="text-[11px]">Home</span>
       </Link>
-      <ChevronRight className="h-4 w-4" />
+      <ChevronRight className="h-3 w-3" />
       <Link
         to={`/category/${tool.category}`}
-        className="hover:text-foreground transition-colors"
+        className="text-[11px] hover:text-foreground transition-colors"
       >
         {categoryInfo.name}
       </Link>
-      <ChevronRight className="h-4 w-4" />
-      <span className="text-foreground font-medium">{tool.name}</span>
+      <ChevronRight className="h-3 w-3" />
+      <span className="text-[11px] text-foreground font-medium">{tool.name}</span>
     </nav>
   );
 }

@@ -209,13 +209,27 @@ export default function CronParser() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
+        </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Cron Expression Parser</h1>
-        <p className="text-muted-foreground">
-          Parse and build cron expressions with human-readable descriptions
-        </p>
+        <div className="flex items-center gap-4 px-6 pb-6">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Clock className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Cron Expression Parser</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Parse and build cron expressions with human-readable descriptions
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Expression Input */}

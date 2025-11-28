@@ -5,7 +5,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
-import { AlertCircle, FileJson, Shield } from 'lucide-react';
+import { AlertCircle, FileJson, Shield, Box } from 'lucide-react';
 
 export default function JsonToSchemaConverter() {
   const [input, setInput] = useState('');
@@ -185,49 +185,65 @@ export default function JsonToSchemaConverter() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb & Actions */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
+        </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">JSON → Schema Converter</h1>
-        <p className="text-muted-foreground">
-          Generate JSON Schema definitions from JSON data automatically
-        </p>
-      </div>
+        {/* Single Row: Title, Icon & Action Buttons */}
+          <div className="flex items-center justify-between gap-4 px-6 pb-6">
+            <div className="flex items-center gap-4">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Box className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">JSON → Schema Converter</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Generate JSON Schema definitions from JSON data automatically
+              </p>
+            </div>
+          </div>
 
-      <Card className="p-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleConvert}>
-            <Shield className="mr-2 h-4 w-4" />
-            Generate Schema
-          </Button>
-          <Button onClick={loadSample} variant="ghost" size="sm">
-            <FileJson className="mr-2 h-4 w-4" />
-            Load Sample
-          </Button>
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <label className="flex items-center gap-2 text-xs cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeRequired}
+                  onChange={(e) => setIncludeRequired(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded border-input"
+                />
+                <span className="text-muted-foreground">Include Required</span>
+              </label>
 
-          <div className="flex items-center gap-4 ml-auto">
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={includeRequired}
-                onChange={(e) => setIncludeRequired(e.target.checked)}
-                className="w-4 h-4 rounded border-input"
-              />
-              <span className="text-muted-foreground">Include Required</span>
-            </label>
+              <label className="flex items-center gap-2 text-xs cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeDescriptions}
+                  onChange={(e) => setIncludeDescriptions(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded border-input"
+                />
+                <span className="text-muted-foreground">Add Descriptions</span>
+              </label>
 
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={includeDescriptions}
-                onChange={(e) => setIncludeDescriptions(e.target.checked)}
-                className="w-4 h-4 rounded border-input"
-              />
-              <span className="text-muted-foreground">Add Descriptions</span>
-            </label>
+              <div className="h-4 w-px bg-border" />
+
+              <Button onClick={handleConvert} size="sm">
+                <Shield className="mr-2 h-4 w-4" />
+                Generate Schema
+              </Button>
+              <Button onClick={loadSample} variant="ghost" size="sm">
+                <FileJson className="mr-2 h-4 w-4" />
+                Load Sample
+              </Button>
+            </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">

@@ -5,7 +5,7 @@ import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Search } from 'lucide-react';
 
 export default function RegexTester() {
   const [pattern, setPattern] = useState('');
@@ -95,22 +95,38 @@ export default function RegexTester() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
-
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Regex Tester</h1>
-        <p className="text-muted-foreground">
-          Test regular expressions with real-time matching and highlighting
-        </p>
-      </div>
-
-      <Card className="p-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={loadSample} variant="ghost" size="sm">
-            Load Sample
-          </Button>
+      {/* Compact Hero Section with Breadcrumb & Actions */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
         </div>
-      </Card>
+
+        {/* Single Row: Title, Icon & Action Buttons */}
+          <div className="flex items-center justify-between gap-4 px-6 pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                <Search className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Regex Tester</h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Test regular expressions with real-time matching and highlighting
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Button onClick={loadSample} variant="ghost" size="sm">
+                Load Sample
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Card className="p-4 space-y-4">
         <div>

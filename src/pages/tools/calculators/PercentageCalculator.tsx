@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui
 import { Input } from '../../../components/ui/Input';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
-import { Calculator } from 'lucide-react';
+import { Calculator, Percent } from 'lucide-react';
 
 export default function PercentageCalculator() {
   const [value1, setValue1] = useState('');
@@ -82,13 +82,27 @@ export default function PercentageCalculator() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Percentage Calculator</h1>
-        <p className="text-muted-foreground">
-          Calculate percentages, increases, decreases, and more
-        </p>
+          <div className="flex items-center gap-4 px-6 pb-6">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Percent className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Percentage Calculator</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Calculate percentages, increases, decreases, and more
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

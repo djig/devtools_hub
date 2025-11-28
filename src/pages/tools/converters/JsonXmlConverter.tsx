@@ -6,7 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToXml, xmlToJson } from '../../../utils/converters/xml';
-import { AlertCircle, ArrowRightLeft } from 'lucide-react';
+import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
 
 export default function JsonXmlConverter() {
   const [input, setInput] = useState('');
@@ -51,29 +51,45 @@ export default function JsonXmlConverter() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
-
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">JSON ↔ XML Converter</h1>
-        <p className="text-muted-foreground">
-          Convert between JSON and XML formats
-        </p>
-      </div>
-
-      <Card className="p-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleConvert}>
-            Convert to {mode === 'json-to-xml' ? 'XML' : 'JSON'}
-          </Button>
-          <Button onClick={toggleMode} variant="outline">
-            <ArrowRightLeft className="mr-2 h-4 w-4" />
-            Switch Direction
-          </Button>
-          <Button onClick={loadSample} variant="ghost" size="sm">
-            Load Sample
-          </Button>
+      {/* Compact Hero Section with Breadcrumb & Actions */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
         </div>
-      </Card>
+
+        {/* Single Row: Title, Icon & Action Buttons */}
+          <div className="flex items-center justify-between gap-4 px-6 pb-6">
+            <div className="flex items-center gap-4">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <RefreshCw className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">JSON ↔ XML Converter</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Convert between JSON and XML formats
+              </p>
+            </div>
+          </div>
+
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Button onClick={handleConvert} size="sm">
+                Convert to {mode === 'json-to-xml' ? 'XML' : 'JSON'}
+              </Button>
+              <Button onClick={toggleMode} variant="outline" size="sm">
+                <ArrowRightLeft className="mr-2 h-4 w-4" />
+                Switch Direction
+              </Button>
+              <Button onClick={loadSample} variant="ghost" size="sm">
+                Load Sample
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">

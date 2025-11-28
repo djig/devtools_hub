@@ -168,13 +168,27 @@ export default function CspGenerator() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Header with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-background p-6">
+        <div className="relative z-10 space-y-4">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">CSP Header Generator</h1>
-        <p className="text-muted-foreground">
-          Generate Content Security Policy headers to protect your website from XSS and data injection attacks
-        </p>
+          {/* Title Row */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Shield className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">CSP Header Generator</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Generate Content Security Policy headers to protect your website from XSS and data injection attacks
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Preset Policies */}
