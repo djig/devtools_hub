@@ -8,10 +8,11 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
+  footer?: ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export function Modal({ isOpen, onClose, title, children, size = 'lg' }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, footer, size = 'lg' }: ModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -50,7 +51,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'lg' }: ModalPr
         className={`relative bg-background border border-border rounded-lg shadow-xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col m-4`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
           <h2 className="text-xl font-semibold">{title}</h2>
           <Button
             variant="ghost"
@@ -63,9 +64,16 @@ export function Modal({ isOpen, onClose, title, children, size = 'lg' }: ModalPr
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 min-h-0">
           {children}
         </div>
+
+        {/* Footer */}
+        {footer && (
+          <div className="border-t border-border p-4 shrink-0">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

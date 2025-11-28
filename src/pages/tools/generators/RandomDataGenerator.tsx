@@ -7,7 +7,7 @@ import { Modal } from '../../../components/ui/Modal';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, AlertTriangle, Settings } from 'lucide-react';
+import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface RandomData {
@@ -68,6 +68,7 @@ export default function RandomDataGenerator() {
   const [schemaError, setSchemaError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [dataSize, setDataSize] = useState<string>('0 B');
 
   useEffect(() => {
     addRecentTool('random-data-generator');
@@ -158,9 +159,18 @@ export default function RandomDataGenerator() {
     return new Blob([JSON.stringify(data)]).size;
   };
 
+  const formatBytes = (bytes: number): string => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  };
+
   const handleGenerate = () => {
-    setData(generateRandomData());
+    const newData = generateRandomData();
+    setData(newData);
     setBatchData([]);
+    const size = new Blob([JSON.stringify(newData)]).size;
+    setDataSize(formatBytes(size));
   };
 
   const handleGenerateBatch = async () => {
@@ -193,6 +203,7 @@ export default function RandomDataGenerator() {
         const dataSizeMB = dataSize / (1024 * 1024);
 
         setBatchData(batch);
+        setDataSize(formatBytes(dataSize));
 
         if (dataSizeMB > 2) {
           toast.error('Large Data Size Warning', {
@@ -343,6 +354,73 @@ export default function RandomDataGenerator() {
     }
   };
 
+  const handleImportSchema = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Check file type
+    if (!file.name.endsWith('.json')) {
+      toast.error('Invalid File', { description: 'Please select a JSON file' });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const parsed = JSON.parse(content);
+
+        // Validate schema structure
+        if (!Array.isArray(parsed)) {
+          toast.error('Invalid Schema', { description: 'Schema must be an array of field definitions' });
+          return;
+        }
+
+        // Validate each field
+        for (const field of parsed) {
+          const error = validateSchemaField(field);
+          if (error) {
+            toast.error('Invalid Schema', { description: error });
+            return;
+          }
+        }
+
+        // Valid schema - update textarea
+        const formatted = JSON.stringify(parsed, null, 2);
+        setTempSchemaText(formatted);
+        setSchemaError('');
+        toast.success('Schema Imported', { description: `Imported schema with ${parsed.length} fields` });
+      } catch (err) {
+        toast.error('Import Failed', { description: 'Invalid JSON file format' });
+      }
+    };
+
+    reader.onerror = () => {
+      toast.error('Import Failed', { description: 'Failed to read file' });
+    };
+
+    reader.readAsText(file);
+
+    // Reset input so the same file can be selected again
+    event.target.value = '';
+  };
+
+  const handleExportSchema = () => {
+    try {
+      const parsed = JSON.parse(tempSchemaText);
+      const blob = new Blob([JSON.stringify(parsed, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'schema.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success('Schema Exported', { description: 'Schema saved as schema.json' });
+    } catch (e) {
+      toast.error('Export Failed', { description: 'Invalid JSON cannot be exported' });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Breadcrumb />
@@ -376,6 +454,18 @@ export default function RandomDataGenerator() {
         onClose={() => setIsModalOpen(false)}
         title="Edit Data Schema"
         size="xl"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button onClick={() => setIsModalOpen(false)} variant="outline" className="gap-2">
+              <X className="h-4 w-4" />
+              Cancel
+            </Button>
+            <Button onClick={saveSchema} disabled={!!schemaError} className="gap-2">
+              <Save className="h-4 w-4" />
+              Save Schema
+            </Button>
+          </div>
+        }
       >
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -383,6 +473,31 @@ export default function RandomDataGenerator() {
               Define your custom schema in JSON format. Each field must have "name" and "type" properties.
             </p>
             <div className="flex gap-2">
+              <input
+                type="file"
+                accept=".json"
+                onChange={handleImportSchema}
+                className="hidden"
+                id="schema-import-input"
+              />
+              <Button
+                onClick={() => document.getElementById('schema-import-input')?.click()}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+              >
+                <Upload className="h-3 w-3" />
+                Import
+              </Button>
+              <Button
+                onClick={handleExportSchema}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+              >
+                <Download className="h-3 w-3" />
+                Export
+              </Button>
               <Button onClick={loadDefaultSchema} variant="outline" size="sm">
                 Load Default
               </Button>
@@ -461,15 +576,6 @@ export default function RandomDataGenerator() {
               </div>
             </div>
           </div>
-
-          <div className="flex justify-end gap-2 pt-4 border-t border-border">
-            <Button onClick={() => setIsModalOpen(false)} variant="outline">
-              Cancel
-            </Button>
-            <Button onClick={saveSchema} disabled={!!schemaError}>
-              Save Schema
-            </Button>
-          </div>
         </div>
       </Modal>
 
@@ -496,9 +602,13 @@ export default function RandomDataGenerator() {
           </div>
           {(data || batchData.length > 0) && (
             <>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-md text-sm font-medium">
+                <span>Size: {dataSize}</span>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
+                className="gap-2"
                 onClick={() => {
                   const blob = new Blob([exportAsJSON()], { type: 'application/json' });
                   const url = URL.createObjectURL(blob);
@@ -509,11 +619,13 @@ export default function RandomDataGenerator() {
                   toast.success('Exported', { description: 'Data exported as JSON' });
                 }}
               >
+                <FileJson className="h-4 w-4" />
                 Export JSON
               </Button>
               <Button
                 variant="outline"
                 size="sm"
+                className="gap-2"
                 onClick={() => {
                   const blob = new Blob([exportAsCSV()], { type: 'text/csv' });
                   const url = URL.createObjectURL(blob);
@@ -524,6 +636,7 @@ export default function RandomDataGenerator() {
                   toast.success('Exported', { description: 'Data exported as CSV' });
                 }}
               >
+                <FileSpreadsheet className="h-4 w-4" />
                 Export CSV
               </Button>
             </>
