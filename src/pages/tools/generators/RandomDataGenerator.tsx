@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
+import { Textarea } from '../../../components/ui/Textarea';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, Plus, X, AlertTriangle } from 'lucide-react';
+import { Shuffle, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface RandomData {
@@ -46,6 +47,8 @@ export default function RandomDataGenerator() {
   const [count, setCount] = useState(10);
   const [batchData, setBatchData] = useState<RandomData[]>([]);
   const [schema, setSchema] = useState<SchemaField[]>(DEFAULT_SCHEMA);
+  const [schemaText, setSchemaText] = useState(JSON.stringify(DEFAULT_SCHEMA, null, 2));
+  const [schemaError, setSchemaError] = useState<string>('');
   const [useCustomSchema, setUseCustomSchema] = useState(false);
   const [generating, setGenerating] = useState(false);
 
@@ -240,31 +243,56 @@ export default function RandomDataGenerator() {
     return [headers, ...rows].join('\n');
   };
 
-  const addSchemaField = () => {
-    const newField: SchemaField = {
-      id: Date.now().toString(),
-      name: `field${schema.length + 1}`,
-      type: 'fullName',
-    };
-    setSchema([...schema, newField]);
-  };
+  const handleSchemaChange = (value: string) => {
+    setSchemaText(value);
 
-  const removeSchemaField = (id: string) => {
-    setSchema(schema.filter(field => field.id !== id));
-  };
+    try {
+      const parsed = JSON.parse(value);
 
-  const updateSchemaField = (id: string, updates: Partial<SchemaField>) => {
-    setSchema(schema.map(field => field.id === id ? { ...field, ...updates } : field));
+      // Validate schema structure
+      if (!Array.isArray(parsed)) {
+        setSchemaError('Schema must be an array of field definitions');
+        return;
+      }
+
+      // Validate each field
+      for (const field of parsed) {
+        if (!field.name || typeof field.name !== 'string') {
+          setSchemaError('Each field must have a "name" property (string)');
+          return;
+        }
+        if (!field.type || typeof field.type !== 'string') {
+          setSchemaError('Each field must have a "type" property (string)');
+          return;
+        }
+      }
+
+      // Valid schema
+      setSchema(parsed);
+      setSchemaError('');
+      toast.success('Schema Valid', { description: 'Schema parsed successfully' });
+    } catch (e) {
+      setSchemaError('Invalid JSON syntax');
+    }
   };
 
   const loadDefaultSchema = () => {
+    const defaultJson = JSON.stringify(DEFAULT_SCHEMA, null, 2);
+    setSchemaText(defaultJson);
     setSchema(DEFAULT_SCHEMA);
+    setSchemaError('');
     toast.success('Schema Loaded', { description: 'Default schema has been loaded' });
   };
 
-  const clearSchema = () => {
-    setSchema([]);
-    toast.success('Schema Cleared', { description: 'All fields have been removed' });
+  const formatSchema = () => {
+    try {
+      const parsed = JSON.parse(schemaText);
+      const formatted = JSON.stringify(parsed, null, 2);
+      setSchemaText(formatted);
+      toast.success('Formatted', { description: 'Schema JSON formatted' });
+    } catch (e) {
+      toast.error('Invalid JSON', { description: 'Cannot format invalid JSON' });
+    }
   };
 
   return (
@@ -295,100 +323,50 @@ export default function RandomDataGenerator() {
       {useCustomSchema && (
         <Card className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Define Schema</h3>
+            <div>
+              <h3 className="font-semibold">Define Schema (JSON)</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Edit the JSON schema below. Each field must have "name" and "type" properties.
+              </p>
+            </div>
             <div className="flex gap-2">
               <Button onClick={loadDefaultSchema} variant="outline" size="sm">
                 Load Default
               </Button>
-              <Button onClick={clearSchema} variant="ghost" size="sm">
-                Clear All
-              </Button>
-              <Button onClick={addSchemaField} size="sm" className="gap-2">
-                <Plus className="h-4 w-4" />
-                Add Field
+              <Button onClick={formatSchema} variant="outline" size="sm">
+                Format
               </Button>
             </div>
           </div>
 
-          <div className="space-y-3 max-h-96 overflow-y-auto">
-            {schema.map((field) => (
-              <div key={field.id} className="flex gap-2 items-start p-3 rounded-lg bg-muted/50">
-                <div className="flex-1 grid gap-2 sm:grid-cols-3">
-                  <Input
-                    placeholder="Field name"
-                    value={field.name}
-                    onChange={(e) => updateSchemaField(field.id, { name: e.target.value })}
-                    className="text-sm"
-                  />
-                  <select
-                    value={field.type}
-                    onChange={(e) => updateSchemaField(field.id, { type: e.target.value as any })}
-                    className="px-3 py-2 text-sm rounded border border-border bg-background"
-                  >
-                    <option value="firstName">First Name</option>
-                    <option value="lastName">Last Name</option>
-                    <option value="fullName">Full Name</option>
-                    <option value="email">Email</option>
-                    <option value="phone">Phone</option>
-                    <option value="address">Address</option>
-                    <option value="city">City</option>
-                    <option value="country">Country</option>
-                    <option value="zipCode">Zip Code</option>
-                    <option value="company">Company</option>
-                    <option value="jobTitle">Job Title</option>
-                    <option value="creditCard">Credit Card</option>
-                    <option value="ssn">SSN</option>
-                    <option value="uuid">UUID</option>
-                    <option value="ipAddress">IP Address</option>
-                    <option value="username">Username</option>
-                    <option value="password">Password</option>
-                    <option value="birthdate">Birthdate</option>
-                    <option value="number">Number</option>
-                    <option value="boolean">Boolean</option>
-                    <option value="custom">Custom Value</option>
-                  </select>
-                  {field.type === 'custom' && (
-                    <Input
-                      placeholder="Custom value"
-                      value={field.customValue || ''}
-                      onChange={(e) => updateSchemaField(field.id, { customValue: e.target.value })}
-                      className="text-sm"
-                    />
-                  )}
-                  {field.type === 'number' && (
-                    <div className="flex gap-2">
-                      <Input
-                        type="number"
-                        placeholder="Min"
-                        value={field.min || 0}
-                        onChange={(e) => updateSchemaField(field.id, { min: parseInt(e.target.value) })}
-                        className="text-sm"
-                      />
-                      <Input
-                        type="number"
-                        placeholder="Max"
-                        value={field.max || 1000}
-                        onChange={(e) => updateSchemaField(field.id, { max: parseInt(e.target.value) })}
-                        className="text-sm"
-                      />
-                    </div>
-                  )}
-                </div>
-                <Button
-                  onClick={() => removeSchemaField(field.id)}
-                  variant="ghost"
-                  size="sm"
-                  className="shrink-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            {schema.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground text-sm">
-                No fields defined. Click "Add Field" to create your schema.
-              </div>
-            )}
+          <Textarea
+            value={schemaText}
+            onChange={(e) => handleSchemaChange(e.target.value)}
+            className="min-h-[300px] font-mono text-sm"
+            placeholder="Enter JSON schema..."
+          />
+
+          {schemaError && (
+            <div className="mt-2 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
+              <AlertTriangle className="h-4 w-4" />
+              <span>{schemaError}</span>
+            </div>
+          )}
+
+          <div className="mt-3 text-xs text-muted-foreground">
+            <p className="font-medium mb-1">Available field types:</p>
+            <p>firstName, lastName, fullName, email, phone, address, city, country, zipCode, company, jobTitle, creditCard, ssn, uuid, ipAddress, username, password, birthdate, number, boolean, custom</p>
+          </div>
+
+          <div className="mt-3 text-xs text-muted-foreground">
+            <p className="font-medium mb-1">Example schema:</p>
+            <code className="block p-2 rounded bg-muted text-xs">
+              {`[
+  { "id": "1", "name": "fullName", "type": "fullName" },
+  { "id": "2", "name": "email", "type": "email" },
+  { "id": "3", "name": "age", "type": "number", "min": 18, "max": 65 }
+]`}
+            </code>
           </div>
         </Card>
       )}
