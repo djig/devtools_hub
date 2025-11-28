@@ -4,7 +4,7 @@ import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
-import { Maximize2, RefreshCw } from 'lucide-react';
+import { Maximize2, RefreshCw, LayoutGrid } from 'lucide-react';
 
 interface CommonRatio {
   name: string;
@@ -144,13 +144,27 @@ export default function AspectRatioCalculator() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Header with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-purple-500/10 via-blue-500/5 to-background p-6">
+        <div className="relative z-10 space-y-4">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Aspect Ratio Calculator</h1>
-        <p className="text-muted-foreground">
-          Calculate dimensions and aspect ratios for images, videos, and screens
-        </p>
+          {/* Title Row */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <LayoutGrid className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Aspect Ratio Calculator</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Calculate dimensions and aspect ratios for images, videos, and screens
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Common Ratios */}

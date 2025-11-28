@@ -5,6 +5,7 @@ import { Button } from '../../../components/ui/Button';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { addDays, addMonths, addYears, differenceInDays, format, parseISO } from 'date-fns';
+import { Calendar } from 'lucide-react';
 
 type Operation = 'add' | 'subtract' | 'difference';
 type Unit = 'days' | 'months' | 'years';
@@ -63,13 +64,27 @@ export default function DateCalculator() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Header with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-pink-500/10 via-rose-500/5 to-background p-6">
+        <div className="relative z-10 space-y-4">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Date Calculator</h1>
-        <p className="text-muted-foreground">
-          Add, subtract, or calculate the difference between dates
-        </p>
+          {/* Title Row */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Calendar className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Date Calculator</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Add, subtract, or calculate the difference between dates
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Card className="p-4">

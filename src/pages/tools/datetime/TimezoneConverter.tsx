@@ -128,13 +128,27 @@ export default function TimezoneConverter() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Header with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-background p-6">
+        <div className="relative z-10 space-y-4">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Timezone Converter</h1>
-        <p className="text-muted-foreground">
-          Convert times between timezones and view world clocks
-        </p>
+          {/* Title Row */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Globe className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Timezone Converter</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Convert times between timezones and view world clocks
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Time Input */}

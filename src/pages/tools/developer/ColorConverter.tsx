@@ -5,7 +5,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from '../../../utils/converters/color';
-import { Pipette } from 'lucide-react';
+import { Pipette, Palette } from 'lucide-react';
 
 export default function ColorConverter() {
   const [hexInput, setHexInput] = useState('#3B82F6');
@@ -48,13 +48,27 @@ export default function ColorConverter() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+        <div className="px-6 pt-4 pb-2">
+          <Breadcrumb />
+        </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Color Converter</h1>
-        <p className="text-muted-foreground">
-          Convert between HEX, RGB, and HSL color formats with live preview
-        </p>
+        <div className="flex items-center gap-4 px-6 pb-6">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Palette className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Color Converter</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Convert between HEX, RGB, and HSL color formats with live preview
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Main Color Preview Card */}

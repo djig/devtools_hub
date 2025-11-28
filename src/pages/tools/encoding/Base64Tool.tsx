@@ -6,7 +6,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { encodeBase64, decodeBase64 } from '../../../utils/converters/base64';
 import useAppStore from '../../../store/useAppStore';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Binary } from 'lucide-react';
 
 export default function Base64Tool() {
   const [input, setInput] = useState('');
@@ -50,26 +50,42 @@ export default function Base64Tool() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb />
+      {/* Compact Hero Section with Breadcrumb & Actions */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
+        <div className="relative">
+          {/* Breadcrumb Navigation */}
+          <div className="px-6 pt-4 pb-2">
+            <Breadcrumb />
+          </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Base64 Encoder/Decoder</h1>
-        <p className="text-muted-foreground">
-          Encode text to Base64 or decode Base64 strings back to text
-        </p>
-      </div>
+          {/* Single Row: Title, Icon & Action Buttons */}
+          <div className="flex items-center justify-between gap-4 px-6 pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                <Binary className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Base64 Encoder/Decoder</h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Encode text to Base64 or decode Base64 strings back to text
+                </p>
+              </div>
+            </div>
 
-      <Card className="p-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleEncode}>Encode</Button>
-          <Button onClick={handleDecode} variant="outline">
-            Decode
-          </Button>
-          <Button onClick={loadSample} variant="ghost" size="sm">
-            Load Sample
-          </Button>
+            {/* Action Buttons (TOP-RIGHT) */}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Button onClick={handleEncode} size="sm">Encode</Button>
+              <Button onClick={handleDecode} variant="outline" size="sm">
+                Decode
+              </Button>
+              <Button onClick={loadSample} variant="ghost" size="sm">
+                Load Sample
+              </Button>
+            </div>
+          </div>
         </div>
-      </Card>
+      </div>
 
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
