@@ -459,17 +459,10 @@ export default function RandomDataGenerator() {
               {generating ? 'Generating...' : `Generate ${count.toLocaleString()}`}
             </Button>
           </div>
-          {count > 5000 && (
-            <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400">
-              <AlertTriangle className="h-4 w-4" />
-              <span>Large batch - may take time</span>
-            </div>
-          )}
           {(data || batchData.length > 0) && (
             <>
-              <div className="flex-1" />
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => {
                   const blob = new Blob([exportAsJSON()], { type: 'application/json' });
@@ -484,7 +477,7 @@ export default function RandomDataGenerator() {
                 Export JSON
               </Button>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => {
                   const blob = new Blob([exportAsCSV()], { type: 'text/csv' });
@@ -500,6 +493,12 @@ export default function RandomDataGenerator() {
               </Button>
             </>
           )}
+          {count > 5000 && (
+            <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400">
+              <AlertTriangle className="h-4 w-4" />
+              <span>Large batch - may take time</span>
+            </div>
+          )}
         </div>
       </Card>
 
@@ -511,9 +510,12 @@ export default function RandomDataGenerator() {
             <CopyButton text={JSON.stringify(data, null, 2)} />
           </div>
           <div className="space-y-2">
-            {Object.entries(data).map(([key, value]) => (
-              <DataRow key={key} label={key} value={String(value)} />
-            ))}
+            {Object.entries(data).map(([key, value]) => {
+              const displayValue = typeof value === 'object'
+                ? JSON.stringify(value, null, 2)
+                : String(value);
+              return <DataRow key={key} label={key} value={displayValue} />;
+            })}
           </div>
         </Card>
       )}
@@ -542,11 +544,22 @@ export default function RandomDataGenerator() {
               <tbody>
                 {batchData.slice(0, 100).map((item, idx) => (
                   <tr key={idx} className="border-b border-border last:border-0">
-                    {Object.values(item).map((value, vidx) => (
-                      <td key={vidx} className="py-2 px-2 font-mono text-xs">
-                        {String(value)}
-                      </td>
-                    ))}
+                    {Object.values(item).map((value, vidx) => {
+                      const displayValue = typeof value === 'object'
+                        ? JSON.stringify(value)
+                        : String(value);
+                      return (
+                        <td
+                          key={vidx}
+                          className="py-2 px-2 font-mono text-xs max-w-xs"
+                          title={displayValue}
+                        >
+                          <div className="truncate">
+                            {displayValue}
+                          </div>
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
