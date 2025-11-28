@@ -7,7 +7,7 @@ import { Modal } from '../../../components/ui/Modal';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download, Archive, Trash2 } from 'lucide-react';
+import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download, Archive, Trash2, Info, CheckCircle2, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
 
@@ -78,6 +78,7 @@ export default function RandomDataGenerator() {
   const [showExportWarning, setShowExportWarning] = useState(false);
   const [pendingExport, setPendingExport] = useState<'json' | 'csv' | 'zip' | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
     addRecentTool('random-data-generator');
@@ -154,6 +155,15 @@ export default function RandomDataGenerator() {
         ? `Cleared ${currentDataSize.toFixed(2)} MB of data from memory`
         : 'All generated data has been cleared',
     });
+  };
+
+  // Handle info modal
+  const handleOpenInfo = () => {
+    setShowDisclaimer(true);
+  };
+
+  const handleCloseInfo = () => {
+    setShowDisclaimer(false);
   };
 
   const firstNames = [
@@ -924,7 +934,18 @@ export default function RandomDataGenerator() {
       <Breadcrumb />
 
       <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Random Data Generator</h1>
+        <div className="flex items-center gap-3 mb-2">
+          <h1 className="text-3xl font-bold tracking-tight">Random Data Generator</h1>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full h-8 w-8"
+            onClick={handleOpenInfo}
+            title="About this tool"
+          >
+            <Info className="h-5 w-5" />
+          </Button>
+        </div>
         <p className="text-muted-foreground">
           Generate realistic fake data with custom schemas for testing and development
         </p>
@@ -1182,6 +1203,258 @@ export default function RandomDataGenerator() {
           <p className="text-xs text-muted-foreground italic">
             The export will be processed using a Web Worker to minimize impact on browser responsiveness.
           </p>
+        </div>
+      </Modal>
+
+      {/* Tool Information Modal */}
+      <Modal
+        isOpen={showDisclaimer}
+        onClose={handleCloseInfo}
+        title="About Random Data Generator"
+        size="xl"
+        footer={
+          <div className="flex justify-end">
+            <Button onClick={handleCloseInfo} className="gap-2">
+              <CheckCircle2 className="h-4 w-4" />
+              Got It
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-6 max-h-[60vh] overflow-y-auto">
+          {/* Important Notice */}
+          <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+            <div className="space-y-2">
+              <p className="font-semibold text-blue-900 dark:text-blue-100">
+                Client-Side Development Tool
+              </p>
+              <p className="text-sm text-blue-800 dark:text-blue-200">
+                This is a <strong>lightweight, browser-based tool</strong> designed for quick prototyping,
+                testing, and development. All data generation happens locally in your browser with
+                <strong> no data sent to any server</strong>.
+              </p>
+            </div>
+          </div>
+
+          {/* Best Use Cases */}
+          <div>
+            <h3 className="font-semibold mb-3 flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+              Perfect For
+            </h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-green-600 dark:text-green-400 mt-0.5">✓</span>
+                <span><strong>Quick prototyping</strong> - Generate mock data instantly for UI development</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-600 dark:text-green-400 mt-0.5">✓</span>
+                <span><strong>Learning & demos</strong> - Test your code with realistic fake data</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-600 dark:text-green-400 mt-0.5">✓</span>
+                <span><strong>Privacy-first</strong> - Everything runs locally, no data leaves your browser</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-600 dark:text-green-400 mt-0.5">✓</span>
+                <span><strong>Custom schemas</strong> - Define nested objects and arrays with JSON</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-600 dark:text-green-400 mt-0.5">✓</span>
+                <span><strong>Small to medium datasets</strong> - Up to {isMobile ? '10,000' : '100,000'} records</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Limitations */}
+          <div>
+            <h3 className="font-semibold mb-3 flex items-center gap-2">
+              <XCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+              Not Suitable For
+            </h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-orange-600 dark:text-orange-400 mt-0.5">✗</span>
+                <span><strong>Production data quality</strong> - Limited name pool, no realistic distributions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-600 dark:text-orange-400 mt-0.5">✗</span>
+                <span><strong>Relational data</strong> - No foreign keys or referential integrity</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-600 dark:text-orange-400 mt-0.5">✗</span>
+                <span><strong>Large-scale testing</strong> - Browser memory limits apply (max ~100MB datasets)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-600 dark:text-orange-400 mt-0.5">✗</span>
+                <span><strong>ML training data</strong> - No statistical distributions or field correlations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-600 dark:text-orange-400 mt-0.5">✗</span>
+                <span><strong>Enterprise features</strong> - No team collaboration, version control, or API access</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Key Features */}
+          <div>
+            <h3 className="font-semibold mb-3">Key Strengths</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Zero cost</strong> - No API limits or paid tiers</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Instant access</strong> - No authentication required</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Offline capable</strong> - Works without internet</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Multiple formats</strong> - Export as JSON, CSV, or ZIP</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Progressive enhancement</strong> - Web Workers for large datasets</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span><strong>Mobile support</strong> - Adaptive limits for devices</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Device Limits */}
+          {isMobile && (
+            <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+              <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+              <div className="space-y-2">
+                <p className="font-semibold text-amber-900 dark:text-amber-100">
+                  Mobile Device Limits
+                </p>
+                <p className="text-sm text-amber-800 dark:text-amber-200">
+                  Mobile devices have reduced limits for optimal performance:
+                </p>
+                <ul className="text-sm text-amber-800 dark:text-amber-200 list-disc list-inside space-y-1 ml-2">
+                  <li>Maximum 10,000 records per generation</li>
+                  <li>Maximum 5MB export size</li>
+                  <li>Web Workers disabled for compatibility</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Technical Details */}
+          <div>
+            <h3 className="font-semibold mb-3">Technical Implementation</h3>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>
+                <strong>Architecture:</strong> Pure client-side application built with React and TypeScript.
+                All processing happens in your browser using Web Workers for parallelization on large datasets.
+              </p>
+              <p>
+                <strong>Data Generation:</strong> Uses a small pool of 32 first names and 32 last names for string
+                generation. Numbers are uniformly distributed random values. Nested objects and arrays are fully supported.
+              </p>
+              <p>
+                <strong>Performance:</strong> Desktop browsers can generate up to 100,000 records with Web Worker
+                support. Mobile devices are limited to 10,000 records due to memory constraints.
+              </p>
+              <p>
+                <strong>Export Formats:</strong> JSON (pretty-printed), CSV (with nested object flattening),
+                and ZIP (containing JSON, CSV, and schema files with DEFLATE compression level 9).
+              </p>
+              <p>
+                <strong>Memory Management:</strong> Automatic cleanup after operations, manual "Clear Data" button,
+                and garbage collection hints for optimal browser performance.
+              </p>
+            </div>
+          </div>
+
+          {/* Use Cases & Alternatives */}
+          <div>
+            <h3 className="font-semibold mb-3">When to Use Alternatives</h3>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>
+                <strong>For Production-Quality Data:</strong> Consider <a href="https://github.com/faker-js/faker" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Faker.js</a> (Node.js)
+                or <a href="https://www.mockaroo.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Mockaroo</a> with extensive data type libraries,
+                realistic distributions, and locale support.
+              </p>
+              <p>
+                <strong>For Relational Data:</strong> Use database-specific tools or ORMs that support fixtures
+                with foreign key relationships, referential integrity, and cascading operations.
+              </p>
+              <p>
+                <strong>For ML/Data Science:</strong> Use <a href="https://numpy.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">NumPy</a>/<a href="https://pandas.pydata.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Pandas</a> for
+                custom distributions (normal, Poisson, exponential) with controlled correlations and statistical properties.
+              </p>
+              <p>
+                <strong>For Enterprise/Team Use:</strong> Consider commercial tools with collaboration features,
+                API access, version control, audit trails, and support contracts.
+              </p>
+            </div>
+          </div>
+
+          {/* Disclaimer & Fine Print */}
+          <div className="text-xs text-muted-foreground border-t pt-4 space-y-3">
+            <div>
+              <p className="font-medium mb-2">⚠️ Important Notice</p>
+              <p>
+                This tool generates <strong>completely fake, random data</strong> for development and testing purposes only.
+                The data is NOT suitable for production use, compliance testing, or scenarios requiring realistic data distributions.
+              </p>
+            </div>
+
+            <div>
+              <p className="font-medium mb-2">Data Quality Limitations</p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Names repeat from a limited pool (64 total combinations)</li>
+                <li>No locale-specific formatting (dates, phone numbers, addresses)</li>
+                <li>Uniform random distribution only (no normal, skewed, or custom distributions)</li>
+                <li>No field correlations (e.g., age doesn't correlate with income)</li>
+                <li>No data validation rules (email domains, phone formats, zip codes)</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-medium mb-2">Browser & Hardware Limitations</p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Maximum dataset size depends on available RAM (typically ~100MB)</li>
+                <li>Large operations may temporarily freeze the browser UI</li>
+                <li>Web Workers not supported in some older browsers or private/incognito modes</li>
+                <li>Mobile devices have reduced limits due to memory constraints</li>
+                <li>No streaming - entire dataset must fit in memory</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-medium mb-2">Privacy & Security</p>
+              <p>
+                This is a free, open-source tool with <strong>no data collection, no analytics, and no server communication</strong>.
+                All processing happens locally in your browser. Your schemas and generated data never leave your device.
+                No cookies are used except localStorage for UI preferences.
+              </p>
+            </div>
+
+            <div>
+              <p className="font-medium mb-2">License & Attribution</p>
+              <p>
+                This tool is provided "as-is" without warranties of any kind. Use at your own risk.
+                Not responsible for data quality issues, browser crashes, or lost data.
+                For critical use cases, always verify generated data meets your requirements.
+              </p>
+            </div>
+
+            <div className="text-center pt-2 border-t">
+              <p className="italic">
+                Version 1.0 • Built with React, TypeScript, and Web Workers • Client-Side Only
+              </p>
+            </div>
+          </div>
         </div>
       </Modal>
 
