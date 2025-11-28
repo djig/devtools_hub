@@ -14,31 +14,46 @@ interface RandomData {
 }
 
 interface SchemaField {
-  id: string;
   name: string;
-  type: 'firstName' | 'lastName' | 'fullName' | 'email' | 'phone' | 'address' | 'city' | 'country' | 'zipCode' | 'company' | 'jobTitle' | 'creditCard' | 'ssn' | 'uuid' | 'ipAddress' | 'username' | 'password' | 'birthdate' | 'number' | 'boolean' | 'custom';
-  customValue?: string;
-  min?: number;
-  max?: number;
+  type: string | SchemaObject | SchemaArray;
+}
+
+interface SchemaObject {
+  type: 'object';
+  properties: Record<string, SchemaField>;
+}
+
+interface SchemaArray {
+  type: 'array';
+  items: SchemaField;
+  length?: number;
 }
 
 const DEFAULT_SCHEMA: SchemaField[] = [
-  { id: '1', name: 'name', type: 'fullName' },
-  { id: '2', name: 'email', type: 'email' },
-  { id: '3', name: 'phone', type: 'phone' },
-  { id: '4', name: 'address', type: 'address' },
-  { id: '5', name: 'city', type: 'city' },
-  { id: '6', name: 'country', type: 'country' },
-  { id: '7', name: 'zipCode', type: 'zipCode' },
-  { id: '8', name: 'company', type: 'company' },
-  { id: '9', name: 'jobTitle', type: 'jobTitle' },
-  { id: '10', name: 'creditCard', type: 'creditCard' },
-  { id: '11', name: 'ssn', type: 'ssn' },
-  { id: '12', name: 'uuid', type: 'uuid' },
-  { id: '13', name: 'ipAddress', type: 'ipAddress' },
-  { id: '14', name: 'username', type: 'username' },
-  { id: '15', name: 'password', type: 'password' },
-  { id: '16', name: 'birthdate', type: 'birthdate' },
+  { name: 'id', type: 'number' },
+  { name: 'name', type: 'string' },
+  { name: 'email', type: 'string' },
+  { name: 'age', type: 'number' },
+  { name: 'isActive', type: 'boolean' },
+  {
+    name: 'address',
+    type: {
+      type: 'object',
+      properties: {
+        street: { name: 'street', type: 'string' },
+        city: { name: 'city', type: 'string' },
+        zipCode: { name: 'zipCode', type: 'string' }
+      }
+    }
+  },
+  {
+    name: 'tags',
+    type: {
+      type: 'array',
+      items: { name: 'tag', type: 'string' },
+      length: 3
+    }
+  }
 ];
 
 export default function RandomDataGenerator() {
@@ -70,91 +85,62 @@ export default function RandomDataGenerator() {
     'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson', 'Walker', 'Young'
   ];
 
-  const cities = [
-    'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia',
-    'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville',
-    'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle',
-    'Denver', 'Boston', 'Portland', 'Nashville', 'Miami', 'Atlanta'
-  ];
-
-  const streets = [
-    'Main St', 'Oak Ave', 'Maple Dr', 'Cedar Ln', 'Park Pl', 'Washington Blvd',
-    'Lake View Dr', 'Hill Rd', 'Elm St', 'Pine Ave', 'River Rd', 'Sunset Blvd',
-    'Broadway', 'First Ave', 'Second St', 'Madison Ave', 'Market St', 'Church St'
-  ];
-
-  const companies = [
-    'Tech Solutions Inc', 'Global Industries', 'Digital Innovations', 'Metro Systems',
-    'Prime Enterprises', 'Apex Corporation', 'Vista Technologies', 'Summit Group',
-    'Horizon LLC', 'Quantum Labs', 'Nexus Partners', 'Fusion Dynamics'
-  ];
-
-  const jobTitles = [
-    'Software Engineer', 'Product Manager', 'Data Analyst', 'UX Designer',
-    'Marketing Manager', 'Sales Representative', 'HR Specialist', 'Financial Analyst',
-    'Operations Manager', 'Business Consultant', 'Project Manager', 'Account Executive'
-  ];
-
   const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
   const randomItem = <T,>(arr: T[]) => arr[random(0, arr.length - 1)];
 
-  const generateFieldValue = (field: SchemaField): string | number => {
+  const generateFieldValue = (field: SchemaField): any => {
+    const fieldType = field.type;
+
+    // Handle object types
+    if (typeof fieldType === 'object' && 'type' in fieldType) {
+      if (fieldType.type === 'object') {
+        const obj: Record<string, any> = {};
+        Object.entries(fieldType.properties).forEach(([key, propField]) => {
+          obj[key] = generateFieldValue(propField);
+        });
+        return obj;
+      }
+
+      if (fieldType.type === 'array') {
+        const length = fieldType.length || random(2, 5);
+        return Array.from({ length }, () => generateFieldValue(fieldType.items));
+      }
+    }
+
+    // Handle primitive types
+    const typeStr = typeof fieldType === 'string' ? fieldType : 'string';
     const firstName = randomItem(firstNames);
     const lastName = randomItem(lastNames);
 
-    switch (field.type) {
-      case 'firstName':
-        return firstName;
-      case 'lastName':
-        return lastName;
-      case 'fullName':
+    switch (typeStr.toLowerCase()) {
+      case 'string':
         return `${firstName} ${lastName}`;
+      case 'number':
+        return random(1, 1000);
+      case 'boolean':
+        return Math.random() > 0.5;
       case 'email':
         return `${firstName.toLowerCase()}${lastName.toLowerCase()}${random(1, 999)}@example.com`;
       case 'phone':
         return `+1 (${random(200, 999)}) ${random(100, 999)}-${random(1000, 9999)}`;
-      case 'address':
-        return `${random(100, 9999)} ${randomItem(streets)}`;
-      case 'city':
-        return randomItem(cities);
-      case 'country':
-        return 'United States';
-      case 'zipCode':
-        return String(random(10000, 99999));
-      case 'company':
-        return randomItem(companies);
-      case 'jobTitle':
-        return randomItem(jobTitles);
-      case 'creditCard':
-        return Array.from({ length: 16 }, () => random(0, 9)).join('').match(/.{1,4}/g)?.join(' ') || '';
-      case 'ssn':
-        return `${random(100, 999)}-${random(10, 99)}-${random(1000, 9999)}`;
       case 'uuid':
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
           const r = Math.random() * 16 | 0;
           const v = c === 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
         });
-      case 'ipAddress':
-        return `${random(1, 255)}.${random(0, 255)}.${random(0, 255)}.${random(0, 255)}`;
-      case 'username':
-        return `${firstName.toLowerCase()}${lastName.toLowerCase()}${random(1, 999)}`;
-      case 'password':
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
-        return Array.from({ length: 12 }, () => chars[random(0, chars.length - 1)]).join('');
-      case 'birthdate':
-        const year = random(1950, 2005);
+      case 'date':
+        const year = random(2020, 2024);
         const month = random(1, 12);
         const day = random(1, 28);
         return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      case 'number':
-        return random(field.min || 0, field.max || 1000);
-      case 'boolean':
-        return Math.random() > 0.5 ? 'true' : 'false';
-      case 'custom':
-        return field.customValue || 'N/A';
+      case 'url':
+        return `https://example.com/${firstName.toLowerCase()}`;
+      case 'ipaddress':
+      case 'ip':
+        return `${random(1, 255)}.${random(0, 255)}.${random(0, 255)}.${random(0, 255)}`;
       default:
-        return 'N/A';
+        return `Sample ${typeStr}`;
     }
   };
 
@@ -243,6 +229,50 @@ export default function RandomDataGenerator() {
     return [headers, ...rows].join('\n');
   };
 
+  const validateSchemaField = (field: any, path: string = ''): string | null => {
+    if (!field.name || typeof field.name !== 'string') {
+      return `Field at ${path} must have a "name" property (string)`;
+    }
+    if (!field.type) {
+      return `Field "${field.name}" must have a "type" property`;
+    }
+
+    const fieldType = field.type;
+
+    // Handle primitive types
+    if (typeof fieldType === 'string') {
+      return null;
+    }
+
+    // Handle object types
+    if (typeof fieldType === 'object') {
+      if (fieldType.type === 'object') {
+        if (!fieldType.properties || typeof fieldType.properties !== 'object') {
+          return `Object field "${field.name}" must have "properties" object`;
+        }
+        // Validate nested properties
+        for (const [key, prop] of Object.entries(fieldType.properties)) {
+          const error = validateSchemaField(prop as any, `${field.name}.${key}`);
+          if (error) return error;
+        }
+        return null;
+      }
+
+      if (fieldType.type === 'array') {
+        if (!fieldType.items) {
+          return `Array field "${field.name}" must have "items" property`;
+        }
+        const error = validateSchemaField(fieldType.items, `${field.name}[]`);
+        if (error) return error;
+        return null;
+      }
+
+      return `Field "${field.name}" has invalid type structure`;
+    }
+
+    return `Field "${field.name}" type must be a string or object`;
+  };
+
   const handleSchemaChange = (value: string) => {
     setSchemaText(value);
 
@@ -257,12 +287,9 @@ export default function RandomDataGenerator() {
 
       // Validate each field
       for (const field of parsed) {
-        if (!field.name || typeof field.name !== 'string') {
-          setSchemaError('Each field must have a "name" property (string)');
-          return;
-        }
-        if (!field.type || typeof field.type !== 'string') {
-          setSchemaError('Each field must have a "type" property (string)');
+        const error = validateSchemaField(field);
+        if (error) {
+          setSchemaError(error);
           return;
         }
       }
@@ -354,19 +381,59 @@ export default function RandomDataGenerator() {
           )}
 
           <div className="mt-3 text-xs text-muted-foreground">
-            <p className="font-medium mb-1">Available field types:</p>
-            <p>firstName, lastName, fullName, email, phone, address, city, country, zipCode, company, jobTitle, creditCard, ssn, uuid, ipAddress, username, password, birthdate, number, boolean, custom</p>
+            <p className="font-medium mb-1">Primitive types:</p>
+            <p>string, number, boolean, email, phone, uuid, date, url, ip</p>
           </div>
 
           <div className="mt-3 text-xs text-muted-foreground">
-            <p className="font-medium mb-1">Example schema:</p>
-            <code className="block p-2 rounded bg-muted text-xs">
-              {`[
-  { "id": "1", "name": "fullName", "type": "fullName" },
-  { "id": "2", "name": "email", "type": "email" },
-  { "id": "3", "name": "age", "type": "number", "min": 18, "max": 65 }
+            <p className="font-medium mb-1">Example schemas:</p>
+            <div className="space-y-2">
+              <div>
+                <p className="text-xs mb-1">Simple fields:</p>
+                <code className="block p-2 rounded bg-muted text-xs whitespace-pre">
+                  {`[
+  { "name": "id", "type": "number" },
+  { "name": "name", "type": "string" },
+  { "name": "email", "type": "email" },
+  { "name": "isActive", "type": "boolean" }
 ]`}
-            </code>
+                </code>
+              </div>
+              <div>
+                <p className="text-xs mb-1">With nested object:</p>
+                <code className="block p-2 rounded bg-muted text-xs whitespace-pre">
+                  {`[
+  { "name": "id", "type": "number" },
+  {
+    "name": "address",
+    "type": {
+      "type": "object",
+      "properties": {
+        "street": { "name": "street", "type": "string" },
+        "city": { "name": "city", "type": "string" }
+      }
+    }
+  }
+]`}
+                </code>
+              </div>
+              <div>
+                <p className="text-xs mb-1">With array:</p>
+                <code className="block p-2 rounded bg-muted text-xs whitespace-pre">
+                  {`[
+  { "name": "id", "type": "number" },
+  {
+    "name": "tags",
+    "type": {
+      "type": "array",
+      "items": { "name": "tag", "type": "string" },
+      "length": 3
+    }
+  }
+]`}
+                </code>
+              </div>
+            </div>
           </div>
         </Card>
       )}
@@ -498,7 +565,8 @@ export default function RandomDataGenerator() {
         <h3 className="font-semibold mb-2">About Random Data Generator</h3>
         <div className="text-sm text-muted-foreground space-y-1">
           <p>• All generated data is completely fake and randomly created</p>
-          <p>• Define custom schemas with multiple field types</p>
+          <p>• Define custom schemas using JSON with primitive types (string, number, boolean, etc.)</p>
+          <p>• Support for nested objects and arrays in schema definition</p>
           <p>• Generate up to 100,000 records at once</p>
           <p>• Warning displayed for batches over 5,000 records or 2MB of data</p>
           <p>• Export data as JSON or CSV for easy integration</p>
