@@ -77,6 +77,27 @@ export default function RandomDataGenerator() {
   const [, setExportProgress] = useState(0);
   const [showExportWarning, setShowExportWarning] = useState(false);
   const [pendingExport, setPendingExport] = useState<'json' | 'csv' | 'zip' | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    addRecentTool('random-data-generator');
+
+    // Detect if running on mobile device
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      const isSmallScreen = window.innerWidth < 768;
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(isMobileDevice || (isSmallScreen && isTouchDevice));
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     addRecentTool('random-data-generator');
@@ -235,7 +256,16 @@ export default function RandomDataGenerator() {
   };
 
   const handleGenerateBatch = async () => {
-    // Show confirmation for very large batches
+    // Mobile devices: limit to 10,000 records
+    if (isMobile && count > 10000) {
+      toast.error('Mobile Limit Exceeded', {
+        description: 'Mobile devices are limited to 10,000 records. Please reduce the count.',
+        duration: 5000,
+      });
+      return;
+    }
+
+    // Desktop: Show confirmation for very large batches
     if (count > 100000) {
       setPendingCount(count);
       setShowConfirmDialog(true);
@@ -256,7 +286,21 @@ export default function RandomDataGenerator() {
   };
 
   const generateBatchData = async (actualCount: number) => {
-    // Show warning for large batches
+    // Mobile: Don't use Web Workers, always use main thread with lower limits
+    if (isMobile) {
+      if (actualCount > 5000) {
+        toast.warning('Large Dataset Warning', {
+          description: `Generating ${actualCount.toLocaleString()} records on mobile. This may take time...`,
+        });
+      }
+      setGenerating(true);
+      setData(null);
+      setGenerationProgress(0);
+      generateInMainThread(actualCount);
+      return;
+    }
+
+    // Desktop: Show warning for large batches
     if (actualCount > 5000) {
       toast.warning('Large Dataset Warning', {
         description: `Generating ${actualCount.toLocaleString()} records. This may take a moment...`,
@@ -267,7 +311,7 @@ export default function RandomDataGenerator() {
     setData(null);
     setGenerationProgress(0);
 
-    // Use Web Worker for large batches (>10,000 records)
+    // Desktop: Use Web Worker for large batches (>10,000 records)
     if (actualCount > 10000) {
       try {
         const worker = new Worker('/dataGenerator.worker.js');
@@ -628,7 +672,16 @@ export default function RandomDataGenerator() {
     const dataSize = new Blob([JSON.stringify(exportData)]).size;
     const dataSizeMB = dataSize / (1024 * 1024);
 
-    // Show warning for large exports (> 10MB)
+    // Mobile: Block exports over 5MB
+    if (isMobile && dataSizeMB > 5) {
+      toast.error('Mobile Export Limit', {
+        description: `Export size (${dataSizeMB.toFixed(2)} MB) exceeds mobile limit of 5MB. Please generate fewer records.`,
+        duration: 7000,
+      });
+      return;
+    }
+
+    // Desktop: Show warning for large exports (> 10MB)
     if (dataSizeMB > 10) {
       setPendingExport(format);
       setShowExportWarning(true);
@@ -655,7 +708,13 @@ export default function RandomDataGenerator() {
     const dataSize = new Blob([JSON.stringify(exportData)]).size;
     const dataSizeMB = dataSize / (1024 * 1024);
 
-    // Use Web Worker for large exports (> 5MB)
+    // Mobile: Always use main thread (no Web Workers)
+    if (isMobile) {
+      exportInMainThread(format);
+      return;
+    }
+
+    // Desktop: Use Web Worker for large exports (> 5MB)
     if (dataSizeMB > 5 && format !== 'json') {
       try {
         setExporting(true);
@@ -1126,6 +1185,26 @@ export default function RandomDataGenerator() {
         </div>
       </Modal>
 
+      {/* Mobile Warning Banner */}
+      {isMobile && (
+        <Card className="p-4 bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+            <div className="space-y-1">
+              <p className="font-semibold text-amber-900 dark:text-amber-100">Mobile Device Detected</p>
+              <p className="text-sm text-amber-800 dark:text-amber-200">
+                To ensure optimal performance on mobile devices:
+              </p>
+              <ul className="text-sm text-amber-800 dark:text-amber-200 list-disc list-inside space-y-1 ml-2">
+                <li>Maximum 10,000 records per generation</li>
+                <li>Maximum 5MB export size</li>
+                <li>Web Workers disabled (not supported on all mobile browsers)</li>
+              </ul>
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Controls */}
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
@@ -1137,6 +1216,7 @@ export default function RandomDataGenerator() {
             <Input
               type="number"
               min="1"
+              max={isMobile ? 10000 : undefined}
               value={count}
               onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
               className="w-28 text-sm"
@@ -1281,16 +1361,27 @@ export default function RandomDataGenerator() {
           <p>• Define custom schemas using JSON with primitive types (string, number, boolean, etc.)</p>
           <p>• Support for nested objects and arrays in schema definition</p>
           <p>• Import and export custom schemas as JSON files</p>
-          <p>• Generate any number of records (confirmation required for &gt;100,000)</p>
-          <p>• Web Workers used for generating &gt;10,000 records with progress tracking</p>
+          {isMobile ? (
+            <>
+              <p>• <strong>Mobile:</strong> Maximum 10,000 records per generation</p>
+              <p>• <strong>Mobile:</strong> Maximum 5MB export size</p>
+              <p>• <strong>Mobile:</strong> Web Workers disabled for compatibility</p>
+            </>
+          ) : (
+            <>
+              <p>• Generate any number of records (confirmation required for &gt;100,000)</p>
+              <p>• Web Workers used for generating &gt;10,000 records with progress tracking</p>
+              <p>• Web Workers used for exporting datasets &gt;5MB to prevent browser freezing</p>
+              <p>• Export warning dialog shown for datasets &gt;10MB</p>
+            </>
+          )}
           <p>• Large batch generation depends on your device's hardware capabilities</p>
           <p>• Warning displayed for batches over 5,000 records or 2MB of data</p>
           <p>• Export data as JSON, CSV, or compressed ZIP archive</p>
-          <p>• Web Workers used for exporting datasets &gt;5MB to prevent browser freezing</p>
-          <p>• Export warning dialog shown for datasets &gt;10MB</p>
           <p>• ZIP export includes JSON, CSV, and schema files with DEFLATE compression</p>
           <p>• Recommended to use ZIP export for datasets larger than 5MB</p>
           <p>• Table preview shows first 100 records for large batches</p>
+          <p>• "Clear Data" button available to manually free up memory after operations</p>
         </div>
       </Card>
     </div>
