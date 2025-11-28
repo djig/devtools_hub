@@ -3,10 +3,11 @@ import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
 import { Textarea } from '../../../components/ui/Textarea';
+import { Modal } from '../../../components/ui/Modal';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, AlertTriangle } from 'lucide-react';
+import { Shuffle, AlertTriangle, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface RandomData {
@@ -63,8 +64,9 @@ export default function RandomDataGenerator() {
   const [batchData, setBatchData] = useState<RandomData[]>([]);
   const [schema, setSchema] = useState<SchemaField[]>(DEFAULT_SCHEMA);
   const [schemaText, setSchemaText] = useState(JSON.stringify(DEFAULT_SCHEMA, null, 2));
+  const [tempSchemaText, setTempSchemaText] = useState(JSON.stringify(DEFAULT_SCHEMA, null, 2));
   const [schemaError, setSchemaError] = useState<string>('');
-  const [useCustomSchema, setUseCustomSchema] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
@@ -273,8 +275,14 @@ export default function RandomDataGenerator() {
     return `Field "${field.name}" type must be a string or object`;
   };
 
+  const openSchemaModal = () => {
+    setTempSchemaText(schemaText);
+    setSchemaError('');
+    setIsModalOpen(true);
+  };
+
   const handleSchemaChange = (value: string) => {
-    setSchemaText(value);
+    setTempSchemaText(value);
 
     try {
       const parsed = JSON.parse(value);
@@ -295,27 +303,40 @@ export default function RandomDataGenerator() {
       }
 
       // Valid schema
-      setSchema(parsed);
       setSchemaError('');
-      toast.success('Schema Valid', { description: 'Schema parsed successfully' });
     } catch (e) {
       setSchemaError('Invalid JSON syntax');
     }
   };
 
+  const saveSchema = () => {
+    if (schemaError) {
+      toast.error('Invalid Schema', { description: schemaError });
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(tempSchemaText);
+      setSchema(parsed);
+      setSchemaText(tempSchemaText);
+      setIsModalOpen(false);
+      toast.success('Schema Saved', { description: 'Schema updated successfully' });
+    } catch (e) {
+      toast.error('Invalid JSON', { description: 'Cannot save invalid JSON' });
+    }
+  };
+
   const loadDefaultSchema = () => {
     const defaultJson = JSON.stringify(DEFAULT_SCHEMA, null, 2);
-    setSchemaText(defaultJson);
-    setSchema(DEFAULT_SCHEMA);
+    setTempSchemaText(defaultJson);
     setSchemaError('');
-    toast.success('Schema Loaded', { description: 'Default schema has been loaded' });
   };
 
   const formatSchema = () => {
     try {
-      const parsed = JSON.parse(schemaText);
+      const parsed = JSON.parse(tempSchemaText);
       const formatted = JSON.stringify(parsed, null, 2);
-      setSchemaText(formatted);
+      setTempSchemaText(formatted);
       toast.success('Formatted', { description: 'Schema JSON formatted' });
     } catch (e) {
       toast.error('Invalid JSON', { description: 'Cannot format invalid JSON' });
@@ -333,29 +354,34 @@ export default function RandomDataGenerator() {
         </p>
       </div>
 
-      {/* Schema Toggle */}
+      {/* Schema Button */}
       <Card className="p-4">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={useCustomSchema}
-            onChange={(e) => setUseCustomSchema(e.target.checked)}
-            className="w-4 h-4 rounded border-border"
-          />
-          <span className="text-sm font-medium">Use Custom Schema</span>
-        </label>
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold mb-1">Data Schema</h3>
+            <p className="text-xs text-muted-foreground">
+              {schema.length} fields defined
+            </p>
+          </div>
+          <Button onClick={openSchemaModal} variant="outline" className="gap-2">
+            <Settings className="h-4 w-4" />
+            Edit Schema
+          </Button>
+        </div>
       </Card>
 
-      {/* Schema Editor */}
-      {useCustomSchema && (
-        <Card className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="font-semibold">Define Schema (JSON)</h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                Edit the JSON schema below. Each field must have "name" and "type" properties.
-              </p>
-            </div>
+      {/* Schema Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Edit Data Schema"
+        size="xl"
+      >
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Define your custom schema in JSON format. Each field must have "name" and "type" properties.
+            </p>
             <div className="flex gap-2">
               <Button onClick={loadDefaultSchema} variant="outline" size="sm">
                 Load Default
@@ -367,25 +393,25 @@ export default function RandomDataGenerator() {
           </div>
 
           <Textarea
-            value={schemaText}
+            value={tempSchemaText}
             onChange={(e) => handleSchemaChange(e.target.value)}
-            className="min-h-[300px] font-mono text-sm"
+            className="min-h-[400px] font-mono text-sm"
             placeholder="Enter JSON schema..."
           />
 
           {schemaError && (
-            <div className="mt-2 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
+            <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
               <AlertTriangle className="h-4 w-4" />
               <span>{schemaError}</span>
             </div>
           )}
 
-          <div className="mt-3 text-xs text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             <p className="font-medium mb-1">Primitive types:</p>
             <p>string, number, boolean, email, phone, uuid, date, url, ip</p>
           </div>
 
-          <div className="mt-3 text-xs text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             <p className="font-medium mb-1">Example schemas:</p>
             <div className="space-y-2">
               <div>
@@ -435,8 +461,17 @@ export default function RandomDataGenerator() {
               </div>
             </div>
           </div>
-        </Card>
-      )}
+
+          <div className="flex justify-end gap-2 pt-4 border-t border-border">
+            <Button onClick={() => setIsModalOpen(false)} variant="outline">
+              Cancel
+            </Button>
+            <Button onClick={saveSchema} disabled={!!schemaError}>
+              Save Schema
+            </Button>
+          </div>
+        </div>
+      </Modal>
 
       {/* Controls */}
       <Card className="p-4">
