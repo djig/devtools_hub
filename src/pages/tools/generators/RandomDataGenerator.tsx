@@ -7,8 +7,9 @@ import { Modal } from '../../../components/ui/Modal';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
-import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download } from 'lucide-react';
+import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download, Archive, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import JSZip from 'jszip';
 
 interface RandomData {
   [key: string]: string | number;
@@ -69,10 +70,70 @@ export default function RandomDataGenerator() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [dataSize, setDataSize] = useState<string>('0 B');
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [, setGenerationProgress] = useState(0);
+  const [exporting, setExporting] = useState(false);
+  const [, setExportProgress] = useState(0);
+  const [showExportWarning, setShowExportWarning] = useState(false);
+  const [pendingExport, setPendingExport] = useState<'json' | 'csv' | 'zip' | null>(null);
 
   useEffect(() => {
     addRecentTool('random-data-generator');
+
+    // Cleanup on unmount
+    return () => {
+      // Clear large data from memory when component unmounts
+      setBatchData([]);
+      setData(null);
+
+      // Force garbage collection hint (if supported)
+      if (typeof window !== 'undefined' && 'gc' in window) {
+        try {
+          (window as any).gc();
+        } catch (e) {
+          // gc() not available in this environment
+        }
+      }
+    };
   }, [addRecentTool]);
+
+  // Cleanup helper function
+  const performCleanup = (clearData: boolean = false) => {
+    if (clearData) {
+      setBatchData([]);
+      setData(null);
+      setDataSize('0 B');
+    }
+
+    // Reset progress states
+    setGenerationProgress(0);
+    setExportProgress(0);
+
+    // Suggest garbage collection
+    if (typeof window !== 'undefined' && 'gc' in window) {
+      try {
+        (window as any).gc();
+      } catch (e) {
+        // gc() not available
+      }
+    }
+  };
+
+  // Manual cleanup handler for user-initiated data clearing
+  const handleClearData = () => {
+    const currentDataSize = batchData.length > 0
+      ? calculateDataSize(batchData) / (1024 * 1024)
+      : 0;
+
+    performCleanup(true);
+
+    toast.success('Data Cleared', {
+      description: currentDataSize > 0
+        ? `Cleared ${currentDataSize.toFixed(2)} MB of data from memory`
+        : 'All generated data has been cleared',
+    });
+  };
 
   const firstNames = [
     'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda',
@@ -174,8 +235,27 @@ export default function RandomDataGenerator() {
   };
 
   const handleGenerateBatch = async () => {
-    const actualCount = Math.min(count, 100000); // Allow up to 100k records
+    // Show confirmation for very large batches
+    if (count > 100000) {
+      setPendingCount(count);
+      setShowConfirmDialog(true);
+      return;
+    }
 
+    await generateBatchData(count);
+  };
+
+  const handleConfirmGeneration = async () => {
+    setShowConfirmDialog(false);
+    await generateBatchData(pendingCount);
+  };
+
+  const handleCancelGeneration = () => {
+    setShowConfirmDialog(false);
+    setPendingCount(0);
+  };
+
+  const generateBatchData = async (actualCount: number) => {
     // Show warning for large batches
     if (actualCount > 5000) {
       toast.warning('Large Dataset Warning', {
@@ -185,8 +265,108 @@ export default function RandomDataGenerator() {
 
     setGenerating(true);
     setData(null);
+    setGenerationProgress(0);
 
-    // Use setTimeout to allow UI to update
+    // Use Web Worker for large batches (>10,000 records)
+    if (actualCount > 10000) {
+      try {
+        const worker = new Worker('/dataGenerator.worker.js');
+
+        worker.onmessage = (e) => {
+          const { type, data: workerData, progress, generated, error } = e.data;
+
+          if (type === 'progress') {
+            setGenerationProgress(progress);
+            toast.loading(`Generating... ${progress}% (${generated.toLocaleString()} records)`, {
+              id: 'generation-progress'
+            });
+          } else if (type === 'complete') {
+            const dataSize = calculateDataSize(workerData);
+            const dataSizeMB = dataSize / (1024 * 1024);
+
+            setBatchData(workerData);
+            setDataSize(formatBytes(dataSize));
+            setGenerating(false);
+            setGenerationProgress(0);
+
+            toast.dismiss('generation-progress');
+
+            if (dataSizeMB > 5) {
+              toast.warning('Large Data Size', {
+                description: `Generated ${dataSizeMB.toFixed(2)} MB of data. Recommend using ZIP export for compression.`,
+                duration: 5000,
+              });
+            } else if (dataSizeMB > 2) {
+              toast.warning('Large Data Size Warning', {
+                description: `Generated data is ${dataSizeMB.toFixed(2)} MB. Export may be slow. Consider using ZIP export.`,
+                duration: 5000,
+              });
+            } else {
+              toast.success('Data Generated Successfully', {
+                description: `Generated ${actualCount.toLocaleString()} records (${dataSizeMB.toFixed(2)} MB)`,
+              });
+            }
+
+            // Cleanup: terminate worker and clear progress
+            worker.terminate();
+            performCleanup(false);
+
+            // For very large datasets, suggest cleanup
+            if (dataSizeMB > 50) {
+              setTimeout(() => {
+                toast.info('Memory Tip', {
+                  description: 'Consider clearing data after export to free up memory.',
+                  duration: 7000,
+                });
+              }, 2000);
+            }
+          } else if (type === 'error') {
+            toast.dismiss('generation-progress');
+            toast.error('Generation Failed', {
+              description: error || 'Failed to generate data. Please try with fewer records.',
+            });
+            setBatchData([]);
+            setGenerating(false);
+            setGenerationProgress(0);
+            worker.terminate();
+
+            // Cleanup after error
+            performCleanup(false);
+          }
+        };
+
+        worker.onerror = () => {
+          toast.dismiss('generation-progress');
+          toast.error('Worker Error', {
+            description: 'Failed to start worker. Falling back to main thread.',
+          });
+          setGenerating(false);
+          setGenerationProgress(0);
+          worker.terminate();
+
+          // Cleanup after error
+          performCleanup(false);
+        };
+
+        worker.postMessage({
+          schema,
+          count: actualCount,
+          batchSize: 1000
+        });
+      } catch (error) {
+        toast.error('Worker Error', {
+          description: 'Web Worker not supported. Generating in main thread...',
+        });
+        // Fallback to main thread
+        generateInMainThread(actualCount);
+      }
+    } else {
+      // Use main thread for smaller batches
+      generateInMainThread(actualCount);
+    }
+  };
+
+  const generateInMainThread = (actualCount: number) => {
     setTimeout(() => {
       try {
         const batch: RandomData[] = [];
@@ -205,9 +385,14 @@ export default function RandomDataGenerator() {
         setBatchData(batch);
         setDataSize(formatBytes(dataSize));
 
-        if (dataSizeMB > 2) {
-          toast.error('Large Data Size Warning', {
-            description: `Generated data is ${dataSizeMB.toFixed(2)} MB. Export may be slow. Consider reducing the record count.`,
+        if (dataSizeMB > 5) {
+          toast.warning('Large Data Size', {
+            description: `Generated ${dataSizeMB.toFixed(2)} MB of data. Recommend using ZIP export for compression.`,
+            duration: 5000,
+          });
+        } else if (dataSizeMB > 2) {
+          toast.warning('Large Data Size Warning', {
+            description: `Generated data is ${dataSizeMB.toFixed(2)} MB. Export may be slow. Consider using ZIP export.`,
             duration: 5000,
           });
         } else {
@@ -215,13 +400,30 @@ export default function RandomDataGenerator() {
             description: `Generated ${actualCount.toLocaleString()} records (${dataSizeMB.toFixed(2)} MB)`,
           });
         }
+
+        // Cleanup after successful generation
+        performCleanup(false);
+
+        // For very large datasets, suggest cleanup
+        if (dataSizeMB > 50) {
+          setTimeout(() => {
+            toast.info('Memory Tip', {
+              description: 'Consider clearing data after export to free up memory.',
+              duration: 7000,
+            });
+          }, 2000);
+        }
       } catch (error) {
         toast.error('Generation Failed', {
           description: 'Failed to generate data. Please try with fewer records.',
         });
         setBatchData([]);
+
+        // Cleanup after error
+        performCleanup(false);
       } finally {
         setGenerating(false);
+        setGenerationProgress(0);
       }
     }, 100);
   };
@@ -421,6 +623,243 @@ export default function RandomDataGenerator() {
     }
   };
 
+  const handleExportClick = (format: 'json' | 'csv' | 'zip') => {
+    const exportData = batchData.length > 0 ? batchData : data ? [data] : [];
+    const dataSize = new Blob([JSON.stringify(exportData)]).size;
+    const dataSizeMB = dataSize / (1024 * 1024);
+
+    // Show warning for large exports (> 10MB)
+    if (dataSizeMB > 10) {
+      setPendingExport(format);
+      setShowExportWarning(true);
+    } else {
+      performExport(format);
+    }
+  };
+
+  const handleConfirmExport = () => {
+    setShowExportWarning(false);
+    if (pendingExport) {
+      performExport(pendingExport);
+      setPendingExport(null);
+    }
+  };
+
+  const handleCancelExport = () => {
+    setShowExportWarning(false);
+    setPendingExport(null);
+  };
+
+  const performExport = async (format: 'json' | 'csv' | 'zip') => {
+    const exportData = batchData.length > 0 ? batchData : data ? [data] : [];
+    const dataSize = new Blob([JSON.stringify(exportData)]).size;
+    const dataSizeMB = dataSize / (1024 * 1024);
+
+    // Use Web Worker for large exports (> 5MB)
+    if (dataSizeMB > 5 && format !== 'json') {
+      try {
+        setExporting(true);
+        setExportProgress(0);
+
+        const worker = new Worker('/dataExporter.worker.js');
+
+        worker.onmessage = async (e) => {
+          const { type, format: exportFormat, data: exportedData, originalSize, compressedSize, progress, error } = e.data;
+
+          if (type === 'progress') {
+            setExportProgress(progress);
+            toast.loading(`Exporting ${format.toUpperCase()}... ${Math.round(progress)}%`, {
+              id: 'export-progress'
+            });
+          } else if (type === 'complete') {
+            toast.dismiss('export-progress');
+
+            let blob: Blob;
+            let filename: string;
+
+            if (exportFormat === 'json') {
+              blob = new Blob([exportedData], { type: 'application/json' });
+              filename = 'random-data.json';
+            } else if (exportFormat === 'csv') {
+              blob = new Blob([exportedData], { type: 'text/csv' });
+              filename = 'random-data.csv';
+            } else if (exportFormat === 'zip') {
+              blob = new Blob([exportedData], { type: 'application/zip' });
+              filename = 'random-data.zip';
+              const compressionRatio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+              toast.success('Exported as ZIP', {
+                description: `Compressed ${formatBytes(originalSize)} → ${formatBytes(compressedSize)} (${compressionRatio}% reduction)`
+              });
+            } else {
+              blob = new Blob([exportedData]);
+              filename = 'random-data.txt';
+            }
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+
+            // Cleanup: Revoke object URL immediately to free memory
+            URL.revokeObjectURL(url);
+
+            if (exportFormat !== 'zip') {
+              toast.success('Exported', { description: `Data exported as ${exportFormat.toUpperCase()}` });
+            }
+
+            setExporting(false);
+            setExportProgress(0);
+
+            // Cleanup: terminate worker and clear progress
+            worker.terminate();
+            performCleanup(false);
+
+            // Suggest data cleanup for very large exports
+            const currentDataSize = batchData.length > 0
+              ? calculateDataSize(batchData) / (1024 * 1024)
+              : 0;
+            if (currentDataSize > 50) {
+              setTimeout(() => {
+                toast.info('Memory Tip', {
+                  description: 'Export complete! You can now clear the data to free up memory if needed.',
+                  duration: 7000,
+                });
+              }, 1000);
+            }
+          } else if (type === 'error') {
+            toast.dismiss('export-progress');
+            toast.error('Export Failed', { description: error || 'Failed to export data' });
+            setExporting(false);
+            setExportProgress(0);
+
+            // Cleanup: terminate worker
+            worker.terminate();
+            performCleanup(false);
+          }
+        };
+
+        worker.onerror = () => {
+          toast.dismiss('export-progress');
+          toast.error('Worker Error', { description: 'Export failed. Falling back to main thread.' });
+          setExporting(false);
+          setExportProgress(0);
+          worker.terminate();
+
+          // Cleanup after error
+          performCleanup(false);
+
+          // Fallback to main thread
+          exportInMainThread(format);
+        };
+
+        worker.postMessage({
+          type: format,
+          data: exportData,
+          schemaText
+        });
+      } catch (error) {
+        toast.error('Worker Error', { description: 'Web Worker not supported. Exporting in main thread...' });
+        exportInMainThread(format);
+      }
+    } else {
+      // Export in main thread for smaller files or JSON
+      exportInMainThread(format);
+    }
+  };
+
+  const exportInMainThread = (format: 'json' | 'csv' | 'zip') => {
+    if (format === 'json') {
+      const blob = new Blob([exportAsJSON()], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'random-data.json';
+      a.click();
+
+      // Cleanup: Revoke object URL immediately
+      URL.revokeObjectURL(url);
+      toast.success('Exported', { description: 'Data exported as JSON' });
+
+      // Cleanup progress states
+      performCleanup(false);
+    } else if (format === 'csv') {
+      const blob = new Blob([exportAsCSV()], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'random-data.csv';
+      a.click();
+
+      // Cleanup: Revoke object URL immediately
+      URL.revokeObjectURL(url);
+      toast.success('Exported', { description: 'Data exported as CSV' });
+
+      // Cleanup progress states
+      performCleanup(false);
+    } else if (format === 'zip') {
+      handleExportZipMainThread();
+    }
+  };
+
+  const handleExportZipMainThread = async () => {
+    try {
+      const zip = new JSZip();
+      const jsonData = exportAsJSON();
+      const csvData = exportAsCSV();
+
+      // Add files to zip
+      zip.file('data.json', jsonData);
+      zip.file('data.csv', csvData);
+      zip.file('schema.json', schemaText);
+
+      // Generate zip file
+      const blob = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 9 }
+      });
+
+      // Calculate compression ratio
+      const originalSize = new Blob([jsonData]).size;
+      const compressedSize = blob.size;
+      const compressionRatio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+
+      // Download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'random-data.zip';
+      a.click();
+
+      // Cleanup: Revoke object URL immediately
+      URL.revokeObjectURL(url);
+
+      toast.success('Exported as ZIP', {
+        description: `Compressed ${formatBytes(originalSize)} → ${formatBytes(compressedSize)} (${compressionRatio}% reduction)`
+      });
+
+      // Cleanup progress states
+      performCleanup(false);
+
+      // Suggest data cleanup for large exports
+      const dataSizeMB = originalSize / (1024 * 1024);
+      if (dataSizeMB > 50) {
+        setTimeout(() => {
+          toast.info('Memory Tip', {
+            description: 'Export complete! You can now clear the data to free up memory if needed.',
+            duration: 7000,
+          });
+        }, 1000);
+      }
+    } catch (e) {
+      toast.error('Export Failed', { description: 'Failed to create ZIP file' });
+
+      // Cleanup after error
+      performCleanup(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Breadcrumb />
@@ -579,6 +1018,114 @@ export default function RandomDataGenerator() {
         </div>
       </Modal>
 
+      {/* Confirmation Dialog for Large Batches */}
+      <Modal
+        isOpen={showConfirmDialog}
+        onClose={handleCancelGeneration}
+        title="Large Dataset Warning"
+        size="md"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button onClick={handleCancelGeneration} variant="outline" className="gap-2">
+              <X className="h-4 w-4" />
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmGeneration} variant="default" className="gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              Continue Anyway
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 p-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+            <AlertTriangle className="h-5 w-5 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
+            <div className="space-y-2">
+              <p className="font-semibold text-orange-900 dark:text-orange-100">
+                You are about to generate {pendingCount.toLocaleString()} records
+              </p>
+              <p className="text-sm text-orange-800 dark:text-orange-200">
+                Generating this many records may:
+              </p>
+              <ul className="text-sm text-orange-800 dark:text-orange-200 list-disc list-inside space-y-1 ml-2">
+                <li>Take several minutes to complete</li>
+                <li>Consume significant memory on your device</li>
+                <li>Cause your browser to freeze or become unresponsive</li>
+                <li>Fail completely depending on your hardware capabilities</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-sm text-muted-foreground space-y-2">
+            <p className="font-medium">Recommendations:</p>
+            <ul className="list-disc list-inside space-y-1 ml-2">
+              <li>Close unnecessary browser tabs to free up memory</li>
+              <li>Consider generating smaller batches (10,000 - 50,000 records)</li>
+              <li>Use a device with sufficient RAM (8GB+ recommended)</li>
+              <li>Save your work before proceeding</li>
+            </ul>
+          </div>
+
+          <p className="text-xs text-muted-foreground italic">
+            Performance depends on your client machine's hardware specifications. The application may fail if your system runs out of memory.
+          </p>
+        </div>
+      </Modal>
+
+      {/* Export Warning Dialog */}
+      <Modal
+        isOpen={showExportWarning}
+        onClose={handleCancelExport}
+        title="Large Export Warning"
+        size="md"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button onClick={handleCancelExport} variant="outline" className="gap-2">
+              <X className="h-4 w-4" />
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmExport} variant="default" className="gap-2">
+              <Download className="h-4 w-4" />
+              Export Anyway
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+            <div className="space-y-2">
+              <p className="font-semibold text-amber-900 dark:text-amber-100">
+                You are about to export a large dataset
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200">
+                Exporting large datasets (over 10MB) may:
+              </p>
+              <ul className="text-sm text-amber-800 dark:text-amber-200 list-disc list-inside space-y-1 ml-2">
+                <li>Take a significant amount of time to process</li>
+                <li>Cause your browser to become temporarily unresponsive</li>
+                <li>Consume considerable memory during the export process</li>
+                <li>Result in a very large file that may be difficult to open</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-sm text-muted-foreground space-y-2">
+            <p className="font-medium">Recommendations:</p>
+            <ul className="list-disc list-inside space-y-1 ml-2">
+              <li>Use ZIP export for better compression and smaller file size</li>
+              <li>Close unnecessary applications to free up system memory</li>
+              <li>Consider exporting in smaller batches if possible</li>
+              <li>Ensure you have sufficient disk space for the export file</li>
+            </ul>
+          </div>
+
+          <p className="text-xs text-muted-foreground italic">
+            The export will be processed using a Web Worker to minimize impact on browser responsiveness.
+          </p>
+        </div>
+      </Modal>
+
       {/* Controls */}
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
@@ -590,9 +1137,8 @@ export default function RandomDataGenerator() {
             <Input
               type="number"
               min="1"
-              max="100000"
               value={count}
-              onChange={(e) => setCount(Math.max(1, Math.min(100000, parseInt(e.target.value) || 1)))}
+              onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
               className="w-28 text-sm"
               disabled={generating}
             />
@@ -609,15 +1155,8 @@ export default function RandomDataGenerator() {
                 variant="outline"
                 size="sm"
                 className="gap-2"
-                onClick={() => {
-                  const blob = new Blob([exportAsJSON()], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'random-data.json';
-                  a.click();
-                  toast.success('Exported', { description: 'Data exported as JSON' });
-                }}
+                onClick={() => handleExportClick('json')}
+                disabled={exporting}
               >
                 <FileJson className="h-4 w-4" />
                 Export JSON
@@ -626,18 +1165,31 @@ export default function RandomDataGenerator() {
                 variant="outline"
                 size="sm"
                 className="gap-2"
-                onClick={() => {
-                  const blob = new Blob([exportAsCSV()], { type: 'text/csv' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'random-data.csv';
-                  a.click();
-                  toast.success('Exported', { description: 'Data exported as CSV' });
-                }}
+                onClick={() => handleExportClick('csv')}
+                disabled={exporting}
               >
                 <FileSpreadsheet className="h-4 w-4" />
                 Export CSV
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => handleExportClick('zip')}
+                disabled={exporting}
+              >
+                <Archive className="h-4 w-4" />
+                Export ZIP
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/20"
+                onClick={handleClearData}
+                disabled={exporting || generating}
+              >
+                <Trash2 className="h-4 w-4" />
+                Clear Data
               </Button>
             </>
           )}
@@ -728,9 +1280,16 @@ export default function RandomDataGenerator() {
           <p>• All generated data is completely fake and randomly created</p>
           <p>• Define custom schemas using JSON with primitive types (string, number, boolean, etc.)</p>
           <p>• Support for nested objects and arrays in schema definition</p>
-          <p>• Generate up to 100,000 records at once</p>
+          <p>• Import and export custom schemas as JSON files</p>
+          <p>• Generate any number of records (confirmation required for &gt;100,000)</p>
+          <p>• Web Workers used for generating &gt;10,000 records with progress tracking</p>
+          <p>• Large batch generation depends on your device's hardware capabilities</p>
           <p>• Warning displayed for batches over 5,000 records or 2MB of data</p>
-          <p>• Export data as JSON or CSV for easy integration</p>
+          <p>• Export data as JSON, CSV, or compressed ZIP archive</p>
+          <p>• Web Workers used for exporting datasets &gt;5MB to prevent browser freezing</p>
+          <p>• Export warning dialog shown for datasets &gt;10MB</p>
+          <p>• ZIP export includes JSON, CSV, and schema files with DEFLATE compression</p>
+          <p>• Recommended to use ZIP export for datasets larger than 5MB</p>
           <p>• Table preview shows first 100 records for large batches</p>
         </div>
       </Card>

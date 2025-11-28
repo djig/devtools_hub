@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { Layout } from './components/layout/Layout';
@@ -7,6 +7,7 @@ import Category from './pages/Category';
 import Favorites from './pages/Favorites';
 import Recent from './pages/Recent';
 import { tools } from './data/tools';
+import useAppStore from './store/useAppStore';
 
 function LoadingFallback() {
   return (
@@ -20,9 +21,37 @@ function LoadingFallback() {
 }
 
 function App() {
+  const { theme } = useAppStore();
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
+
+  useEffect(() => {
+    // Resolve the theme based on current setting
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      setResolvedTheme(systemTheme);
+
+      // Listen for system theme changes
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = (e: MediaQueryListEvent) => {
+        setResolvedTheme(e.matches ? 'dark' : 'light');
+      };
+      mediaQuery.addEventListener('change', handler);
+      return () => mediaQuery.removeEventListener('change', handler);
+    } else {
+      setResolvedTheme(theme as 'light' | 'dark');
+    }
+  }, [theme]);
+
   return (
     <BrowserRouter>
-      <Toaster position="top-right" richColors />
+      <Toaster
+        position="top-right"
+        richColors
+        theme={resolvedTheme}
+        toastOptions={{
+          className: 'backdrop-blur-xl',
+        }}
+      />
       <Layout>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>

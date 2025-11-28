@@ -27,6 +27,7 @@
     "ip-address": "^10.1.0",
     "js-beautify": "^1.15.4",
     "js-yaml": "^4.1.1",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.554.0",
     "markdown-it": "^14.1.0",
     "papaparse": "^5.5.3",
