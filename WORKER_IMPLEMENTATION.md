@@ -158,3 +158,5 @@ Both workers implement graceful degradation:
 - Configurable thresholds in settings
 - Multiple worker instances for parallel processing
 - Web Assembly for faster data generation
+
+testing
