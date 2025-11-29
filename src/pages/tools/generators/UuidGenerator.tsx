@@ -7,6 +7,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import { generateMultipleUuids } from '../../../utils/generators/uuid';
 import useAppStore from '../../../store/useAppStore';
 import { RefreshCw, Hash } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function UuidGenerator() {
   const [uuids, setUuids] = useState<string[]>([]);
@@ -24,7 +25,14 @@ export default function UuidGenerator() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="UUID Generator - Free Online UUID/GUID Generator"
+        description="Generate UUIDs (v4) and GUIDs online. Free UUID generator that creates universally unique identifiers instantly. Bulk generation supported. Secure and random."
+        keywords="uuid generator, guid generator, generate uuid, uuid v4, unique id generator, random uuid, uuid tool, free uuid generator"
+        path="/tools/uuid-generator"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -106,6 +114,7 @@ export default function UuidGenerator() {
           <code className="text-xs">xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</code>
         </p>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

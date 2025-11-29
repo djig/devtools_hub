@@ -7,6 +7,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import * as caseUtils from '../../../utils/text/case';
 import { CaseSensitive } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function CaseConverter() {
   const [input, setInput] = useState('');
@@ -34,7 +35,14 @@ export default function CaseConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Case Converter - Convert Text Case Online (camelCase, snake_case, etc.)"
+        description="Convert text between different cases online: camelCase, snake_case, kebab-case, PascalCase, UPPER CASE, and lower case. Free case converter for developers and writers."
+        keywords="case converter, camel case, snake case, kebab case, pascal case, convert case, text case, case transformer, free converter"
+        path="/tools/case-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -95,6 +103,7 @@ export default function CaseConverter() {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

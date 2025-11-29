@@ -7,6 +7,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Tags, FileCode, Tag } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface MetaTags {
   title: string;
@@ -111,7 +112,14 @@ export default function MetaTagGenerator() {
   const hasContent = Object.values(formData).some(value => value && value !== '#0ea5e9' && value !== 'en_US');
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Meta Tag Generator - Generate HTML Meta Tags for SEO"
+        description="Generate HTML meta tags for SEO, Open Graph, and Twitter Cards online. Free meta tag generator that creates optimized tags for social sharing and search engines."
+        keywords="meta tag generator, seo meta tags, open graph, twitter cards, meta tags, html meta, seo tool, social meta tags, free generator"
+        path="/tools/meta-tag-generator"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -301,6 +309,7 @@ export default function MetaTagGenerator() {
           <p>• Place these tags in the <code className="px-1 py-0.5 rounded bg-muted">&lt;head&gt;</code> section of your HTML</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

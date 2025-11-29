@@ -7,6 +7,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import MarkdownIt from 'markdown-it';
 import { FileText } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 const md = new MarkdownIt({
   html: true,
@@ -65,7 +66,14 @@ function hello() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Markdown Editor - Free Online Markdown Editor with Live Preview"
+        description="Edit and preview Markdown with live rendering online. Free Markdown editor with syntax highlighting and real-time preview. Supports GitHub Flavored Markdown (GFM)."
+        keywords="markdown editor, markdown preview, online markdown editor, md editor, markdown tool, markdown live preview, github markdown, free markdown editor"
+        path="/tools/markdown-editor"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -153,6 +161,7 @@ function hello() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

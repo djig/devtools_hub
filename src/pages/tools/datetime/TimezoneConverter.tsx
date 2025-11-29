@@ -4,6 +4,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Globe, Clock, CalendarDays } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface Timezone {
   name: string;
@@ -127,7 +128,14 @@ export default function TimezoneConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Timezone Converter - Convert Times Between Timezones"
+        description="Convert times between different timezones online. Free timezone converter with world clock. Find meeting times across timezones easily. Supports all IANA timezones."
+        keywords="timezone converter, time zone converter, world clock, convert timezone, meeting time, time converter, timezone tool, free converter"
+        path="/tools/timezone-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -255,6 +263,7 @@ export default function TimezoneConverter() {
           <p>• All conversions account for daylight saving time automatically</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

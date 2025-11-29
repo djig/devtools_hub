@@ -6,6 +6,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { formatHTML, minifyHTML } from '../../../utils/formatters/code';
 import { Minimize2 } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function HtmlMinifier() {
   const [input, setInput] = useState('');
@@ -29,7 +30,14 @@ export default function HtmlMinifier() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="HTML Minifier - Free Online HTML Compressor and Beautifier"
+        description="Minify and beautify HTML code online. Free HTML minifier that compresses HTML for production and beautifies for development. Optimize your web pages."
+        keywords="html minifier, html compressor, minify html, compress html, html beautifier, html formatter, optimize html, free html tool"
+        path="/tools/html-minifier"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -84,6 +92,7 @@ export default function HtmlMinifier() {
         }
         outputValue={output}
       />
-    </div>
+      </div>
+    </>
   );
 }

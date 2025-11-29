@@ -3,13 +3,21 @@ import { ToolCard } from '../components/shared/ToolCard';
 import { tools } from '../data/tools';
 import { ChevronRight, Home, Star } from 'lucide-react';
 import useAppStore from '../store/useAppStore';
+import { SEO } from '../utils/seo';
 
 export default function Favorites() {
   const { favoriteTools } = useAppStore();
   const favoriteToolsList = tools.filter(tool => favoriteTools.includes(tool.id));
 
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="Favorite Tools - Your Most Used Developer Utilities"
+        description="Quick access to your favorite developer tools. Save and organize the tools you use most frequently for instant access."
+        keywords="favorite tools, bookmarked tools, saved tools, developer utilities, quick access, personalized tools"
+        path="/favorites"
+      />
+      <div className="space-y-8">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-white/60">
         <Link to="/" className="flex items-center gap-1 hover:text-white transition-colors">
@@ -55,5 +63,6 @@ export default function Favorites() {
         </div>
       )}
     </div>
+    </>
   );
 }

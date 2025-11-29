@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Monitor as MonitorIcon, Smartphone, Tablet, Globe, Cpu, Code, Monitor } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface ParsedUA {
   browser: { name: string; version: string };
@@ -150,7 +151,14 @@ export default function UserAgentParser() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="User Agent Parser - Parse and Analyze HTTP User-Agent Strings"
+        description="Parse and analyze HTTP User-Agent strings online. Free user agent parser that extracts browser, OS, and device information. Perfect for analytics and debugging."
+        keywords="user agent parser, parse user agent, user agent analyzer, browser detection, device detection, user agent tool, free parser"
+        path="/tools/user-agent-parser"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -323,6 +331,7 @@ export default function UserAgentParser() {
           </Card>
         </>
       )}
-    </div>
+      </div>
+    </>
   );
 }

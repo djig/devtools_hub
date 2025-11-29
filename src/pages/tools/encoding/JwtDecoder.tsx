@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, Clock, Key } from 'lucide-react';
 import { CopyButton } from '../../../components/shared/CopyButton';
+import { SEO } from '../../../utils/seo';
 
 interface DecodedJWT {
   header: any;
@@ -56,7 +57,14 @@ export default function JwtDecoder() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JWT Decoder - Free Online JSON Web Token Decoder"
+        description="Decode and validate JSON Web Tokens (JWT) online. Free JWT decoder that displays header, payload, and signature with expiration checking. Works entirely in your browser - your tokens never leave your device."
+        keywords="jwt decoder, json web token decoder, decode jwt, jwt parser, jwt validator, jwt debugger, jwt tool, free jwt decoder"
+        path="/tools/jwt-decoder"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -187,6 +195,7 @@ export default function JwtDecoder() {
           trust client-side JWT validation for security purposes.
         </p>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

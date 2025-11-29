@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Upload, Image as ImageIcon, Download, RefreshCw } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function ImageBase64Converter() {
   const [imagePreview, setImagePreview] = useState<string>('');
@@ -132,7 +133,14 @@ export default function ImageBase64Converter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Image to Base64 Converter - Convert Images to Base64 and Vice Versa"
+        description="Convert images to Base64 strings and Base64 to images online. Free image Base64 converter supporting PNG, JPG, GIF, and more. Embed images in CSS or HTML."
+        keywords="image to base64, base64 to image, image encoder, base64 image, convert image, image base64 converter, data uri, free converter"
+        path="/tools/image-base64-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -278,6 +286,7 @@ export default function ImageBase64Converter() {
           </Button>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

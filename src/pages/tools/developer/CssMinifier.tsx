@@ -6,6 +6,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { formatCSS, minifyCSS } from '../../../utils/formatters/code';
 import { Minimize2 } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function CssMinifier() {
   const [input, setInput] = useState('');
@@ -29,7 +30,14 @@ export default function CssMinifier() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="CSS Minifier - Free Online CSS Compressor and Beautifier"
+        description="Minify and beautify CSS code online. Free CSS minifier that compresses CSS for production and beautifies for development. Reduce file size and improve load times."
+        keywords="css minifier, css compressor, minify css, compress css, css beautifier, css formatter, optimize css, free css tool"
+        path="/tools/css-minifier"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -84,6 +92,7 @@ export default function CssMinifier() {
         }
         outputValue={output}
       />
-    </div>
+      </div>
+    </>
   );
 }

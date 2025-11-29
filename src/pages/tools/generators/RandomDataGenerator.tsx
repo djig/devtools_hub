@@ -10,6 +10,7 @@ import useAppStore from '../../../store/useAppStore';
 import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download, Archive, Trash2, Info, CheckCircle2, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
+import { SEO } from '../../../utils/seo';
 
 interface RandomData {
   [key: string]: string | number;
@@ -930,7 +931,14 @@ export default function RandomDataGenerator() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Random Data Generator - Generate Fake Names, Emails, Addresses"
+        description="Generate random fake data online: names, emails, addresses, phone numbers, and more. Free random data generator for testing and development. Realistic dummy data instantly."
+        keywords="random data generator, fake data generator, test data, dummy data, random name, fake email, mock data, free generator"
+        path="/tools/random-data-generator"
+      />
+      <div className="space-y-6">
       {/* Hero Section with Breadcrumb & Integrated Controls */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -1754,18 +1762,27 @@ export default function RandomDataGenerator() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }
 
 function DataRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors px-2 rounded">
+    <>
+      <SEO
+        title="Random Data Generator - Generate Fake Names, Emails, Addresses"
+        description="Generate random fake data online: names, emails, addresses, phone numbers, and more. Free random data generator for testing and development. Realistic dummy data instantly."
+        keywords="random data generator, fake data generator, test data, dummy data, random name, fake email, mock data, free generator"
+        path="/tools/random-data-generator"
+      />
+      <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors px-2 rounded">
       <span className="text-xs font-semibold text-foreground/80 min-w-[100px]">{label}</span>
       <div className="flex items-center gap-2 flex-1 justify-end">
         <code className="text-xs font-mono bg-muted/50 px-2 py-0.5 rounded border border-border/50 max-w-md truncate">{value}</code>
         <CopyButton text={value} />
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToXml, xmlToJson } from '../../../utils/converters/xml';
 import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsonXmlConverter() {
   const [input, setInput] = useState('');
@@ -50,7 +51,14 @@ export default function JsonXmlConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON to XML Converter - Free Online JSON XML Converter"
+        description="Convert between JSON and XML formats instantly with our free online converter. Bidirectional conversion tool that transforms JSON to XML and XML to JSON. Works entirely in your browser - fast and secure."
+        keywords="json to xml, xml to json, json xml converter, convert json to xml, convert xml to json, online converter, free converter"
+        path="/tools/json-xml-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -123,6 +131,7 @@ export default function JsonXmlConverter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-    </div>
+      </div>
+    </>
   );
 }

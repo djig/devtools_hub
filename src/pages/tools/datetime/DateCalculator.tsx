@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { addDays, addMonths, addYears, differenceInDays, format, parseISO } from 'date-fns';
 import { Calendar } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 type Operation = 'add' | 'subtract' | 'difference';
 type Unit = 'days' | 'months' | 'years';
@@ -63,7 +64,14 @@ export default function DateCalculator() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Date Calculator - Add or Subtract Days, Months, Years from Dates"
+        description="Add or subtract days, months, and years from dates online. Free date calculator for date arithmetic. Calculate future and past dates, find date differences."
+        keywords="date calculator, add days to date, subtract days, date math, calculate date, date difference, days calculator, free calculator"
+        path="/tools/date-calculator"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-pink-500/10 via-rose-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -192,6 +200,7 @@ export default function DateCalculator() {
           </p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

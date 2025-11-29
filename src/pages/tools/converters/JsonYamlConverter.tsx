@@ -7,6 +7,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToYaml, yamlToJson } from '../../../utils/converters/yaml';
 import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsonYamlConverter() {
   const [input, setInput] = useState('');
@@ -50,7 +51,14 @@ export default function JsonYamlConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON to YAML Converter - Free Online JSON YAML Converter"
+        description="Convert between JSON and YAML formats instantly with our free online converter. Bidirectional conversion tool that transforms JSON to YAML and YAML to JSON. Works entirely in your browser - fast and secure."
+        keywords="json to yaml, yaml to json, json yaml converter, convert json to yaml, convert yaml to json, json yml converter, online converter, free converter"
+        path="/tools/json-yaml-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -126,6 +134,7 @@ export default function JsonYamlConverter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-    </div>
+      </div>
+    </>
   );
 }

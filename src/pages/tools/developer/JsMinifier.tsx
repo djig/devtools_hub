@@ -6,6 +6,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { formatJavaScript, minifyJavaScript } from '../../../utils/formatters/code';
 import { Minimize2 } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsMinifier() {
   const [input, setInput] = useState('');
@@ -29,7 +30,14 @@ export default function JsMinifier() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JavaScript Minifier - Free Online JS Compressor and Beautifier"
+        description="Minify and beautify JavaScript code online. Free JS minifier that compresses JavaScript for production and beautifies for development. Reduce file size instantly."
+        keywords="javascript minifier, js minifier, minify javascript, compress js, javascript beautifier, js formatter, optimize javascript, free js tool"
+        path="/tools/js-minifier"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -84,6 +92,7 @@ export default function JsMinifier() {
         }
         outputValue={output}
       />
-    </div>
+      </div>
+    </>
   );
 }

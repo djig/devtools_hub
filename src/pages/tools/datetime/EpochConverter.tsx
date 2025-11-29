@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
+import { SEO } from '../../../utils/seo';
 
 export default function EpochConverter() {
   const [currentTime, setCurrentTime] = useState(Date.now());
@@ -78,7 +79,14 @@ export default function EpochConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Epoch Converter - Unix Timestamp Converter"
+        description="Convert between Unix timestamps and dates online. Free epoch converter that transforms Unix time to human-readable dates and vice versa. Supports milliseconds and seconds."
+        keywords="epoch converter, unix timestamp, timestamp converter, epoch to date, unix time converter, timestamp tool, epoch time, free converter"
+        path="/tools/epoch-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -198,6 +206,7 @@ export default function EpochConverter() {
           represent dates and times.
         </p>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }
