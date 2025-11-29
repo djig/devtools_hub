@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, FileJson, Shield, Box } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsonToSchemaConverter() {
   const [input, setInput] = useState('');
@@ -184,7 +185,14 @@ export default function JsonToSchemaConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON to Schema Generator - Free Online JSON Schema Creator"
+        description="Generate JSON Schema from JSON data automatically. Free online JSON Schema generator that creates Draft-07 schemas with type detection, pattern recognition, and validation rules. Perfect for API documentation and validation."
+        keywords="json to schema, json schema generator, generate json schema, json schema creator, json schema from json, api schema, schema generator, free tool"
+        path="/tools/json-to-schema-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -317,6 +325,7 @@ export default function JsonToSchemaConverter() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

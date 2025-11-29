@@ -3,6 +3,7 @@ import { ToolCard } from '../components/shared/ToolCard';
 import { getToolsByCategory, getCategoryInfo } from '../data/tools';
 import { ChevronRight, Home } from 'lucide-react';
 import type { ToolCategory } from '../types';
+import { SEO } from '../utils/seo';
 
 // Color schemes matching the home page
 const categoryColors: Record<string, { iconBg: string; badge: string }> = {
@@ -34,8 +35,18 @@ export default function Category() {
   const Icon = categoryInfo.icon;
   const colors = categoryColors[category as string] || categoryColors.formatters;
 
+  // Generate SEO keywords from tools in category
+  const categoryKeywords = tools.map(tool => tool.name).join(', ') + ', ' + categoryInfo.name + ' tools, developer utilities, free online tools';
+
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title={`${categoryInfo.name} Tools - ${tools.length} Free ${categoryInfo.name} Utilities`}
+        description={`${categoryInfo.description} Browse ${tools.length} free ${categoryInfo.name.toLowerCase()} tools including ${tools.slice(0, 3).map(t => t.name).join(', ')} and more. All tools run in your browser.`}
+        keywords={categoryKeywords}
+        path={`/category/${category}`}
+      />
+      <div className="space-y-8">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-muted-foreground">
         <Link to="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
@@ -76,5 +87,6 @@ export default function Category() {
         </div>
       )}
     </div>
+    </>
   );
 }

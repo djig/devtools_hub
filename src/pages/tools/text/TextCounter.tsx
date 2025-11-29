@@ -5,6 +5,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { countText } from '../../../utils/text/counter';
 import { AlignLeft, FileText, List, Clock, Hash } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function TextCounter() {
   const [input, setInput] = useState('');
@@ -27,7 +28,14 @@ export default function TextCounter() {
   ];
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Text Counter - Count Characters, Words, Lines, and Sentences"
+        description="Count characters, words, lines, and sentences in text online. Free text counter with real-time statistics. Perfect for writers, students, and social media content creators."
+        keywords="text counter, character counter, word counter, count words, count characters, text statistics, word count tool, free counter"
+        path="/tools/text-counter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -75,6 +83,7 @@ export default function TextCounter() {
           );
         })}
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { encodeBase64, decodeBase64 } from '../../../utils/converters/base64';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Binary } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function Base64Tool() {
   const [input, setInput] = useState('');
@@ -49,7 +50,14 @@ export default function Base64Tool() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Base64 Encoder/Decoder - Free Online Base64 Tool"
+        description="Encode and decode Base64 strings online with our free Base64 tool. Convert text to Base64 encoding or decode Base64 to text instantly. Works entirely in your browser - fast, secure, and no data upload required."
+        keywords="base64 encoder, base64 decoder, base64 online, encode base64, decode base64, base64 tool, base64 converter, free base64"
+        path="/tools/base64-encoder"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -125,6 +133,7 @@ export default function Base64Tool() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-    </div>
+      </div>
+    </>
   );
 }

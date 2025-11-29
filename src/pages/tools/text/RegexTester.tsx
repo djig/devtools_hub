@@ -6,6 +6,7 @@ import { Button } from '../../../components/ui/Button';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Search } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function RegexTester() {
   const [pattern, setPattern] = useState('');
@@ -94,7 +95,14 @@ export default function RegexTester() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Regex Tester - Free Online Regular Expression Tester"
+        description="Test regular expressions with real-time matching online. Free regex tester with syntax highlighting, match highlighting, and pattern explanation. Supports JavaScript, Python, and PCRE regex."
+        keywords="regex tester, regular expression tester, regex tool, regex matcher, test regex, regex debugger, regexp tester, free regex tool"
+        path="/tools/regex-tester"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -269,6 +277,7 @@ export default function RegexTester() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

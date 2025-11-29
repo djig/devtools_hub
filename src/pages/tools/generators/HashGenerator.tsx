@@ -7,6 +7,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { generateAllHashes } from '../../../utils/generators/hash';
 import { Shield } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function HashGenerator() {
   const [input, setInput] = useState('');
@@ -48,7 +49,14 @@ export default function HashGenerator() {
     : [];
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Hash Generator - MD5, SHA1, SHA256, SHA512 Hash Calculator"
+        description="Generate MD5, SHA1, SHA256, and SHA512 hashes online. Free hash generator for checksums and data integrity verification. Works entirely in your browser."
+        keywords="hash generator, md5 generator, sha256 generator, hash calculator, checksum generator, hash tool, md5 hash, sha512, free hash generator"
+        path="/tools/hash-generator"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -115,6 +123,7 @@ export default function HashGenerator() {
           Enter text above to generate hashes
         </Card>
       )}
-    </div>
+      </div>
+    </>
   );
 }

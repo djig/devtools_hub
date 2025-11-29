@@ -5,6 +5,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, Shield, FileJson } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface ValidationError {
   path: string;
@@ -285,7 +286,14 @@ export default function JsonSchemaValidator() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON Schema Validator - Free Online JSON Validation Tool"
+        description="Validate JSON data against JSON Schema specifications online. Free JSON Schema validator with detailed error reporting and support for all major JSON Schema features. Test your API responses and configuration files instantly."
+        keywords="json schema validator, validate json schema, json validation tool, json schema online, api validator, json schema tester, schema validation, free json validator"
+        path="/tools/json-schema-validator"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -465,6 +473,7 @@ export default function JsonSchemaValidator() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

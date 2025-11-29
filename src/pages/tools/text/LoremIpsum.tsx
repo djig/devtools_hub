@@ -8,6 +8,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { generateLoremWords, generateLoremSentences, generateLoremParagraphs } from '../../../utils/text/lorem';
 import { Type } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function LoremIpsum() {
   const [type, setType] = useState<'words' | 'sentences' | 'paragraphs'>('paragraphs');
@@ -41,7 +42,14 @@ export default function LoremIpsum() {
   }, [type, count]);
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Lorem Ipsum Generator - Free Placeholder Text Generator"
+        description="Generate Lorem Ipsum placeholder text online. Free Lorem Ipsum generator for designers and developers. Create paragraphs, words, or bytes of dummy text instantly."
+        keywords="lorem ipsum generator, placeholder text, dummy text, lorem ipsum, filler text, lipsum generator, text generator, free generator"
+        path="/tools/lorem-ipsum"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -111,6 +119,7 @@ export default function LoremIpsum() {
           className="min-h-[300px]"
         />
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

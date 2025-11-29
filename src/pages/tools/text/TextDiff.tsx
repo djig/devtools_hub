@@ -7,6 +7,7 @@ import useAppStore from '../../../store/useAppStore';
 import { diffText } from '../../../utils/text/diff';
 import type { DiffResult } from '../../../utils/text/diff';
 import { GitCompare } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function TextDiff() {
   const [text1, setText1] = useState('');
@@ -29,7 +30,14 @@ export default function TextDiff() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Text Diff - Free Online Text Comparison Tool"
+        description="Compare two texts and see line-by-line differences online. Free text diff tool that highlights additions, deletions, and changes. Perfect for code reviews and document comparison."
+        keywords="text diff, compare text, text difference, diff checker, text comparison, diff tool, compare documents, free diff tool"
+        path="/tools/text-diff"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -142,6 +150,7 @@ export default function TextDiff() {
           </div>
         </Card>
       )}
-    </div>
+      </div>
+    </>
   );
 }

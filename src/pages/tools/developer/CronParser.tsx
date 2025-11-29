@@ -5,6 +5,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Clock, Calendar, Info } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface CronParts {
   minute: string;
@@ -208,7 +209,14 @@ export default function CronParser() {
   ];
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Cron Expression Parser - Build and Parse Cron Schedules"
+        description="Parse and build cron expressions online. Free cron parser with visual preview of schedule execution times. Perfect for scheduling tasks and jobs."
+        keywords="cron parser, cron expression, cron builder, parse cron, cron schedule, cron generator, cron tool, free cron parser"
+        path="/tools/cron-parser"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -382,6 +390,7 @@ export default function CronParser() {
           <p>• Month: 1 = January, 2 = February, ... 12 = December</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

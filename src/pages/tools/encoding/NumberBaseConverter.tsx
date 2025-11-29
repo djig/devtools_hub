@@ -6,6 +6,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { convertBase } from '../../../utils/converters/numberBase';
 import { Binary } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function NumberBaseConverter() {
   const [input, setInput] = useState('');
@@ -44,7 +45,14 @@ export default function NumberBaseConverter() {
     : [];
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Number Base Converter - Binary, Decimal, Hex, Octal Converter"
+        description="Convert numbers between Binary, Decimal, Hexadecimal, and Octal bases online. Free number base converter for programmers and students. Supports all major number systems instantly."
+        keywords="number base converter, binary to decimal, decimal to hex, hex to binary, octal converter, base converter, radix converter, free converter"
+        path="/tools/number-base-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -138,6 +146,7 @@ export default function NumberBaseConverter() {
           <p>• Hex: FF → Decimal: 255, Binary: 11111111</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

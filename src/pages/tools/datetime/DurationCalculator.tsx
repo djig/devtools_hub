@@ -4,6 +4,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Clock, Calendar, Timer } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface Duration {
   years: number;
@@ -165,7 +166,14 @@ export default function DurationCalculator() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Duration Calculator - Calculate Time Between Two Dates"
+        description="Calculate time duration between two dates online. Free duration calculator that shows years, months, days, hours, minutes, and seconds. Perfect for age calculation and time tracking."
+        keywords="duration calculator, time difference, date difference, calculate duration, time between dates, age calculator, elapsed time, free calculator"
+        path="/tools/duration-calculator"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -385,6 +393,7 @@ export default function DurationCalculator() {
           <p>• Year calculations account for leap years (365.25 days)</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

@@ -22,25 +22,24 @@ function LoadingFallback() {
 
 function App() {
   const { theme } = useAppStore();
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(() =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
 
+  // Listen for system theme changes
   useEffect(() => {
-    // Resolve the theme based on current setting
     if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      setResolvedTheme(systemTheme);
-
-      // Listen for system theme changes
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const handler = (e: MediaQueryListEvent) => {
-        setResolvedTheme(e.matches ? 'dark' : 'light');
+        setSystemTheme(e.matches ? 'dark' : 'light');
       };
       mediaQuery.addEventListener('change', handler);
       return () => mediaQuery.removeEventListener('change', handler);
-    } else {
-      setResolvedTheme(theme as 'light' | 'dark');
     }
   }, [theme]);
+
+  // Calculate resolved theme based on current settings
+  const resolvedTheme = theme === 'system' ? systemTheme : (theme as 'light' | 'dark');
 
   return (
     <BrowserRouter>

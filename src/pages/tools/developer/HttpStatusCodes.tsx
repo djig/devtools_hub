@@ -4,6 +4,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Search, Server } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface StatusCode {
   code: number;
@@ -132,7 +133,14 @@ export default function HttpStatusCodes() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="HTTP Status Codes - Complete Reference Guide"
+        description="Browse HTTP status codes with descriptions and examples online. Free HTTP status code reference for web developers. Includes 1xx, 2xx, 3xx, 4xx, and 5xx codes."
+        keywords="http status codes, http codes, status code reference, http response codes, 404 error, 200 ok, http status, free reference"
+        path="/tools/http-status-codes"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -199,6 +207,7 @@ export default function HttpStatusCodes() {
           No status codes found matching your search
         </Card>
       )}
-    </div>
+      </div>
+    </>
   );
 }

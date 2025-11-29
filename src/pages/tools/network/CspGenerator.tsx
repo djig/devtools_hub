@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Shield, Info } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface CSPDirective {
   name: string;
@@ -167,7 +168,14 @@ export default function CspGenerator() {
   const cspHeader = generateCSP();
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="CSP Header Generator - Generate Content Security Policy Headers"
+        description="Generate Content Security Policy (CSP) headers online. Free CSP generator that helps secure your web applications against XSS and injection attacks. Build CSP policies easily."
+        keywords="csp generator, content security policy, csp header, security header, csp tool, web security, xss prevention, free generator"
+        path="/tools/csp-generator"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -377,6 +385,7 @@ export default function CspGenerator() {
           <p>• Test thoroughly before deploying to production</p>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

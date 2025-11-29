@@ -6,6 +6,7 @@ import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from '../../../utils/converters/color';
 import { Pipette, Palette } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function ColorConverter() {
   const [hexInput, setHexInput] = useState('#3B82F6');
@@ -47,7 +48,14 @@ export default function ColorConverter() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Color Converter - Convert HEX, RGB, HSL, CMYK with Color Picker"
+        description="Convert colors between HEX, RGB, HSL, and CMYK formats online. Free color converter with interactive color picker. Perfect for web designers and developers."
+        keywords="color converter, hex to rgb, rgb to hex, color picker, hsl converter, cmyk converter, color tool, hex color, free converter"
+        path="/tools/color-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -294,6 +302,7 @@ export default function ColorConverter() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

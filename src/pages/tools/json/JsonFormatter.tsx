@@ -7,6 +7,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { formatJson, minifyJson, validateJson } from '../../../utils/formatters/json';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, FileJson } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsonFormatter() {
   const [input, setInput] = useState('');
@@ -68,7 +69,14 @@ export default function JsonFormatter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON Formatter - Free Online JSON Beautifier & Validator"
+        description="Format, validate, and minify JSON data online with our free JSON formatter tool. Beautify JSON with customizable indentation, validate syntax, and minify for production. Works entirely in your browser - fast, secure, and no data upload required."
+        keywords="json formatter, json validator, json beautifier, json minifier, format json online, validate json, json pretty print, json tool, beautify json, minify json, json syntax validator, free json formatter"
+        path="/tools/json-formatter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -163,6 +171,7 @@ export default function JsonFormatter() {
         outputValue={output}
         showCopy={!error && !!output && !output.startsWith('✓')}
       />
-    </div>
+      </div>
+    </>
   );
 }

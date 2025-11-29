@@ -6,6 +6,7 @@ import useAppStore from '../../../store/useAppStore';
 import { convertUnit, UNIT_CATEGORIES } from '../../../utils/converters/units';
 import type { UnitCategory } from '../../../utils/converters/units';
 import { Ruler } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function UnitConverter() {
   const [category, setCategory] = useState<UnitCategory>('length');
@@ -49,7 +50,14 @@ export default function UnitConverter() {
   const unitKeys = Object.keys(currentUnits);
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Unit Converter - Convert Length, Weight, Temperature, Data Size"
+        description="Convert units online: length, weight, temperature, data size, and more. Free unit converter with support for metric, imperial, and other unit systems. Accurate and instant."
+        keywords="unit converter, convert units, length converter, weight converter, temperature converter, data size converter, metric converter, free converter"
+        path="/tools/unit-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -180,6 +188,7 @@ export default function UnitConverter() {
           ))}
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

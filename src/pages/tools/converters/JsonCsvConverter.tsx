@@ -7,6 +7,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToCsv, csvToJson } from '../../../utils/converters/csv';
 import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function JsonCsvConverter() {
   const [input, setInput] = useState('');
@@ -50,7 +51,14 @@ export default function JsonCsvConverter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="JSON to CSV Converter - Free Online JSON CSV Converter"
+        description="Convert between JSON and CSV formats instantly with our free online converter. Transform JSON arrays to CSV spreadsheets and CSV data to JSON. Perfect for data import/export. Works entirely in your browser."
+        keywords="json to csv, csv to json, json csv converter, convert json to csv, convert csv to json, json to excel, csv converter, free converter"
+        path="/tools/json-csv-converter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -123,6 +131,7 @@ export default function JsonCsvConverter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-    </div>
+      </div>
+    </>
   );
 }

@@ -3,13 +3,21 @@ import { ToolCard } from '../components/shared/ToolCard';
 import { tools } from '../data/tools';
 import { ChevronRight, Home, Clock } from 'lucide-react';
 import useAppStore from '../store/useAppStore';
+import { SEO } from '../utils/seo';
 
 export default function Recent() {
   const { recentTools } = useAppStore();
   const recentToolsList = tools.filter(tool => recentTools.includes(tool.id));
 
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="Recently Used Tools - Quick Access to Your Tool History"
+        description="View and quickly access your recently used developer tools. Track your tool usage history for easy access to your frequently needed utilities."
+        keywords="recent tools, tool history, recently used, developer utilities, quick access, tool tracking"
+        path="/recent"
+      />
+      <div className="space-y-8">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-white/60">
         <Link to="/" className="flex items-center gap-1 hover:text-white transition-colors">
@@ -55,5 +63,6 @@ export default function Recent() {
         </div>
       )}
     </div>
+    </>
   );
 }

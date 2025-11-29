@@ -7,6 +7,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { formatYaml } from '../../../utils/converters/yaml';
 import { AlertCircle, FileCode } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function YamlFormatter() {
   const [input, setInput] = useState('');
@@ -34,7 +35,14 @@ export default function YamlFormatter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="YAML Formatter - Free Online YAML Beautifier & Validator"
+        description="Format and validate YAML files online with our free YAML formatter. Beautify YAML with proper indentation, validate syntax, and ensure structure correctness. Works entirely in your browser - fast and secure."
+        keywords="yaml formatter, yaml validator, yaml beautifier, format yaml online, validate yaml, yml formatter, yaml tool, beautify yaml, yaml syntax validator, free yaml formatter"
+        path="/tools/yaml-formatter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -101,6 +109,7 @@ export default function YamlFormatter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-    </div>
+      </div>
+    </>
   );
 }

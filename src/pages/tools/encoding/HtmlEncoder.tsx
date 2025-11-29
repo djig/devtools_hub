@@ -7,6 +7,7 @@ import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { encodeHtml, decodeHtml } from '../../../utils/converters/html';
 import { Code2 } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function HtmlEncoder() {
   const [input, setInput] = useState('');
@@ -35,7 +36,14 @@ export default function HtmlEncoder() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="HTML Entity Encoder/Decoder - Free Online HTML Escape Tool"
+        description="Encode and decode HTML entities and special characters online. Free HTML encoder that converts characters to HTML entities and decodes HTML entities back to text. Secure and fast."
+        keywords="html encoder, html decoder, html entity encoder, html escape, encode html, decode html entities, html special characters, free html encoder"
+        path="/tools/html-encoder"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -106,6 +114,7 @@ export default function HtmlEncoder() {
           <div>/ = &amp;#x2F;</div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

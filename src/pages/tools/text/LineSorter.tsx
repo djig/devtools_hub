@@ -5,6 +5,7 @@ import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { ArrowUpDown } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 export default function LineSorter() {
   const [input, setInput] = useState('');
@@ -45,7 +46,14 @@ export default function LineSorter() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Line Sorter - Sort and Deduplicate Lines of Text Online"
+        description="Sort and deduplicate lines of text online. Free line sorter that arranges text alphabetically, numerically, or in reverse. Remove duplicate lines instantly."
+        keywords="line sorter, sort lines, alphabetize lines, deduplicate lines, sort text, remove duplicates, unique lines, free sorter"
+        path="/tools/line-sorter"
+      />
+      <div className="space-y-6">
       {/* Compact Hero Section with Breadcrumb & Actions */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
         <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -123,6 +131,7 @@ export default function LineSorter() {
         }
         outputValue={output}
       />
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { categories, tools } from '../data/tools';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { SEO } from '../utils/seo';
 
 // Color schemes for each category
 const categoryColors: Record<string, { from: string; to: string; iconBg: string; glow: string }> = {
@@ -17,7 +18,14 @@ const categoryColors: Record<string, { from: string; to: string; iconBg: string;
 
 export default function Home() {
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="47+ Free Developer Tools & Utilities Online"
+        description="Free collection of 47+ developer tools including JSON formatter, Base64 encoder, UUID generator, regex tester, and more. All tools run in your browser - fast, secure, and private."
+        keywords="developer tools, json formatter, base64 encoder, jwt decoder, uuid generator, regex tester, url encoder, html encoder, yaml formatter, xml formatter, sql formatter, hash generator, qr code generator, epoch converter, color converter, markdown editor, text diff, code minifier, online tools, web tools, free tools, developer utilities, programming tools"
+        path="/"
+      />
+      <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-4 py-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 backdrop-blur-xl shadow-lg shadow-blue-500/10">
@@ -108,5 +116,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { Card } from '../../../components/ui/Card';
 import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import useAppStore from '../../../store/useAppStore';
 import { Maximize2, RefreshCw, LayoutGrid } from 'lucide-react';
+import { SEO } from '../../../utils/seo';
 
 interface CommonRatio {
   name: string;
@@ -143,7 +144,14 @@ export default function AspectRatioCalculator() {
   const visualSize = getVisualRatio();
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Aspect Ratio Calculator - Calculate and Convert Aspect Ratios"
+        description="Calculate and convert aspect ratios for images and videos online. Free aspect ratio calculator for designers and content creators. Find width or height for any aspect ratio."
+        keywords="aspect ratio calculator, aspect ratio, image aspect ratio, video aspect ratio, resolution calculator, aspect ratio converter, free calculator"
+        path="/tools/aspect-ratio-calculator"
+      />
+      <div className="space-y-6">
       {/* Compact Header with Breadcrumb */}
       <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-purple-500/10 via-blue-500/5 to-background p-6">
         <div className="relative z-10 space-y-4">
@@ -337,6 +345,7 @@ export default function AspectRatioCalculator() {
           </div>
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }
