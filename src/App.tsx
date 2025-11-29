@@ -1,11 +1,13 @@
 import { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { Layout } from './components/layout/Layout';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Favorites from './pages/Favorites';
 import Recent from './pages/Recent';
 import { tools } from './data/tools';
+import { usePageMeta } from './hooks/usePageMeta';
 
 function LoadingFallback() {
   return (
@@ -18,9 +20,38 @@ function LoadingFallback() {
   );
 }
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const { title, description, keywords } = usePageMeta();
+  const baseUrl = 'https://engtoolshub.com';
+
+  console.log('🎯 AppContent render:', {
+    pathname: location.pathname,
+    title,
+    keywords: keywords.substring(0, 100) + '...'
+  });
+
   return (
-    <BrowserRouter>
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content={keywords} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`${baseUrl}${location.pathname}`} />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:url" content={`${baseUrl}${location.pathname}`} />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href={`${baseUrl}${location.pathname}`} />
+      </Helmet>
+
       <Layout>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
@@ -46,7 +77,17 @@ function App() {
           </Routes>
         </Suspense>
       </Layout>
-    </BrowserRouter>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
