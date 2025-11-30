@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Globe, MapPin, Clock, Network as NetworkIcon } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface IpData {
   ip: string;
@@ -103,37 +102,17 @@ export default function IpInfo() {
   };
 
   return (
-    <>
-      <SEO
-        title="IP Address Info - Get Information About IP Addresses"
-        description="Get information about IP addresses online. Free IP lookup tool that shows geolocation, ISP, and network details. Check your own IP or look up any IP address."
-        keywords="ip address info, ip lookup, my ip address, ip geolocation, ip location, what is my ip, ip info tool, free ip lookup"
-        path="/tools/ip-info"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-blue-500/10 via-sky-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Globe className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">IP Address Info</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Get geolocation and network information about any IP address
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "IP Address Info - Get Information About IP Addresses",
+        description: "Get information about IP addresses online. Free IP lookup tool that shows geolocation, ISP, and network details. Check your own IP or look up any IP address.",
+        keywords: "ip address info, ip lookup, my ip address, ip geolocation, ip location, what is my ip, ip info tool, free ip lookup",
+        path: "/tools/ip-info"
+      }}
+      icon={Globe}
+      title="IP Address Info"
+      description="Get geolocation and network information about any IP address"
+    >
       <Card className="p-4">
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3">
@@ -288,7 +267,6 @@ export default function IpInfo() {
           <p>• All lookups are performed client-side for privacy</p>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { addDays, addMonths, addYears, differenceInDays, format, parseISO } from 'date-fns';
 import { Calendar } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 type Operation = 'add' | 'subtract' | 'difference';
 type Unit = 'days' | 'months' | 'years';
@@ -64,37 +63,17 @@ export default function DateCalculator() {
   };
 
   return (
-    <>
-      <SEO
-        title="Date Calculator - Add or Subtract Days, Months, Years from Dates"
-        description="Add or subtract days, months, and years from dates online. Free date calculator for date arithmetic. Calculate future and past dates, find date differences."
-        keywords="date calculator, add days to date, subtract days, date math, calculate date, date difference, days calculator, free calculator"
-        path="/tools/date-calculator"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-pink-500/10 via-rose-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Calendar className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Date Calculator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Add, subtract, or calculate the difference between dates
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "Date Calculator - Add or Subtract Days, Months, Years from Dates",
+        description: "Add or subtract days, months, and years from dates online. Free date calculator for date arithmetic. Calculate future and past dates, find date differences.",
+        keywords: "date calculator, add days to date, subtract days, date math, calculate date, date difference, days calculator, free calculator",
+        path: "/tools/date-calculator"
+      }}
+      icon={Calendar}
+      title="Date Calculator"
+      description="Add, subtract, or calculate the difference between dates"
+    >
       <Card className="p-4">
         <label className="text-sm font-medium mb-2 block">Operation</label>
         <div className="grid grid-cols-3 gap-2">
@@ -200,7 +179,6 @@ export default function DateCalculator() {
           </p>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

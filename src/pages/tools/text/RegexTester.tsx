@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Input } from '../../../components/ui/Input';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Search } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function RegexTester() {
   const [pattern, setPattern] = useState('');
@@ -95,46 +94,22 @@ export default function RegexTester() {
   };
 
   return (
-    <>
-      <SEO
-        title="Regex Tester - Free Online Regular Expression Tester"
-        description="Test regular expressions with real-time matching online. Free regex tester with syntax highlighting, match highlighting, and pattern explanation. Supports JavaScript, Python, and PCRE regex."
-        keywords="regex tester, regular expression tester, regex tool, regex matcher, test regex, regex debugger, regexp tester, free regex tool"
-        path="/tools/regex-tester"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Search className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Regex Tester</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Test regular expressions with real-time matching and highlighting
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Regex Tester - Free Online Regular Expression Tester",
+        description: "Test regular expressions with real-time matching online. Free regex tester with syntax highlighting, match highlighting, and pattern explanation. Supports JavaScript, Python, and PCRE regex.",
+        keywords: "regex tester, regular expression tester, regex tool, regex matcher, test regex, regex debugger, regexp tester, free regex tool",
+        path: "/tools/regex-tester"
+      }}
+      icon={Search}
+      title="Regex Tester"
+      description="Test regular expressions with real-time matching and highlighting"
+      actions={
+        <Button onClick={loadSample} variant="ghost" size="sm">
+          Load Sample
+        </Button>
+      }
+    >
 
       <Card className="p-4 space-y-4">
         <div>
@@ -188,17 +163,16 @@ export default function RegexTester() {
         </Card>
       )}
 
-      <Card className="p-4">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-2">
-          Test String
-        </h3>
-        <Textarea
-          placeholder="Enter test string..."
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Test String</label>
+        <CodeEditor
           value={testString}
-          onChange={(e) => setTestString(e.target.value)}
-          className="min-h-[200px] font-mono text-sm"
+          onChange={setTestString}
+          language="plaintext"
+          placeholder="Enter test string..."
+          height="200px"
         />
-      </Card>
+      </div>
 
       {result && result.count > 0 && (
         <>
@@ -277,7 +251,6 @@ export default function RegexTester() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

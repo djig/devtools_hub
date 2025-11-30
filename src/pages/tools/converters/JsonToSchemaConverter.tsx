@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, FileJson, Shield, Box } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function JsonToSchemaConverter() {
   const [input, setInput] = useState('');
@@ -185,74 +184,51 @@ export default function JsonToSchemaConverter() {
   };
 
   return (
-    <>
-      <SEO
-        title="JSON to Schema Generator - Free Online JSON Schema Creator"
-        description="Generate JSON Schema from JSON data automatically. Free online JSON Schema generator that creates Draft-07 schemas with type detection, pattern recognition, and validation rules. Perfect for API documentation and validation."
-        keywords="json to schema, json schema generator, generate json schema, json schema creator, json schema from json, api schema, schema generator, free tool"
-        path="/tools/json-to-schema-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
+    <ToolPageLayout
+      seo={{
+        title: "JSON to Schema Generator - Free Online JSON Schema Creator",
+        description: "Generate JSON Schema from JSON data automatically. Free online JSON Schema generator that creates Draft-07 schemas with type detection, pattern recognition, and validation rules. Perfect for API documentation and validation.",
+        keywords: "json to schema, json schema generator, generate json schema, json schema creator, json schema from json, api schema, schema generator, free tool",
+        path: "/tools/json-to-schema-converter"
+      }}
+      icon={Box}
+      title="JSON → Schema Converter"
+      description="Generate JSON Schema definitions from JSON data automatically"
+      actions={
+        <>
+          <label className="flex items-center gap-2 text-xs cursor-pointer">
+            <input
+              type="checkbox"
+              checked={includeRequired}
+              onChange={(e) => setIncludeRequired(e.target.checked)}
+              className="w-3.5 h-3.5 rounded border-input"
+            />
+            <span className="text-muted-foreground">Include Required</span>
+          </label>
 
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <Box className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">JSON → Schema Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Generate JSON Schema definitions from JSON data automatically
-              </p>
-            </div>
-          </div>
+          <label className="flex items-center gap-2 text-xs cursor-pointer">
+            <input
+              type="checkbox"
+              checked={includeDescriptions}
+              onChange={(e) => setIncludeDescriptions(e.target.checked)}
+              className="w-3.5 h-3.5 rounded border-input"
+            />
+            <span className="text-muted-foreground">Add Descriptions</span>
+          </label>
 
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <label className="flex items-center gap-2 text-xs cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={includeRequired}
-                  onChange={(e) => setIncludeRequired(e.target.checked)}
-                  className="w-3.5 h-3.5 rounded border-input"
-                />
-                <span className="text-muted-foreground">Include Required</span>
-              </label>
+          <div className="h-4 w-px bg-border" />
 
-              <label className="flex items-center gap-2 text-xs cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={includeDescriptions}
-                  onChange={(e) => setIncludeDescriptions(e.target.checked)}
-                  className="w-3.5 h-3.5 rounded border-input"
-                />
-                <span className="text-muted-foreground">Add Descriptions</span>
-              </label>
-
-              <div className="h-4 w-px bg-border" />
-
-              <Button onClick={handleConvert} size="sm">
-                <Shield className="mr-2 h-4 w-4" />
-                Generate Schema
-              </Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                <FileJson className="mr-2 h-4 w-4" />
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+          <Button onClick={handleConvert} size="sm">
+            <Shield className="mr-2 h-4 w-4" />
+            Generate Schema
+          </Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            <FileJson className="mr-2 h-4 w-4" />
+            Load Sample
+          </Button>
+        </>
+      }
+    >
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
           <div className="flex items-start gap-2">
@@ -325,7 +301,6 @@ export default function JsonToSchemaConverter() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

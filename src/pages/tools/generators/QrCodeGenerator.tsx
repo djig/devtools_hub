@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Textarea } from '../../../components/ui/Textarea';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { QRCodeSVG } from 'qrcode.react';
 import { Download, QrCode } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function QrCodeGenerator() {
   const [text, setText] = useState('');
@@ -47,36 +46,17 @@ export default function QrCodeGenerator() {
   };
 
   return (
-    <>
-      <SEO
-        title="QR Code Generator - Free Online QR Code Creator"
-        description="Generate QR codes from text or URLs online. Free QR code generator with customizable size and error correction. Download QR codes as PNG images instantly."
-        keywords="qr code generator, create qr code, qr code maker, generate qr code, qr code creator, qr code tool, free qr generator"
-        path="/tools/qr-code-generator"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        <div className="flex items-center gap-4 px-6 pb-6">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <QrCode className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">QR Code Generator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Generate QR codes from text, URLs, or any string data
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "QR Code Generator - Free Online QR Code Creator",
+        description: "Generate QR codes from text or URLs online. Free QR code generator with customizable size and error correction. Download QR codes as PNG images instantly.",
+        keywords: "qr code generator, create qr code, qr code maker, generate qr code, qr code creator, qr code tool, free qr generator",
+        path: "/tools/qr-code-generator"
+      }}
+      icon={QrCode}
+      title="QR Code Generator"
+      description="Generate QR codes from text, URLs, or any string data"
+    >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="p-4 space-y-4">
@@ -146,7 +126,6 @@ export default function QrCodeGenerator() {
           <li>Use larger sizes (256px+) for better scanning on printed materials</li>
         </ul>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

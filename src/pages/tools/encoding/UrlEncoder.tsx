@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { encodeUrl, decodeUrl } from '../../../utils/converters/url';
 import { AlertCircle, Link } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function UrlEncoder() {
   const [input, setInput] = useState('');
@@ -43,53 +42,30 @@ export default function UrlEncoder() {
   };
 
   return (
-    <>
-      <SEO
-        title="URL Encoder/Decoder - Free Online URL Encoding Tool"
-        description="Encode and decode URL parameters and query strings online. Free URL encoder that converts special characters to percent-encoding and decodes URL-encoded strings. Works entirely in your browser."
-        keywords="url encoder, url decoder, percent encoding, url encode online, decode url, uri encoder, url escape, free url encoder"
-        path="/tools/url-encoder"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Link className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">URL Encoder/Decoder</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Encode and decode URL parameters and query strings
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={handleAction} size="sm">
-                {mode === 'encode' ? 'Encode' : 'Decode'}
-              </Button>
-              <Button onClick={() => setMode(mode === 'encode' ? 'decode' : 'encode')} variant="outline" size="sm">
-                Switch to {mode === 'encode' ? 'Decode' : 'Encode'}
-              </Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "URL Encoder/Decoder - Free Online URL Encoding Tool",
+        description: "Encode and decode URL parameters and query strings online. Free URL encoder that converts special characters to percent-encoding and decodes URL-encoded strings. Works entirely in your browser.",
+        keywords: "url encoder, url decoder, percent encoding, url encode online, decode url, uri encoder, url escape, free url encoder",
+        path: "/tools/url-encoder"
+      }}
+      icon={Link}
+      title="URL Encoder/Decoder"
+      description="Encode and decode URL parameters and query strings"
+      actions={
+        <>
+          <Button onClick={handleAction} size="sm">
+            {mode === 'encode' ? 'Encode' : 'Decode'}
+          </Button>
+          <Button onClick={() => setMode(mode === 'encode' ? 'decode' : 'encode')} variant="outline" size="sm">
+            Switch to {mode === 'encode' ? 'Decode' : 'Encode'}
+          </Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+        </>
+      }
+    >
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
           <div className="flex items-start gap-2">
@@ -122,7 +98,6 @@ export default function UrlEncoder() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

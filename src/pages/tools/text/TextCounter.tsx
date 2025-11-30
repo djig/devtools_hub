@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { countText } from '../../../utils/text/counter';
 import { AlignLeft, FileText, List, Clock, Hash } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function TextCounter() {
   const [input, setInput] = useState('');
@@ -28,37 +27,17 @@ export default function TextCounter() {
   ];
 
   return (
-    <>
-      <SEO
-        title="Text Counter - Count Characters, Words, Lines, and Sentences"
-        description="Count characters, words, lines, and sentences in text online. Free text counter with real-time statistics. Perfect for writers, students, and social media content creators."
-        keywords="text counter, character counter, word counter, count words, count characters, text statistics, word count tool, free counter"
-        path="/tools/text-counter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          <div className="flex items-center gap-4 px-6 pb-6">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <Hash className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Text Counter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Count characters, words, lines, sentences, and more
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "Text Counter - Count Characters, Words, Lines, and Sentences",
+        description: "Count characters, words, lines, and sentences in text online. Free text counter with real-time statistics. Perfect for writers, students, and social media content creators.",
+        keywords: "text counter, character counter, word counter, count words, count characters, text statistics, word count tool, free counter",
+        path: "/tools/text-counter"
+      }}
+      icon={Hash}
+      title="Text Counter"
+      description="Count characters, words, lines, sentences, and more"
+    >
       <Card className="p-4">
         <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Enter Text</h3>
         <Textarea
@@ -83,7 +62,6 @@ export default function TextCounter() {
           );
         })}
       </div>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

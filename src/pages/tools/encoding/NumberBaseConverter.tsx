@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { convertBase } from '../../../utils/converters/numberBase';
 import { Binary } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function NumberBaseConverter() {
   const [input, setInput] = useState('');
@@ -45,66 +44,43 @@ export default function NumberBaseConverter() {
     : [];
 
   return (
-    <>
-      <SEO
-        title="Number Base Converter - Binary, Decimal, Hex, Octal Converter"
-        description="Convert numbers between Binary, Decimal, Hexadecimal, and Octal bases online. Free number base converter for programmers and students. Supports all major number systems instantly."
-        keywords="number base converter, binary to decimal, decimal to hex, hex to binary, octal converter, base converter, radix converter, free converter"
-        path="/tools/number-base-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Binary className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Number Base Converter</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Convert between Binary, Decimal, Octal, and Hexadecimal
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <div className="flex items-center gap-2">
-                <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Input:</label>
-                <Input
-                  placeholder="Enter number..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="font-mono h-9 text-sm w-32"
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Base:</label>
-                <select
-                  value={fromBase}
-                  onChange={(e) => setFromBase(Number(e.target.value))}
-                  className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-                >
-                  <option value={2}>Binary (2)</option>
-                  <option value={8}>Octal (8)</option>
-                  <option value={10}>Decimal (10)</option>
-                  <option value={16}>Hex (16)</option>
-                </select>
-              </div>
-            </div>
+    <ToolPageLayout
+      seo={{
+        title: "Number Base Converter - Binary, Decimal, Hex, Octal Converter",
+        description: "Convert numbers between Binary, Decimal, Hexadecimal, and Octal bases online. Free number base converter for programmers and students. Supports all major number systems instantly.",
+        keywords: "number base converter, binary to decimal, decimal to hex, hex to binary, octal converter, base converter, radix converter, free converter",
+        path: "/tools/number-base-converter"
+      }}
+      icon={Binary}
+      title="Number Base Converter"
+      description="Convert between Binary, Decimal, Octal, and Hexadecimal"
+      actions={
+        <>
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Input:</label>
+            <Input
+              placeholder="Enter number..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="font-mono h-9 text-sm w-32"
+            />
           </div>
-        </div>
-      </div>
-
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-medium text-muted-foreground whitespace-nowrap">Base:</label>
+            <select
+              value={fromBase}
+              onChange={(e) => setFromBase(Number(e.target.value))}
+              className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+            >
+              <option value={2}>Binary (2)</option>
+              <option value={8}>Octal (8)</option>
+              <option value={10}>Decimal (10)</option>
+              <option value={16}>Hex (16)</option>
+            </select>
+          </div>
+        </>
+      }
+    >
       <Card className="p-4">
         <div className="space-y-4">
 
@@ -146,7 +122,6 @@ export default function NumberBaseConverter() {
           <p>• Hex: FF → Decimal: 255, Binary: 11111111</p>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

@@ -5,11 +5,11 @@ import { Construction } from 'lucide-react';
 
 interface ComingSoonProps {
   toolId: string;
-  toolName: string;
+  toolName?: string; // Optional for backward compatibility
   description: string;
 }
 
-export function ComingSoon({ toolId, toolName, description }: ComingSoonProps) {
+export function ComingSoon({ toolId, description }: ComingSoonProps) {
   const { addRecentTool } = useAppStore();
 
   useEffect(() => {
@@ -17,12 +17,7 @@ export function ComingSoon({ toolId, toolName, description }: ComingSoonProps) {
   }, [addRecentTool, toolId]);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">{toolName}</h1>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
-
+    <>
       <Card className="p-12 text-center">
         <Construction className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
         <h2 className="text-2xl font-bold mb-2">Coming Soon!</h2>
@@ -39,6 +34,6 @@ export function ComingSoon({ toolId, toolName, description }: ComingSoonProps) {
           implemented soon. In the meantime, check out our other available tools!
         </p>
       </Card>
-    </div>
+    </>
   );
 }

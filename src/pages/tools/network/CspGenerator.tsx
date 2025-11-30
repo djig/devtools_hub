@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Textarea } from '../../../components/ui/Textarea';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Shield, Info } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface CSPDirective {
   name: string;
@@ -168,37 +167,17 @@ export default function CspGenerator() {
   const cspHeader = generateCSP();
 
   return (
-    <>
-      <SEO
-        title="CSP Header Generator - Generate Content Security Policy Headers"
-        description="Generate Content Security Policy (CSP) headers online. Free CSP generator that helps secure your web applications against XSS and injection attacks. Build CSP policies easily."
-        keywords="csp generator, content security policy, csp header, security header, csp tool, web security, xss prevention, free generator"
-        path="/tools/csp-generator"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Shield className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">CSP Header Generator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Generate Content Security Policy headers to protect your website from XSS and data injection attacks
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "CSP Header Generator - Generate Content Security Policy Headers",
+        description: "Generate Content Security Policy (CSP) headers online. Free CSP generator that helps secure your web applications against XSS and injection attacks. Build CSP policies easily.",
+        keywords: "csp generator, content security policy, csp header, security header, csp tool, web security, xss prevention, free generator",
+        path: "/tools/csp-generator"
+      }}
+      icon={Shield}
+      title="CSP Header Generator"
+      description="Generate Content Security Policy headers to protect your website from XSS and data injection attacks"
+    >
       {/* Preset Policies */}
       <Card className="p-4">
         <h3 className="font-semibold mb-3">Preset Policies</h3>
@@ -385,7 +364,6 @@ export default function CspGenerator() {
           <p>• Test thoroughly before deploying to production</p>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { diffText } from '../../../utils/text/diff';
 import type { DiffResult } from '../../../utils/text/diff';
 import { GitCompare } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function TextDiff() {
   const [text1, setText1] = useState('');
@@ -30,63 +29,41 @@ export default function TextDiff() {
   };
 
   return (
-    <>
-      <SEO
-        title="Text Diff - Free Online Text Comparison Tool"
-        description="Compare two texts and see line-by-line differences online. Free text diff tool that highlights additions, deletions, and changes. Perfect for code reviews and document comparison."
-        keywords="text diff, compare text, text difference, diff checker, text comparison, diff tool, compare documents, free diff tool"
-        path="/tools/text-diff"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <GitCompare className="h-5 w-5 text-primary" />
+    <ToolPageLayout
+      seo={{
+        title: "Text Diff - Free Online Text Comparison Tool",
+        description: "Compare two texts and see line-by-line differences online. Free text diff tool that highlights additions, deletions, and changes. Perfect for code reviews and document comparison.",
+        keywords: "text diff, compare text, text difference, diff checker, text comparison, diff tool, compare documents, free diff tool",
+        path: "/tools/text-diff"
+      }}
+      icon={GitCompare}
+      title="Text Diff"
+      description="Compare two texts and see the differences"
+      actions={
+        <>
+          <Button onClick={handleCompare} size="sm">Compare</Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+          {diffResult && (
+            <>
+              <div className="h-4 w-px bg-border" />
+              <div className="flex gap-4 text-xs">
+                <span className="text-green-600 dark:text-green-400">
+                  +{diffResult.stats.added} added
+                </span>
+                <span className="text-red-600 dark:text-red-400">
+                  -{diffResult.stats.removed} removed
+                </span>
+                <span className="text-muted-foreground">
+                  {diffResult.stats.unchanged} unchanged
+                </span>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Text Diff</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Compare two texts and see the differences
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-3">
-              <Button onClick={handleCompare} size="sm">Compare</Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-              {diffResult && (
-                <>
-                  <div className="h-4 w-px bg-border" />
-                  <div className="flex gap-4 text-xs">
-                    <span className="text-green-600 dark:text-green-400">
-                      +{diffResult.stats.added} added
-                    </span>
-                    <span className="text-red-600 dark:text-red-400">
-                      -{diffResult.stats.removed} removed
-                    </span>
-                    <span className="text-muted-foreground">
-                      {diffResult.stats.unchanged} unchanged
-                    </span>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+            </>
+          )}
+        </>
+      }
+    >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="p-4">
@@ -150,7 +127,6 @@ export default function TextDiff() {
           </div>
         </Card>
       )}
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

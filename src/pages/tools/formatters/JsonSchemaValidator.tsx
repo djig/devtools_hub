@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, Shield, FileJson } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface ValidationError {
   path: string;
@@ -286,50 +285,28 @@ export default function JsonSchemaValidator() {
   };
 
   return (
-    <>
-      <SEO
-        title="JSON Schema Validator - Free Online JSON Validation Tool"
-        description="Validate JSON data against JSON Schema specifications online. Free JSON Schema validator with detailed error reporting and support for all major JSON Schema features. Test your API responses and configuration files instantly."
-        keywords="json schema validator, validate json schema, json validation tool, json schema online, api validator, json schema tester, schema validation, free json validator"
-        path="/tools/json-schema-validator"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <CheckCircle className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">JSON Schema Validator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Validate JSON data against JSON Schema specifications with detailed error reporting
-              </p>
-            </div>
-          </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={handleValidate} size="sm">
-                <Shield className="h-4 w-4 mr-2" />
-                Validate
-              </Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "JSON Schema Validator - Free Online JSON Validation Tool",
+        description: "Validate JSON data against JSON Schema specifications online. Free JSON Schema validator with detailed error reporting and support for all major JSON Schema features. Test your API responses and configuration files instantly.",
+        keywords: "json schema validator, validate json schema, json validation tool, json schema online, api validator, json schema tester, schema validation, free json validator",
+        path: "/tools/json-schema-validator"
+      }}
+      icon={CheckCircle}
+      title="JSON Schema Validator"
+      description="Validate JSON data against JSON Schema specifications with detailed error reporting"
+      actions={
+        <>
+          <Button onClick={handleValidate} size="sm">
+            <Shield className="h-4 w-4 mr-2" />
+            Validate
+          </Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+        </>
+      }
+    >
 
       {validationResult && (
         <Card
@@ -410,11 +387,12 @@ export default function JsonSchemaValidator() {
               Load Sample
             </Button>
           </div>
-          <Textarea
-            placeholder="Paste your JSON data here..."
+          <CodeEditor
             value={jsonInput}
-            onChange={(e) => setJsonInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm relative z-10"
+            onChange={setJsonInput}
+            language="json"
+            placeholder="Paste your JSON data here..."
+            height="400px"
           />
         </Card>
 
@@ -432,11 +410,12 @@ export default function JsonSchemaValidator() {
               Load Sample
             </Button>
           </div>
-          <Textarea
-            placeholder="Paste your JSON Schema here..."
+          <CodeEditor
             value={schemaInput}
-            onChange={(e) => setSchemaInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm relative z-10"
+            onChange={setSchemaInput}
+            language="json"
+            placeholder="Paste your JSON Schema here..."
+            height="400px"
           />
         </Card>
       </div>
@@ -473,7 +452,6 @@ export default function JsonSchemaValidator() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }
