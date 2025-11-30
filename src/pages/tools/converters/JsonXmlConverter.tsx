@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { InputOutput } from '../../../components/shared/InputOutput';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToXml, xmlToJson } from '../../../utils/converters/xml';
@@ -76,38 +75,46 @@ export default function JsonXmlConverter() {
       }
     >
 
-      {error && (
-        <Card className="p-4 border-destructive/50 bg-destructive/10">
-          <div className="flex items-start gap-2">
-            <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-destructive">Error</p>
-              <p className="text-sm text-destructive/90">{error}</p>
+      <div className="space-y-6">
+        {error && (
+          <Card className="p-4 border-destructive/50 bg-destructive/10">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-destructive">Error</p>
+                <p className="text-sm text-destructive/90">{error}</p>
+              </div>
             </div>
-          </div>
-        </Card>
-      )}
+          </Card>
+        )}
 
-      <InputOutput
-        input={
-          <Textarea
-            placeholder={mode === 'json-to-xml' ? 'Paste JSON here...' : 'Paste XML here...'}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm"
-          />
-        }
-        output={
-          <Textarea
-            value={output}
-            readOnly
-            placeholder={mode === 'json-to-xml' ? 'XML output...' : 'JSON output...'}
-            className="min-h-[400px] font-mono text-sm"
-          />
-        }
-        outputValue={output}
-        showCopy={!error && !!output}
-      />
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">
+              Input {mode === 'json-to-xml' ? 'JSON' : 'XML'}
+            </label>
+            <CodeEditor
+              value={input}
+              onChange={setInput}
+              language={mode === 'json-to-xml' ? 'json' : 'xml'}
+              placeholder={mode === 'json-to-xml' ? 'Paste JSON here...' : 'Paste XML here...'}
+              height="400px"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">
+              Output {mode === 'json-to-xml' ? 'XML' : 'JSON'}
+            </label>
+            <CodeEditor
+              value={output}
+              language={mode === 'json-to-xml' ? 'xml' : 'json'}
+              readOnly
+              placeholder={mode === 'json-to-xml' ? 'XML output...' : 'JSON output...'}
+              height="400px"
+            />
+          </div>
+        </div>
+      </div>
     </ToolPageLayout>
   );
 }

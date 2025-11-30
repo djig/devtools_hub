@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
-import { InputOutput } from '../../../components/shared/InputOutput';
 import { Card } from '../../../components/ui/Card';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { formatJson, minifyJson, validateJson } from '../../../utils/formatters/json';
 import useAppStore from '../../../store/useAppStore';
@@ -107,47 +106,51 @@ export default function JsonFormatter() {
       }
     >
 
-      {error && (
-        <Card className="p-4 border-destructive/50 bg-destructive/10">
-          <div className="flex items-start gap-2">
-            <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-destructive">Error</p>
-              <p className="text-sm text-destructive/90">{error}</p>
+      <div className="space-y-6">
+        {error && (
+          <Card className="p-4 border-destructive/50 bg-destructive/10">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-destructive">Error</p>
+                <p className="text-sm text-destructive/90">{error}</p>
+              </div>
             </div>
-          </div>
-        </Card>
-      )}
+          </Card>
+        )}
 
-      {output && !error && output.startsWith('✓') && (
-        <Card className="p-4 border-green-500/50 bg-green-500/10">
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-            <p className="font-semibold text-green-600 dark:text-green-400">{output}</p>
-          </div>
-        </Card>
-      )}
+        {output && !error && output.startsWith('✓') && (
+          <Card className="p-4 border-green-500/50 bg-green-500/10">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+              <p className="font-semibold text-green-600 dark:text-green-400">{output}</p>
+            </div>
+          </Card>
+        )}
 
-      <InputOutput
-        input={
-          <Textarea
-            placeholder="Paste your JSON here..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm"
-          />
-        }
-        output={
-          <Textarea
-            value={output}
-            readOnly
-            placeholder="Formatted JSON will appear here..."
-            className="min-h-[400px] font-mono text-sm"
-          />
-        }
-        outputValue={output}
-        showCopy={!error && !!output && !output.startsWith('✓')}
-      />
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Input JSON</label>
+            <CodeEditor
+              value={input}
+              onChange={setInput}
+              language="json"
+              placeholder="Paste your JSON here..."
+              height="400px"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Output</label>
+            <CodeEditor
+              value={output}
+              language="json"
+              readOnly
+              placeholder="Formatted JSON will appear here..."
+              height="400px"
+            />
+          </div>
+        </div>
+      </div>
     </ToolPageLayout>
   );
 }

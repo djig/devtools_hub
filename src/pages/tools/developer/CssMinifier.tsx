@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
-import { InputOutput } from '../../../components/shared/InputOutput';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { formatCSS, minifyCSS } from '../../../utils/formatters/code';
@@ -50,25 +49,28 @@ export default function CssMinifier() {
       }
     >
 
-      <InputOutput
-        input={
-          <Textarea
-            placeholder="Paste your CSS here..."
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Input CSS</label>
+          <CodeEditor
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm"
+            onChange={setInput}
+            language="css"
+            placeholder="Paste your CSS here..."
+            height="400px"
           />
-        }
-        output={
-          <Textarea
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Output</label>
+          <CodeEditor
             value={output}
+            language="css"
             readOnly
             placeholder="Processed CSS will appear here..."
-            className="min-h-[400px] font-mono text-sm"
+            height="400px"
           />
-        }
-        outputValue={output}
-      />
+        </div>
+      </div>
     </ToolPageLayout>
   );
 }

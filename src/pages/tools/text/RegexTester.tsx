@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Input } from '../../../components/ui/Input';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, Search } from 'lucide-react';
@@ -163,17 +163,16 @@ export default function RegexTester() {
         </Card>
       )}
 
-      <Card className="p-4">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-2">
-          Test String
-        </h3>
-        <Textarea
-          placeholder="Enter test string..."
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Test String</label>
+        <CodeEditor
           value={testString}
-          onChange={(e) => setTestString(e.target.value)}
-          className="min-h-[200px] font-mono text-sm"
+          onChange={setTestString}
+          language="plaintext"
+          placeholder="Enter test string..."
+          height="200px"
         />
-      </Card>
+      </div>
 
       {result && result.count > 0 && (
         <>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
+import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, Shield, FileJson } from 'lucide-react';
@@ -387,11 +387,12 @@ export default function JsonSchemaValidator() {
               Load Sample
             </Button>
           </div>
-          <Textarea
-            placeholder="Paste your JSON data here..."
+          <CodeEditor
             value={jsonInput}
-            onChange={(e) => setJsonInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm relative z-10"
+            onChange={setJsonInput}
+            language="json"
+            placeholder="Paste your JSON data here..."
+            height="400px"
           />
         </Card>
 
@@ -409,11 +410,12 @@ export default function JsonSchemaValidator() {
               Load Sample
             </Button>
           </div>
-          <Textarea
-            placeholder="Paste your JSON Schema here..."
+          <CodeEditor
             value={schemaInput}
-            onChange={(e) => setSchemaInput(e.target.value)}
-            className="min-h-[400px] font-mono text-sm relative z-10"
+            onChange={setSchemaInput}
+            language="json"
+            placeholder="Paste your JSON Schema here..."
+            height="400px"
           />
         </Card>
       </div>
