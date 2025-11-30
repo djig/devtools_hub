@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { Globe, Clock, CalendarDays } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface Timezone {
   name: string;
@@ -128,37 +127,17 @@ export default function TimezoneConverter() {
   };
 
   return (
-    <>
-      <SEO
-        title="Timezone Converter - Convert Times Between Timezones"
-        description="Convert times between different timezones online. Free timezone converter with world clock. Find meeting times across timezones easily. Supports all IANA timezones."
-        keywords="timezone converter, time zone converter, world clock, convert timezone, meeting time, time converter, timezone tool, free converter"
-        path="/tools/timezone-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Globe className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Timezone Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Convert times between timezones and view world clocks
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "Timezone Converter - Convert Times Between Timezones",
+        description: "Convert times between different timezones online. Free timezone converter with world clock. Find meeting times across timezones easily. Supports all IANA timezones.",
+        keywords: "timezone converter, time zone converter, world clock, convert timezone, meeting time, time converter, timezone tool, free converter",
+        path: "/tools/timezone-converter"
+      }}
+      icon={Globe}
+      title="Timezone Converter"
+      description="Convert times between timezones and view world clocks"
+    >
       {/* Time Input */}
       <Card className="p-4">
         <div className="space-y-4">
@@ -263,7 +242,6 @@ export default function TimezoneConverter() {
           <p>• All conversions account for daylight saving time automatically</p>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

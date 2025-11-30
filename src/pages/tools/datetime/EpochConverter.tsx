@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
-import { SEO } from '../../../utils/seo';
 
 export default function EpochConverter() {
   const [currentTime, setCurrentTime] = useState(Date.now());
@@ -79,37 +78,17 @@ export default function EpochConverter() {
   };
 
   return (
-    <>
-      <SEO
-        title="Epoch Converter - Unix Timestamp Converter"
-        description="Convert between Unix timestamps and dates online. Free epoch converter that transforms Unix time to human-readable dates and vice versa. Supports milliseconds and seconds."
-        keywords="epoch converter, unix timestamp, timestamp converter, epoch to date, unix time converter, timestamp tool, epoch time, free converter"
-        path="/tools/epoch-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Clock className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Epoch Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Convert between Unix timestamps and human-readable dates
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "Epoch Converter - Unix Timestamp Converter",
+        description: "Convert between Unix timestamps and dates online. Free epoch converter that transforms Unix time to human-readable dates and vice versa. Supports milliseconds and seconds.",
+        keywords: "epoch converter, unix timestamp, timestamp converter, epoch to date, unix time converter, timestamp tool, epoch time, free converter",
+        path: "/tools/epoch-converter"
+      }}
+      icon={Clock}
+      title="Epoch Converter"
+      description="Convert between Unix timestamps and human-readable dates"
+    >
       <Card className="p-6">
         <div className="flex items-center gap-3 mb-2">
           <Clock className="h-5 w-5 text-primary" />
@@ -206,7 +185,6 @@ export default function EpochConverter() {
           represent dates and times.
         </p>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

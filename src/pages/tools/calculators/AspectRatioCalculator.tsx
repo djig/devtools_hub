@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { Maximize2, RefreshCw, LayoutGrid } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface CommonRatio {
   name: string;
@@ -144,37 +143,17 @@ export default function AspectRatioCalculator() {
   const visualSize = getVisualRatio();
 
   return (
-    <>
-      <SEO
-        title="Aspect Ratio Calculator - Calculate and Convert Aspect Ratios"
-        description="Calculate and convert aspect ratios for images and videos online. Free aspect ratio calculator for designers and content creators. Find width or height for any aspect ratio."
-        keywords="aspect ratio calculator, aspect ratio, image aspect ratio, video aspect ratio, resolution calculator, aspect ratio converter, free calculator"
-        path="/tools/aspect-ratio-calculator"
-      />
-      <div className="space-y-6">
-      {/* Compact Header with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-purple-500/10 via-blue-500/5 to-background p-6">
-        <div className="relative z-10 space-y-4">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <LayoutGrid className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Aspect Ratio Calculator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Calculate dimensions and aspect ratios for images, videos, and screens
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "Aspect Ratio Calculator - Calculate and Convert Aspect Ratios",
+        description: "Calculate and convert aspect ratios for images and videos online. Free aspect ratio calculator for designers and content creators. Find width or height for any aspect ratio.",
+        keywords: "aspect ratio calculator, aspect ratio, image aspect ratio, video aspect ratio, resolution calculator, aspect ratio converter, free calculator",
+        path: "/tools/aspect-ratio-calculator"
+      }}
+      icon={LayoutGrid}
+      title="Aspect Ratio Calculator"
+      description="Calculate dimensions and aspect ratios for images, videos, and screens"
+    >
       {/* Common Ratios */}
       <Card className="p-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent pointer-events-none" />
@@ -345,7 +324,6 @@ export default function AspectRatioCalculator() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

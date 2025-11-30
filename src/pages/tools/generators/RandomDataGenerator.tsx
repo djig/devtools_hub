@@ -4,13 +4,12 @@ import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Modal } from '../../../components/ui/Modal';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Shuffle, AlertTriangle, Settings, FileJson, FileSpreadsheet, Save, X, Upload, Download, Archive, Trash2, Info, CheckCircle2, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
-import { SEO } from '../../../utils/seo';
 
 interface RandomData {
   [key: string]: string | number;
@@ -931,39 +930,18 @@ export default function RandomDataGenerator() {
   };
 
   return (
-    <>
-      <SEO
-        title="Random Data Generator - Generate Fake Names, Emails, Addresses"
-        description="Generate random fake data online: names, emails, addresses, phone numbers, and more. Free random data generator for testing and development. Realistic dummy data instantly."
-        keywords="random data generator, fake data generator, test data, dummy data, random name, fake email, mock data, free generator"
-        path="/tools/random-data-generator"
-      />
-      <div className="space-y-6">
-      {/* Hero Section with Breadcrumb & Integrated Controls */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          {/* Single Row: Title & Action Buttons */}
-          <div className="flex items-center justify-between px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Shuffle className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Random Data Generator</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Generate realistic fake data with custom schemas. All processing happens locally.
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
+    <ToolPageLayout
+      seo={{
+        title: "Random Data Generator - Generate Fake Names, Emails, Addresses",
+        description: "Generate random fake data online: names, emails, addresses, phone numbers, and more. Free random data generator for testing and development. Realistic dummy data instantly.",
+        keywords: "random data generator, fake data generator, test data, dummy data, random name, fake email, mock data, free generator",
+        path: "/tools/random-data-generator"
+      }}
+      icon={Shuffle}
+      title="Random Data Generator"
+      description="Generate realistic fake data with custom schemas. All processing happens locally"
+      actions={
+        <div className="flex flex-wrap items-center justify-end gap-2">
               {/* Large Batch Warning */}
               {count > 5000 && (
                 <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
@@ -1028,10 +1006,8 @@ export default function RandomDataGenerator() {
                 <Info className="h-4 w-4" />
               </Button>
             </div>
-          </div>
-        </div>
-      </div>
-
+      }
+    >
       {/* Export Controls - Appears only when data exists */}
       {(data || batchData.length > 0) && (
         <Card className="overflow-hidden border-border/50 shadow-sm">
@@ -1762,27 +1738,18 @@ export default function RandomDataGenerator() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }
 
 function DataRow({ label, value }: { label: string; value: string }) {
   return (
-    <>
-      <SEO
-        title="Random Data Generator - Generate Fake Names, Emails, Addresses"
-        description="Generate random fake data online: names, emails, addresses, phone numbers, and more. Free random data generator for testing and development. Realistic dummy data instantly."
-        keywords="random data generator, fake data generator, test data, dummy data, random name, fake email, mock data, free generator"
-        path="/tools/random-data-generator"
-      />
-      <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors px-2 rounded">
+    <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors px-2 rounded">
       <span className="text-xs font-semibold text-foreground/80 min-w-[100px]">{label}</span>
       <div className="flex items-center gap-2 flex-1 justify-end">
         <code className="text-xs font-mono bg-muted/50 px-2 py-0.5 rounded border border-border/50 max-w-md truncate">{value}</code>
         <CopyButton text={value} />
       </div>
-      </div>
-    </>
+    </div>
   );
 }
