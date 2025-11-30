@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { InputOutput } from '../../../components/shared/InputOutput';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToCsv, csvToJson } from '../../../utils/converters/csv';
 import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function JsonCsvConverter() {
   const [input, setInput] = useState('');
@@ -51,53 +50,31 @@ export default function JsonCsvConverter() {
   };
 
   return (
-    <>
-      <SEO
-        title="JSON to CSV Converter - Free Online JSON CSV Converter"
-        description="Convert between JSON and CSV formats instantly with our free online converter. Transform JSON arrays to CSV spreadsheets and CSV data to JSON. Perfect for data import/export. Works entirely in your browser."
-        keywords="json to csv, csv to json, json csv converter, convert json to csv, convert csv to json, json to excel, csv converter, free converter"
-        path="/tools/json-csv-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <RefreshCw className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">JSON ↔ CSV Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Convert between JSON and CSV formats
-              </p>
-            </div>
-          </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={handleConvert} size="sm">
-                Convert to {mode === 'json-to-csv' ? 'CSV' : 'JSON'}
-              </Button>
-              <Button onClick={toggleMode} variant="outline" size="sm">
-                <ArrowRightLeft className="mr-2 h-4 w-4" />
-                Switch Direction
-              </Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "JSON to CSV Converter - Free Online JSON CSV Converter",
+        description: "Convert between JSON and CSV formats instantly with our free online converter. Transform JSON arrays to CSV spreadsheets and CSV data to JSON. Perfect for data import/export. Works entirely in your browser.",
+        keywords: "json to csv, csv to json, json csv converter, convert json to csv, convert csv to json, json to excel, csv converter, free converter",
+        path: "/tools/json-csv-converter"
+      }}
+      icon={RefreshCw}
+      title="JSON ↔ CSV Converter"
+      description="Convert between JSON and CSV formats"
+      actions={
+        <>
+          <Button onClick={handleConvert} size="sm">
+            Convert to {mode === 'json-to-csv' ? 'CSV' : 'JSON'}
+          </Button>
+          <Button onClick={toggleMode} variant="outline" size="sm">
+            <ArrowRightLeft className="mr-2 h-4 w-4" />
+            Switch Direction
+          </Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+        </>
+      }
+    >
 
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
@@ -131,7 +108,6 @@ export default function JsonCsvConverter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { generateMultipleUuids } from '../../../utils/generators/uuid';
 import useAppStore from '../../../store/useAppStore';
 import { RefreshCw, Hash } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function UuidGenerator() {
   const [uuids, setUuids] = useState<string[]>([]);
@@ -25,61 +24,39 @@ export default function UuidGenerator() {
   };
 
   return (
-    <>
-      <SEO
-        title="UUID Generator - Free Online UUID/GUID Generator"
-        description="Generate UUIDs (v4) and GUIDs online. Free UUID generator that creates universally unique identifiers instantly. Bulk generation supported. Secure and random."
-        keywords="uuid generator, guid generator, generate uuid, uuid v4, unique id generator, random uuid, uuid tool, free uuid generator"
-        path="/tools/uuid-generator"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Hash className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">UUID Generator</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Generate universally unique identifiers (UUIDs) version 4
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <div className="flex items-center gap-2">
-                <label className="text-xs text-muted-foreground whitespace-nowrap">
-                  Generate:
-                </label>
-                <Input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={count}
-                  onChange={(e) => setCount(Math.max(1, Math.min(100, Number(e.target.value))))}
-                  className="w-20 h-8"
-                />
-                <span className="text-xs text-muted-foreground">UUIDs</span>
-              </div>
-              <Button onClick={generateUuids} size="sm">
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Generate
-              </Button>
-            </div>
+    <ToolPageLayout
+      seo={{
+        title: "UUID Generator - Free Online UUID/GUID Generator",
+        description: "Generate UUIDs (v4) and GUIDs online. Free UUID generator that creates universally unique identifiers instantly. Bulk generation supported. Secure and random.",
+        keywords: "uuid generator, guid generator, generate uuid, uuid v4, unique id generator, random uuid, uuid tool, free uuid generator",
+        path: "/tools/uuid-generator"
+      }}
+      icon={Hash}
+      title="UUID Generator"
+      description="Generate universally unique identifiers (UUIDs) version 4"
+      actions={
+        <>
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">
+              Generate:
+            </label>
+            <Input
+              type="number"
+              min={1}
+              max={100}
+              value={count}
+              onChange={(e) => setCount(Math.max(1, Math.min(100, Number(e.target.value))))}
+              className="w-20 h-8"
+            />
+            <span className="text-xs text-muted-foreground">UUIDs</span>
           </div>
-        </div>
-      </div>
+          <Button onClick={generateUuids} size="sm">
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Generate
+          </Button>
+        </>
+      }
+    >
 
       <Card className="p-4">
         <div className="flex items-center justify-between mb-4">
@@ -114,7 +91,6 @@ export default function UuidGenerator() {
           <code className="text-xs">xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</code>
         </p>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from '../../../utils/converters/color';
 import { Pipette, Palette } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function ColorConverter() {
   const [hexInput, setHexInput] = useState('#3B82F6');
@@ -48,36 +47,17 @@ export default function ColorConverter() {
   }, []);
 
   return (
-    <>
-      <SEO
-        title="Color Converter - Convert HEX, RGB, HSL, CMYK with Color Picker"
-        description="Convert colors between HEX, RGB, HSL, and CMYK formats online. Free color converter with interactive color picker. Perfect for web designers and developers."
-        keywords="color converter, hex to rgb, rgb to hex, color picker, hsl converter, cmyk converter, color tool, hex color, free converter"
-        path="/tools/color-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        <div className="flex items-center gap-4 px-6 pb-6">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <Palette className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Color Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Convert between HEX, RGB, and HSL color formats with live preview
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Color Converter - Convert HEX, RGB, HSL, CMYK with Color Picker",
+        description: "Convert colors between HEX, RGB, HSL, and CMYK formats online. Free color converter with interactive color picker. Perfect for web designers and developers.",
+        keywords: "color converter, hex to rgb, rgb to hex, color picker, hsl converter, cmyk converter, color tool, hex color, free converter",
+        path: "/tools/color-converter"
+      }}
+      icon={Palette}
+      title="Color Converter"
+      description="Convert between HEX, RGB, and HSL color formats with live preview"
+    >
 
       {/* Main Color Preview Card */}
       <Card className="p-8 relative overflow-hidden">
@@ -302,7 +282,6 @@ export default function ColorConverter() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

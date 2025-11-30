@@ -2,11 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Upload, Image as ImageIcon, Download, RefreshCw } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function ImageBase64Converter() {
   const [imagePreview, setImagePreview] = useState<string>('');
@@ -133,36 +132,17 @@ export default function ImageBase64Converter() {
   };
 
   return (
-    <>
-      <SEO
-        title="Image to Base64 Converter - Convert Images to Base64 and Vice Versa"
-        description="Convert images to Base64 strings and Base64 to images online. Free image Base64 converter supporting PNG, JPG, GIF, and more. Embed images in CSS or HTML."
-        keywords="image to base64, base64 to image, image encoder, base64 image, convert image, image base64 converter, data uri, free converter"
-        path="/tools/image-base64-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        <div className="flex items-center gap-4 px-6 pb-6">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <ImageIcon className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Image ↔ Base64 Converter</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Convert between images and Base64 strings in both directions with drag & drop support
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Image to Base64 Converter - Convert Images to Base64 and Vice Versa",
+        description: "Convert images to Base64 strings and Base64 to images online. Free image Base64 converter supporting PNG, JPG, GIF, and more. Embed images in CSS or HTML.",
+        keywords: "image to base64, base64 to image, image encoder, base64 image, convert image, image base64 converter, data uri, free converter",
+        path: "/tools/image-base64-converter"
+      }}
+      icon={ImageIcon}
+      title="Image ↔ Base64 Converter"
+      description="Convert between images and Base64 strings in both directions with drag & drop support"
+    >
 
       {/* Upload Area */}
       <Card className="p-8 relative overflow-hidden">
@@ -286,7 +266,6 @@ export default function ImageBase64Converter() {
           </Button>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

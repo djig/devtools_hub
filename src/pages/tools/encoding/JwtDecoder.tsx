@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { AlertCircle, CheckCircle, Clock, Key } from 'lucide-react';
 import { CopyButton } from '../../../components/shared/CopyButton';
-import { SEO } from '../../../utils/seo';
 
 interface DecodedJWT {
   header: any;
@@ -57,48 +56,25 @@ export default function JwtDecoder() {
   };
 
   return (
-    <>
-      <SEO
-        title="JWT Decoder - Free Online JSON Web Token Decoder"
-        description="Decode and validate JSON Web Tokens (JWT) online. Free JWT decoder that displays header, payload, and signature with expiration checking. Works entirely in your browser - your tokens never leave your device."
-        keywords="jwt decoder, json web token decoder, decode jwt, jwt parser, jwt validator, jwt debugger, jwt tool, free jwt decoder"
-        path="/tools/jwt-decoder"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Key className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">JWT Decoder</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Decode and inspect JSON Web Tokens (JWT) without verification
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={decodeJWT} size="sm">Decode JWT</Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      seo={{
+        title: "JWT Decoder - Free Online JSON Web Token Decoder",
+        description: "Decode and validate JSON Web Tokens (JWT) online. Free JWT decoder that displays header, payload, and signature with expiration checking. Works entirely in your browser - your tokens never leave your device.",
+        keywords: "jwt decoder, json web token decoder, decode jwt, jwt parser, jwt validator, jwt debugger, jwt tool, free jwt decoder",
+        path: "/tools/jwt-decoder"
+      }}
+      icon={Key}
+      title="JWT Decoder"
+      description="Decode and inspect JSON Web Tokens (JWT) without verification"
+      actions={
+        <>
+          <Button onClick={decodeJWT} size="sm">Decode JWT</Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+        </>
+      }
+    >
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
           <div className="flex items-start gap-2">
@@ -195,7 +171,6 @@ export default function JwtDecoder() {
           trust client-side JWT validation for security purposes.
         </p>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

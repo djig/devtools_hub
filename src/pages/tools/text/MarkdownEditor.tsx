@@ -2,12 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import MarkdownIt from 'markdown-it';
 import { FileText } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 const md = new MarkdownIt({
   html: true,
@@ -66,47 +65,25 @@ function hello() {
   };
 
   return (
-    <>
-      <SEO
-        title="Markdown Editor - Free Online Markdown Editor with Live Preview"
-        description="Edit and preview Markdown with live rendering online. Free Markdown editor with syntax highlighting and real-time preview. Supports GitHub Flavored Markdown (GFM)."
-        keywords="markdown editor, markdown preview, online markdown editor, md editor, markdown tool, markdown live preview, github markdown, free markdown editor"
-        path="/tools/markdown-editor"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <FileText className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Markdown Editor</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Edit and preview Markdown with live rendering
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-              <CopyButton text={markdown} />
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Markdown Editor - Free Online Markdown Editor with Live Preview",
+        description: "Edit and preview Markdown with live rendering online. Free Markdown editor with syntax highlighting and real-time preview. Supports GitHub Flavored Markdown (GFM).",
+        keywords: "markdown editor, markdown preview, online markdown editor, md editor, markdown tool, markdown live preview, github markdown, free markdown editor",
+        path: "/tools/markdown-editor"
+      }}
+      icon={FileText}
+      title="Markdown Editor"
+      description="Edit and preview Markdown with live rendering"
+      actions={
+        <>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+          <CopyButton text={markdown} />
+        </>
+      }
+    >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="p-4">
@@ -161,7 +138,6 @@ function hello() {
           </div>
         </div>
       </Card>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

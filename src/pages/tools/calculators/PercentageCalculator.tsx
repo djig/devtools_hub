@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
 import { Input } from '../../../components/ui/Input';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { Calculator, Percent } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function PercentageCalculator() {
   const [value1, setValue1] = useState('');
@@ -82,36 +81,17 @@ export default function PercentageCalculator() {
   };
 
   return (
-    <>
-      <SEO
-        title="Percentage Calculator - Calculate Percentages, Increase, Decrease"
-        description="Calculate percentages, percentage increase, and percentage decrease online. Free percentage calculator for business, finance, and everyday math. Multiple calculation modes."
-        keywords="percentage calculator, percent calculator, calculate percentage, percentage increase, percentage decrease, percent change, free calculator"
-        path="/tools/percentage-calculator"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-          <div className="px-6 pt-4 pb-2">
-            <Breadcrumb />
-          </div>
-
-          <div className="flex items-center gap-4 px-6 pb-6">
-            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-              <Percent className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Percentage Calculator</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Calculate percentages, increases, decreases, and more
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Percentage Calculator - Calculate Percentages, Increase, Decrease",
+        description: "Calculate percentages, percentage increase, and percentage decrease online. Free percentage calculator for business, finance, and everyday math. Multiple calculation modes.",
+        keywords: "percentage calculator, percent calculator, calculate percentage, percentage increase, percentage decrease, percent change, free calculator",
+        path: "/tools/percentage-calculator"
+      }}
+      icon={Percent}
+      title="Percentage Calculator"
+      description="Calculate percentages, increases, decreases, and more"
+    >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
@@ -276,7 +256,6 @@ export default function PercentageCalculator() {
           </CardContent>
         </Card>
       </div>
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

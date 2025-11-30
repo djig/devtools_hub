@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { CopyButton } from '../../../components/shared/CopyButton';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import * as caseUtils from '../../../utils/text/case';
 import { CaseSensitive } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function CaseConverter() {
   const [input, setInput] = useState('');
@@ -35,46 +34,22 @@ export default function CaseConverter() {
   };
 
   return (
-    <>
-      <SEO
-        title="Case Converter - Convert Text Case Online (camelCase, snake_case, etc.)"
-        description="Convert text between different cases online: camelCase, snake_case, kebab-case, PascalCase, UPPER CASE, and lower case. Free case converter for developers and writers."
-        keywords="case converter, camel case, snake case, kebab case, pascal case, convert case, text case, case transformer, free converter"
-        path="/tools/case-converter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <CaseSensitive className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Case Converter</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Convert text between different casing styles
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={loadSample} variant="outline" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "Case Converter - Convert Text Case Online (camelCase, snake_case, etc.)",
+        description: "Convert text between different cases online: camelCase, snake_case, kebab-case, PascalCase, UPPER CASE, and lower case. Free case converter for developers and writers.",
+        keywords: "case converter, camel case, snake case, kebab case, pascal case, convert case, text case, case transformer, free converter",
+        path: "/tools/case-converter"
+      }}
+      icon={CaseSensitive}
+      title="Case Converter"
+      description="Convert text between different casing styles"
+      actions={
+        <Button onClick={loadSample} variant="outline" size="sm">
+          Load Sample
+        </Button>
+      }
+    >
 
       <Card className="p-4">
         <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Input Text</h3>
@@ -103,7 +78,6 @@ export default function CaseConverter() {
           ))}
         </div>
       )}
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

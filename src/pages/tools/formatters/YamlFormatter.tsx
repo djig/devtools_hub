@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
 import { InputOutput } from '../../../components/shared/InputOutput';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { formatYaml } from '../../../utils/converters/yaml';
 import { AlertCircle, FileCode } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 export default function YamlFormatter() {
   const [input, setInput] = useState('');
@@ -35,47 +34,25 @@ export default function YamlFormatter() {
   };
 
   return (
-    <>
-      <SEO
-        title="YAML Formatter - Free Online YAML Beautifier & Validator"
-        description="Format and validate YAML files online with our free YAML formatter. Beautify YAML with proper indentation, validate syntax, and ensure structure correctness. Works entirely in your browser - fast and secure."
-        keywords="yaml formatter, yaml validator, yaml beautifier, format yaml online, validate yaml, yml formatter, yaml tool, beautify yaml, yaml syntax validator, free yaml formatter"
-        path="/tools/yaml-formatter"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <FileCode className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">YAML Formatter</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Format and validate YAML files with proper indentation
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={handleFormat} size="sm">Format YAML</Button>
-              <Button onClick={loadSample} variant="ghost" size="sm">
-                Load Sample
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "YAML Formatter - Free Online YAML Beautifier & Validator",
+        description: "Format and validate YAML files online with our free YAML formatter. Beautify YAML with proper indentation, validate syntax, and ensure structure correctness. Works entirely in your browser - fast and secure.",
+        keywords: "yaml formatter, yaml validator, yaml beautifier, format yaml online, validate yaml, yml formatter, yaml tool, beautify yaml, yaml syntax validator, free yaml formatter",
+        path: "/tools/yaml-formatter"
+      }}
+      icon={FileCode}
+      title="YAML Formatter"
+      description="Format and validate YAML files with proper indentation"
+      actions={
+        <>
+          <Button onClick={handleFormat} size="sm">Format YAML</Button>
+          <Button onClick={loadSample} variant="ghost" size="sm">
+            Load Sample
+          </Button>
+        </>
+      }
+    >
 
       {error && (
         <Card className="p-4 border-destructive/50 bg-destructive/10">
@@ -109,7 +86,6 @@ export default function YamlFormatter() {
         outputValue={output}
         showCopy={!error && !!output}
       />
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }

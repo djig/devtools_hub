@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '../../../components/ui/Textarea';
 import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
-import { Breadcrumb } from '../../../components/shared/Breadcrumb';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { CopyButton } from '../../../components/shared/CopyButton';
 import useAppStore from '../../../store/useAppStore';
 import { Monitor as MonitorIcon, Smartphone, Tablet, Globe, Cpu, Code, Monitor } from 'lucide-react';
-import { SEO } from '../../../utils/seo';
 
 interface ParsedUA {
   browser: { name: string; version: string };
@@ -151,59 +150,37 @@ export default function UserAgentParser() {
   };
 
   return (
-    <>
-      <SEO
-        title="User Agent Parser - Parse and Analyze HTTP User-Agent Strings"
-        description="Parse and analyze HTTP User-Agent strings online. Free user agent parser that extracts browser, OS, and device information. Perfect for analytics and debugging."
-        keywords="user agent parser, parse user agent, user agent analyzer, browser detection, device detection, user agent tool, free parser"
-        path="/tools/user-agent-parser"
-      />
-      <div className="space-y-6">
-      {/* Compact Hero Section with Breadcrumb & Actions */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-sm">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
-        <div className="relative">
-          {/* Breadcrumb Navigation */}
-        <div className="px-6 pt-4 pb-2">
-          <Breadcrumb />
-        </div>
-
-        {/* Single Row: Title, Icon & Action Buttons */}
-          <div className="flex items-center justify-between gap-4 px-6 pb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Monitor className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">User Agent Parser</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Parse and analyze HTTP User-Agent strings to extract browser, OS, and device information
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons (TOP-RIGHT) */}
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              <Button onClick={detectCurrentUA} size="sm">
-                Detect My User Agent
-              </Button>
-              <Button onClick={handleParse} variant="outline" size="sm">
-                Parse
-              </Button>
-              {samples.map((sample) => (
-                <Button
-                  key={sample.name}
-                  onClick={() => loadSample(sample.ua)}
-                  variant="ghost"
-                  size="sm"
-                >
-                  {sample.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+    <ToolPageLayout
+      seo={{
+        title: "User Agent Parser - Parse and Analyze HTTP User-Agent Strings",
+        description: "Parse and analyze HTTP User-Agent strings online. Free user agent parser that extracts browser, OS, and device information. Perfect for analytics and debugging.",
+        keywords: "user agent parser, parse user agent, user agent analyzer, browser detection, device detection, user agent tool, free parser",
+        path: "/tools/user-agent-parser"
+      }}
+      icon={Monitor}
+      title="User Agent Parser"
+      description="Parse and analyze HTTP User-Agent strings to extract browser, OS, and device information"
+      actions={
+        <>
+          <Button onClick={detectCurrentUA} size="sm">
+            Detect My User Agent
+          </Button>
+          <Button onClick={handleParse} variant="outline" size="sm">
+            Parse
+          </Button>
+          {samples.map((sample) => (
+            <Button
+              key={sample.name}
+              onClick={() => loadSample(sample.ua)}
+              variant="ghost"
+              size="sm"
+            >
+              {sample.name}
+            </Button>
+          ))}
+        </>
+      }
+    >
 
       <Card className="p-4">
         <Textarea
@@ -331,7 +308,6 @@ export default function UserAgentParser() {
           </Card>
         </>
       )}
-      </div>
-    </>
+    </ToolPageLayout>
   );
 }
