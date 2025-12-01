@@ -157,6 +157,7 @@ xC5GNhqKXVhJNqqF8l3nFCMhCQmhVS8z9gVnWb2MiKZqF7H8mFxXtSGhZh
       icon={Shield}
       title="SSL Certificate Decoder"
       description="Decode and analyze SSL certificates"
+      category="network"
       actions={
         <>
           <Button onClick={handleDecode} size="sm">Decode</Button>

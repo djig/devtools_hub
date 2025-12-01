@@ -43,6 +43,7 @@ export default function XmlFormatter() {
       icon={FileCode}
       title="XML Formatter"
       description="Format and validate XML documents with proper indentation"
+      category="formatters"
       actions={
         <>
           <Button onClick={handleFormat} size="sm">Format XML</Button>

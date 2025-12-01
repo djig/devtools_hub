@@ -4,19 +4,7 @@ import { getToolsByCategory, getCategoryInfo } from '../data/tools';
 import { ChevronRight, Home } from 'lucide-react';
 import type { ToolCategory } from '../types';
 import { SEO } from '../utils/seo';
-
-// Color schemes matching the home page
-const categoryColors: Record<string, { iconBg: string; badge: string }> = {
-  formatters: { iconBg: 'bg-gradient-to-br from-blue-500 to-cyan-500', badge: 'from-blue-400 to-cyan-400' },
-  converters: { iconBg: 'bg-gradient-to-br from-purple-500 to-pink-500', badge: 'from-purple-400 to-pink-400' },
-  encoders: { iconBg: 'bg-gradient-to-br from-green-500 to-emerald-500', badge: 'from-green-400 to-emerald-400' },
-  text: { iconBg: 'bg-gradient-to-br from-orange-500 to-amber-500', badge: 'from-orange-400 to-amber-400' },
-  generators: { iconBg: 'bg-gradient-to-br from-pink-500 to-rose-500', badge: 'from-pink-400 to-rose-400' },
-  datetime: { iconBg: 'bg-gradient-to-br from-indigo-500 to-violet-500', badge: 'from-indigo-400 to-violet-400' },
-  calculators: { iconBg: 'bg-gradient-to-br from-teal-500 to-cyan-500', badge: 'from-teal-400 to-cyan-400' },
-  developer: { iconBg: 'bg-gradient-to-br from-red-500 to-orange-500', badge: 'from-red-400 to-orange-400' },
-  network: { iconBg: 'bg-gradient-to-br from-lime-500 to-green-500', badge: 'from-lime-400 to-green-400' },
-};
+import { getCategoryColors } from '../utils/categoryColors';
 
 export default function Category() {
   const { category } = useParams<{ category: string }>();
@@ -33,7 +21,7 @@ export default function Category() {
   }
 
   const Icon = categoryInfo.icon;
-  const colors = categoryColors[category as string] || categoryColors.formatters;
+  const colors = getCategoryColors(category as ToolCategory);
 
   // Generate SEO keywords from tools in category
   const categoryKeywords = tools.map(tool => tool.name).join(', ') + ', ' + categoryInfo.name + ' tools, developer utilities, free online tools';

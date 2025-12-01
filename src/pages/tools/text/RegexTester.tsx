@@ -104,6 +104,7 @@ export default function RegexTester() {
       icon={Search}
       title="Regex Tester"
       description="Test regular expressions with real-time matching and highlighting"
+      category="text"
       actions={
         <Button onClick={loadSample} variant="ghost" size="sm">
           Load Sample

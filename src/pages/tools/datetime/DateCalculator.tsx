@@ -73,6 +73,7 @@ export default function DateCalculator() {
       icon={Calendar}
       title="Date Calculator"
       description="Add, subtract, or calculate the difference between dates"
+      category="datetime"
     >
       <Card className="p-4">
         <label className="text-sm font-medium mb-2 block">Operation</label>

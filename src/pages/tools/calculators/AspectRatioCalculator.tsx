@@ -153,6 +153,7 @@ export default function AspectRatioCalculator() {
       icon={LayoutGrid}
       title="Aspect Ratio Calculator"
       description="Calculate dimensions and aspect ratios for images, videos, and screens"
+      category="calculators"
     >
       {/* Common Ratios */}
       <Card className="p-6 relative overflow-hidden">

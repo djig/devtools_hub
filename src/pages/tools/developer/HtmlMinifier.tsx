@@ -38,6 +38,7 @@ export default function HtmlMinifier() {
       icon={Minimize2}
       title="HTML Minifier"
       description="Minify and beautify HTML code"
+      category="developer"
       actions={
         <>
           <Button onClick={handleMinify} size="sm">Minify</Button>

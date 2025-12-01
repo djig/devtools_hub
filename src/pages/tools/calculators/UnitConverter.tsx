@@ -59,6 +59,7 @@ export default function UnitConverter() {
       icon={Ruler}
       title="Unit Converter"
       description="Convert between different units of measurement"
+      category="calculators"
     >
       <Card className="p-4">
         <label className="text-sm font-medium mb-2 block">Category</label>

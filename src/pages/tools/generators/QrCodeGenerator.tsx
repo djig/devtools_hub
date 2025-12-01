@@ -56,6 +56,7 @@ export default function QrCodeGenerator() {
       icon={QrCode}
       title="QR Code Generator"
       description="Generate QR codes from text, URLs, or any string data"
+      category="generators"
     >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

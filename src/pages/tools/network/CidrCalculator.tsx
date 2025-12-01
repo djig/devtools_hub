@@ -14,6 +14,7 @@ export default function CidrCalculator() {
       icon={Network}
       title="CIDR Calculator"
       description="Calculate IP ranges and subnet masks"
+      category="network"
     >
       <ComingSoon toolId='cidr-calculator' toolName='CIDR Calculator' description='Calculate IP ranges and subnet masks' />
     </ToolPageLayout>

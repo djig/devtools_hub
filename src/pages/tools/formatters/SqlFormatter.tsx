@@ -410,6 +410,7 @@ export default function SqlFormatter() {
       icon={Database}
       title="SQL Formatter"
       description="Format and beautify SQL queries with validation"
+      category="formatters"
       actions={
         <>
           <Select

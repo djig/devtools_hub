@@ -66,6 +66,7 @@ export default function JwtDecoder() {
       icon={Key}
       title="JWT Decoder"
       description="Decode and inspect JSON Web Tokens (JWT) without verification"
+      category="encoders"
       actions={
         <>
           <Button onClick={decodeJWT} size="sm">Decode JWT</Button>

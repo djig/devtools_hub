@@ -218,6 +218,7 @@ export default function CronParser() {
       icon={Clock}
       title="Cron Expression Parser"
       description="Parse and build cron expressions with human-readable descriptions"
+      category="developer"
     >
 
       {/* Expression Input */}

@@ -58,6 +58,7 @@ export default function HashGenerator() {
       icon={Shield}
       title="Hash Generator"
       description="Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text"
+      category="generators"
       actions={
         <Button onClick={loadSample} variant="outline" size="sm">
           Load Sample

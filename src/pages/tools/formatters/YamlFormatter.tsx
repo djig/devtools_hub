@@ -43,6 +43,7 @@ export default function YamlFormatter() {
       icon={FileCode}
       title="YAML Formatter"
       description="Format and validate YAML files with proper indentation"
+      category="formatters"
       actions={
         <>
           <Button onClick={handleFormat} size="sm">Format YAML</Button>

@@ -38,6 +38,7 @@ export default function JsMinifier() {
       icon={Minimize2}
       title="JavaScript Minifier"
       description="Minify and beautify JavaScript code"
+      category="developer"
       actions={
         <>
           <Button onClick={handleMinify} size="sm">Minify</Button>

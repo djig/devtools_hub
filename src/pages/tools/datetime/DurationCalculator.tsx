@@ -175,6 +175,7 @@ export default function DurationCalculator() {
       icon={Timer}
       title="Duration Calculator"
       description="Calculate the time duration between two dates and times"
+      category="datetime"
     >
       {/* Quick Examples */}
       <Card className="p-4">

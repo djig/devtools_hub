@@ -59,6 +59,7 @@ export default function Base64Tool() {
       icon={Binary}
       title="Base64 Encoder/Decoder"
       description="Encode text to Base64 or decode Base64 strings back to text"
+      category="encoders"
       actions={
         <>
           <Button onClick={handleEncode} size="sm">Encode</Button>

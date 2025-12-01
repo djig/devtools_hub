@@ -51,6 +51,7 @@ export default function LoremIpsum() {
       icon={Type}
       title="Lorem Ipsum Generator"
       description="Generate placeholder Lorem Ipsum text for your designs"
+      category="text"
       actions={
         <>
           <div className="flex items-center gap-2">

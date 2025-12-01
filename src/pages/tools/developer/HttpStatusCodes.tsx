@@ -142,6 +142,7 @@ export default function HttpStatusCodes() {
       icon={Server}
       title="HTTP Status Codes"
       description="Reference guide for HTTP response status codes"
+      category="developer"
     >
 
       <Card className="p-4">

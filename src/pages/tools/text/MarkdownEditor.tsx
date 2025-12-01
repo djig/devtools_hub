@@ -180,6 +180,7 @@ sequenceDiagram
       icon={FileText}
       title="Markdown Editor"
       description="Edit and preview Markdown with live rendering"
+      category="text"
       actions={
         <>
           <Button onClick={loadSample} variant="ghost" size="sm">

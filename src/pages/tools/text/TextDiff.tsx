@@ -39,6 +39,7 @@ export default function TextDiff() {
       icon={GitCompare}
       title="Text Diff"
       description="Compare two texts and see the differences"
+      category="text"
       actions={
         <>
           <Button onClick={handleCompare} size="sm">Compare</Button>

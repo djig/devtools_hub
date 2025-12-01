@@ -57,6 +57,7 @@ export default function ColorConverter() {
       icon={Palette}
       title="Color Converter"
       description="Convert between HEX, RGB, and HSL color formats with live preview"
+      category="developer"
     >
 
       {/* Main Color Preview Card */}

@@ -14,6 +14,7 @@ export default function UnicodeConverter() {
       icon={Type}
       title="Unicode Converter"
       description="Convert between Unicode and text"
+      category="encoders"
     >
       <ComingSoon toolId='unicode-converter' toolName='Unicode Converter' description='Convert between Unicode and text' />
     </ToolPageLayout>
