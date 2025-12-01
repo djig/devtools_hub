@@ -137,6 +137,7 @@ export default function TimezoneConverter() {
       icon={Globe}
       title="Timezone Converter"
       description="Convert times between timezones and view world clocks"
+      category="datetime"
     >
       {/* Time Input */}
       <Card className="p-4">

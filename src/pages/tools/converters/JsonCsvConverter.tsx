@@ -60,6 +60,7 @@ export default function JsonCsvConverter() {
       icon={RefreshCw}
       title="JSON ↔ CSV Converter"
       description="Convert between JSON and CSV formats"
+      category="converters"
       actions={
         <>
           <Button onClick={handleConvert} size="sm">

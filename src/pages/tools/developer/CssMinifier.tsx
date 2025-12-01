@@ -38,6 +38,7 @@ export default function CssMinifier() {
       icon={Minimize2}
       title="CSS Minifier"
       description="Minify and beautify CSS code"
+      category="developer"
       actions={
         <>
           <Button onClick={handleMinify} size="sm">Minify</Button>

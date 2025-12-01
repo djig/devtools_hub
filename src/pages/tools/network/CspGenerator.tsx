@@ -177,6 +177,7 @@ export default function CspGenerator() {
       icon={Shield}
       title="CSP Header Generator"
       description="Generate Content Security Policy headers to protect your website from XSS and data injection attacks"
+      category="network"
     >
       {/* Preset Policies */}
       <Card className="p-4">

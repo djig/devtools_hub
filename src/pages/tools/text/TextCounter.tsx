@@ -37,6 +37,7 @@ export default function TextCounter() {
       icon={Hash}
       title="Text Counter"
       description="Count characters, words, lines, sentences, and more"
+      category="text"
     >
       <Card className="p-4">
         <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Enter Text</h3>

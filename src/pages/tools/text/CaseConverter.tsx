@@ -44,6 +44,7 @@ export default function CaseConverter() {
       icon={CaseSensitive}
       title="Case Converter"
       description="Convert text between different casing styles"
+      category="text"
       actions={
         <Button onClick={loadSample} variant="outline" size="sm">
           Load Sample

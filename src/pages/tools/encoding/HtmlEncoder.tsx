@@ -44,6 +44,7 @@ export default function HtmlEncoder() {
       icon={Code2}
       title="HTML Entity Encoder"
       description="Encode and decode HTML entities and special characters"
+      category="encoders"
       actions={
         <>
           <Button onClick={handleAction} size="sm">

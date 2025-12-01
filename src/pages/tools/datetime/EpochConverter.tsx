@@ -88,6 +88,7 @@ export default function EpochConverter() {
       icon={Clock}
       title="Epoch Converter"
       description="Convert between Unix timestamps and human-readable dates"
+      category="datetime"
     >
       <Card className="p-6">
         <div className="flex items-center gap-3 mb-2">

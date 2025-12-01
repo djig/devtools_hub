@@ -54,6 +54,7 @@ export default function NumberBaseConverter() {
       icon={Binary}
       title="Number Base Converter"
       description="Convert between Binary, Decimal, Octal, and Hexadecimal"
+      category="encoders"
       actions={
         <>
           <div className="flex items-center gap-2">

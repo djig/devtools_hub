@@ -91,6 +91,7 @@ export default function PercentageCalculator() {
       icon={Percent}
       title="Percentage Calculator"
       description="Calculate percentages, increases, decreases, and more"
+      category="calculators"
     >
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

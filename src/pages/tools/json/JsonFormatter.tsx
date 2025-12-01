@@ -77,6 +77,7 @@ export default function JsonFormatter() {
       icon={FileJson}
       title="JSON Formatter"
       description="Format, validate, and minify JSON data with customizable indentation"
+      category="formatters"
       actions={
         <>
           <Button onClick={handleFormat} size="sm">Format</Button>

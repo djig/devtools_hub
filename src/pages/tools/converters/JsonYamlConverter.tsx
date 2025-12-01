@@ -59,6 +59,7 @@ export default function JsonYamlConverter() {
       icon={RefreshCw}
       title="JSON ↔ YAML Converter"
       description="Convert between JSON and YAML formats"
+      category="converters"
       actions={
         <>
           <span className="text-xs text-muted-foreground">

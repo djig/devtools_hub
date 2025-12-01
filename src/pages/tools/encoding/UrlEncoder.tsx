@@ -52,6 +52,7 @@ export default function UrlEncoder() {
       icon={Link}
       title="URL Encoder/Decoder"
       description="Encode and decode URL parameters and query strings"
+      category="encoders"
       actions={
         <>
           <Button onClick={handleAction} size="sm">

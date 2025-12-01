@@ -142,6 +142,7 @@ export default function ImageBase64Converter() {
       icon={ImageIcon}
       title="Image ↔ Base64 Converter"
       description="Convert between images and Base64 strings in both directions with drag & drop support"
+      category="developer"
     >
 
       {/* Upload Area */}

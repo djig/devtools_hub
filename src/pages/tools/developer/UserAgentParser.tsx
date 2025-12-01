@@ -160,6 +160,7 @@ export default function UserAgentParser() {
       icon={Monitor}
       title="User Agent Parser"
       description="Parse and analyze HTTP User-Agent strings to extract browser, OS, and device information"
+      category="developer"
       actions={
         <>
           <Button onClick={detectCurrentUA} size="sm">

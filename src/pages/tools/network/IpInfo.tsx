@@ -112,6 +112,7 @@ export default function IpInfo() {
       icon={Globe}
       title="IP Address Info"
       description="Get geolocation and network information about any IP address"
+      category="network"
     >
       <Card className="p-4">
         <div className="space-y-4">

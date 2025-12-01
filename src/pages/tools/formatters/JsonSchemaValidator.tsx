@@ -295,6 +295,7 @@ export default function JsonSchemaValidator() {
       icon={CheckCircle}
       title="JSON Schema Validator"
       description="Validate JSON data against JSON Schema specifications with detailed error reporting"
+      category="formatters"
       actions={
         <>
           <Button onClick={handleValidate} size="sm">

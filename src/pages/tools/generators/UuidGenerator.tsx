@@ -34,6 +34,7 @@ export default function UuidGenerator() {
       icon={Hash}
       title="UUID Generator"
       description="Generate universally unique identifiers (UUIDs) version 4"
+      category="generators"
       actions={
         <>
           <div className="flex items-center gap-2">

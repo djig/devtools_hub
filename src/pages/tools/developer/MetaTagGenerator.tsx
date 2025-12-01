@@ -121,6 +121,7 @@ export default function MetaTagGenerator() {
       icon={Tag}
       title="Meta Tag Generator"
       description="Generate HTML meta tags for SEO, Open Graph, and Twitter Cards"
+      category="developer"
       actions={
         <>
           <Button onClick={loadSample} variant="outline" size="sm">

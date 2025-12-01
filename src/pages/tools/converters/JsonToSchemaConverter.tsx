@@ -194,6 +194,7 @@ export default function JsonToSchemaConverter() {
       icon={Box}
       title="JSON → Schema Converter"
       description="Generate JSON Schema definitions from JSON data automatically"
+      category="converters"
       actions={
         <>
           <label className="flex items-center gap-2 text-xs cursor-pointer">

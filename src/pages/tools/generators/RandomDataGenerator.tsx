@@ -940,6 +940,7 @@ export default function RandomDataGenerator() {
       icon={Shuffle}
       title="Random Data Generator"
       description="Generate realistic fake data with custom schemas. All processing happens locally"
+      category="generators"
       actions={
         <div className="flex flex-wrap items-center justify-end gap-2">
               {/* Large Batch Warning */}

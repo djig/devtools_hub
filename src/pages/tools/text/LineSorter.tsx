@@ -55,6 +55,7 @@ export default function LineSorter() {
       icon={ArrowUpDown}
       title="Line Sorter"
       description="Sort and deduplicate lines of text alphabetically"
+      category="text"
       actions={
         <>
           <div className="flex items-center gap-2">

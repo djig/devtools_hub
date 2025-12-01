@@ -14,6 +14,7 @@ export default function JsonDiff() {
       icon={GitCompare}
       title="JSON Diff"
       description="Compare two JSON objects and see differences"
+      category="formatters"
     >
       <ComingSoon toolId='json-diff' toolName='JSON Diff' description='Compare two JSON objects and see differences' />
     </ToolPageLayout>

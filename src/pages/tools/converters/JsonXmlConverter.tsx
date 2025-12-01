@@ -59,6 +59,7 @@ export default function JsonXmlConverter() {
       icon={RefreshCw}
       title="JSON ↔ XML Converter"
       description="Convert between JSON and XML formats"
+      category="converters"
       actions={
         <>
           <Button onClick={handleConvert} size="sm">
