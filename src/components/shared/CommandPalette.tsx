@@ -4,6 +4,22 @@ import { Search, Clock, Star, ArrowRight } from 'lucide-react';
 import { searchTools, tools } from '../../data/tools';
 import useAppStore from '../../store/useAppStore';
 
+// Get icon gradient based on tool ID (same logic as ToolCard)
+const getIconGradient = (toolId: string): string => {
+  const gradients = [
+    'from-blue-500 to-cyan-500',
+    'from-purple-500 to-pink-500',
+    'from-green-500 to-emerald-500',
+    'from-orange-500 to-amber-500',
+    'from-pink-500 to-rose-500',
+    'from-indigo-500 to-violet-500',
+    'from-teal-500 to-cyan-500',
+    'from-red-500 to-orange-500',
+  ];
+  const hash = toolId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return gradients[hash % gradients.length];
+};
+
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
@@ -92,13 +108,14 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     </div>
                     {searchResults.map((tool) => {
                       const Icon = tool.icon;
+                      const iconGradient = getIconGradient(tool.id);
                       return (
                         <button
                           key={tool.id}
                           onClick={() => handleSelectTool(tool.path)}
                           className="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-muted transition-colors group"
                         >
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                          <div className={`p-2 rounded-lg bg-gradient-to-br ${iconGradient} text-white shadow-lg`}>
                             <Icon className="h-4 w-4" />
                           </div>
                           <div className="flex-1 text-left">
@@ -129,13 +146,14 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     </div>
                     {favoriteToolsList.slice(0, 5).map((tool) => {
                       const Icon = tool.icon;
+                      const iconGradient = getIconGradient(tool.id);
                       return (
                         <button
                           key={tool.id}
                           onClick={() => handleSelectTool(tool.path)}
                           className="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-muted transition-colors group"
                         >
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                          <div className={`p-2 rounded-lg bg-gradient-to-br ${iconGradient} text-white shadow-lg`}>
                             <Icon className="h-4 w-4" />
                           </div>
                           <div className="flex-1 text-left">
@@ -159,13 +177,14 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     </div>
                     {recentToolsList.slice(0, 5).map((tool) => {
                       const Icon = tool.icon;
+                      const iconGradient = getIconGradient(tool.id);
                       return (
                         <button
                           key={tool.id}
                           onClick={() => handleSelectTool(tool.path)}
                           className="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-muted transition-colors group"
                         >
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                          <div className={`p-2 rounded-lg bg-gradient-to-br ${iconGradient} text-white shadow-lg`}>
                             <Icon className="h-4 w-4" />
                           </div>
                           <div className="flex-1 text-left">
