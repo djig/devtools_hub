@@ -53,7 +53,7 @@ export default function UnitConverter() {
       seo={{
         title: "Unit Converter - Convert Length, Weight, Temperature, Data Size",
         description: "Convert units online: length, weight, temperature, data size, and more. Free unit converter with support for metric, imperial, and other unit systems. Accurate and instant.",
-        keywords: "unit converter, convert units, length converter, weight converter, temperature converter, data size converter, metric converter, free converter",
+        keywords: "unit converter, convert units, length converter, weight converter, temperature converter, data size converter, metric converter, free converter, unit conversion tool, unit conversion online, convert measurement units, Convert different units of measurement",
         path: "/tools/unit-converter"
       }}
       icon={Ruler}
@@ -70,7 +70,7 @@ export default function UnitConverter() {
               onClick={() => setCategory(cat)}
               className={`px-4 py-2 rounded border text-sm font-medium transition-colors ${
                 category === cat
-                  ? 'bg-primary text-primary-foreground border-primary'
+                  ? 'bg-blue-600 text-white border-blue-600 dark:bg-blue-500 dark:border-blue-500'
                   : 'bg-background border-border hover:bg-muted'
               }`}
             >
@@ -137,7 +137,7 @@ export default function UnitConverter() {
         </Card>
       </div>
 
-      {outputValue && !isNaN(Number(outputValue)) && (
+      {outputValue && !isNaN(Number(outputValue)) && currentUnits[fromUnit] && currentUnits[toUnit] && (
         <Card className="p-4 bg-muted/50">
           <div className="text-center">
             <p className="text-lg">

@@ -82,7 +82,7 @@ export default function EpochConverter() {
       seo={{
         title: "Epoch Converter - Unix Timestamp Converter",
         description: "Convert between Unix timestamps and dates online. Free epoch converter that transforms Unix time to human-readable dates and vice versa. Supports milliseconds and seconds.",
-        keywords: "epoch converter, unix timestamp, timestamp converter, epoch to date, unix time converter, timestamp tool, epoch time, free converter",
+        keywords: "epoch converter, epoch to time converter online, unix timestamp, timestamp converter, epoch to date, unix time converter, timestamp tool, epoch time, free converter",
         path: "/tools/epoch-converter"
       }}
       icon={Clock}

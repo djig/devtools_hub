@@ -131,7 +131,7 @@ export default function TimezoneConverter() {
       seo={{
         title: "Timezone Converter - Convert Times Between Timezones",
         description: "Convert times between different timezones online. Free timezone converter with world clock. Find meeting times across timezones easily. Supports all IANA timezones.",
-        keywords: "timezone converter, time zone converter, world clock, convert timezone, meeting time, time converter, timezone tool, free converter",
+        keywords: "timezone converter, timezone converter online, time converter world clock,  time zone converter, world clock, convert timezone, meeting time, time converter, timezone tool, world time converter",
         path: "/tools/timezone-converter"
       }}
       icon={Globe}
