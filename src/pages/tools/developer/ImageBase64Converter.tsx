@@ -136,7 +136,7 @@ export default function ImageBase64Converter() {
       seo={{
         title: "Image to Base64 Converter - Convert Images to Base64 and Vice Versa",
         description: "Convert images to Base64 strings and Base64 to images online. Free image Base64 converter supporting PNG, JPG, GIF, and more. Embed images in CSS or HTML.",
-        keywords: "image to base64, base64 to image, image encoder, base64 image, convert image, image base64 converter, data uri, free converter",
+        keywords: "image to base64, base64 to image, image encoder, base64 image, convert image, image to base64 converter, base64 image converter, online image to base64, free image to base64 tool, image base64 encoder, image base64 decoder",
         path: "/tools/image-base64-converter"
       }}
       icon={ImageIcon}

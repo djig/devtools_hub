@@ -5,7 +5,8 @@ import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import { formatJson, minifyJson, validateJson } from '../../../utils/formatters/json';
 import useAppStore from '../../../store/useAppStore';
-import { AlertCircle, CheckCircle, FileJson } from 'lucide-react';
+import { AlertCircle, CheckCircle, FileJson, Copy, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function JsonFormatter() {
   const [input, setInput] = useState('');
@@ -64,6 +65,25 @@ export default function JsonFormatter() {
       hobbies: ['reading', 'coding', 'gaming'],
     };
     setInput(JSON.stringify(sample));
+  };
+
+  const handleCopy = async () => {
+    if (!output) {
+      toast.error('No output to copy');
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(output);
+      toast.success('Copied to clipboard!');
+    } catch (err) {
+      toast.error('Failed to copy to clipboard');
+    }
+  };
+
+  const handleClear = () => {
+    setInput('');
+    setOutput('');
+    setError('');
   };
 
   return (
@@ -131,7 +151,20 @@ export default function JsonFormatter() {
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Input JSON</label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">Input JSON</label>
+              {input && (
+                <Button
+                  onClick={handleClear}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 gap-1.5"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  Clear
+                </Button>
+              )}
+            </div>
             <CodeEditor
               value={input}
               onChange={setInput}
@@ -141,7 +174,20 @@ export default function JsonFormatter() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Output</label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">Output</label>
+              {output && !output.startsWith('✓') && (
+                <Button
+                  onClick={handleCopy}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 gap-1.5"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  Copy
+                </Button>
+              )}
+            </div>
             <CodeEditor
               value={output}
               language="json"

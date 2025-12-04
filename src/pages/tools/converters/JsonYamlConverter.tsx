@@ -5,7 +5,8 @@ import { CodeEditor } from '../../../components/ui/CodeEditor';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { jsonToYaml, yamlToJson } from '../../../utils/converters/yaml';
-import { AlertCircle, ArrowRightLeft, RefreshCw } from 'lucide-react';
+import { AlertCircle, ArrowRightLeft, RefreshCw, Copy, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function JsonYamlConverter() {
   const [input, setInput] = useState('');
@@ -48,12 +49,31 @@ export default function JsonYamlConverter() {
     }
   };
 
+  const handleCopy = async () => {
+    if (!output) {
+      toast.error('No output to copy');
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(output);
+      toast.success('Copied to clipboard!');
+    } catch (err) {
+      toast.error('Failed to copy to clipboard');
+    }
+  };
+
+  const handleClear = () => {
+    setInput('');
+    setOutput('');
+    setError('');
+  };
+
   return (
     <ToolPageLayout
       seo={{
         title: "JSON to YAML Converter - Free Online JSON YAML Converter",
         description: "Convert between JSON and YAML formats instantly with our free online converter. Bidirectional conversion tool that transforms JSON to YAML and YAML to JSON. Works entirely in your browser - fast and secure.",
-        keywords: "json to yaml, yaml to json, json yaml converter, convert json to yaml, convert yaml to json, json yml converter, online converter, free converter",
+        keywords: "json to yaml, yaml to json, json yaml converter, convert json to yaml, convert yaml to json, online json yml converter, online yaml to json converter, free online JSON to YAML converter, json yaml tool, json yaml translator, json yaml format converter",
         path: "/tools/json-yaml-converter"
       }}
       icon={RefreshCw}
@@ -94,9 +114,22 @@ export default function JsonYamlConverter() {
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Input {mode === 'json-to-yaml' ? 'JSON' : 'YAML'}
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">
+                Input {mode === 'json-to-yaml' ? '(JSON)' : '(YAML)'}
+              </label>
+              {input && (
+                <Button
+                  onClick={handleClear}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 gap-1.5"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  Clear
+                </Button>
+              )}
+            </div>
             <CodeEditor
               value={input}
               onChange={setInput}
@@ -106,9 +139,22 @@ export default function JsonYamlConverter() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Output {mode === 'json-to-yaml' ? 'YAML' : 'JSON'}
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">
+                Output {mode === 'json-to-yaml' ? '(YAML)' : '(JSON)'}
+              </label>
+              {output && (
+                <Button
+                  onClick={handleCopy}
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 gap-1.5"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  Copy
+                </Button>
+              )}
+            </div>
             <CodeEditor
               value={output}
               language={mode === 'json-to-yaml' ? 'yaml' : 'json'}

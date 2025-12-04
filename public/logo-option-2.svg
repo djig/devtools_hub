@@ -1,0 +1,32 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Option 2: Modern Circle with Tool Symbol -->
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer circle -->
+  <circle cx="60" cy="60" r="45" fill="url(#grad2)" stroke="#0ea5e9" stroke-width="2"/>
+
+  <!-- Wrench -->
+  <path d="M 50 70 L 50 50 L 45 45 L 45 35 L 55 35 L 55 45 L 50 50"
+        stroke="white"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+
+  <!-- Screwdriver -->
+  <path d="M 70 70 L 70 45 M 65 45 L 75 45 L 75 38 L 65 38 Z"
+        stroke="white"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="white"/>
+
+  <!-- Small dots for decoration -->
+  <circle cx="40" cy="75" r="2" fill="white"/>
+  <circle cx="80" cy="75" r="2" fill="white"/>
+</svg>

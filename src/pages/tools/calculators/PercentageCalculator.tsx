@@ -85,7 +85,7 @@ export default function PercentageCalculator() {
       seo={{
         title: "Percentage Calculator - Calculate Percentages, Increase, Decrease",
         description: "Calculate percentages, percentage increase, and percentage decrease online. Free percentage calculator for business, finance, and everyday math. Multiple calculation modes.",
-        keywords: "percentage calculator, percent calculator, calculate percentage, percentage increase, percentage decrease, percent change, free calculator",
+        keywords: "percentage calculator, percent calculator, calculate percentage, percentage increase, percentage decrease, percent change, free calculator, percentage calculators online, free percentage calculator, percentage tool online, percentage finder",
         path: "/tools/percentage-calculator"
       }}
       icon={Percent}

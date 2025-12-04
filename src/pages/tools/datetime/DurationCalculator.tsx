@@ -169,7 +169,7 @@ export default function DurationCalculator() {
       seo={{
         title: "Duration Calculator - Calculate Time Between Two Dates",
         description: "Calculate time duration between two dates online. Free duration calculator that shows years, months, days, hours, minutes, and seconds. Perfect for age calculation and time tracking.",
-        keywords: "duration calculator, time difference, date difference, calculate duration, time between dates, age calculator, elapsed time, free calculator",
+        keywords: "duration calculator, duration calculator time, duration calculator between two dates, duration calculator online,  time difference, date difference, calculate duration, time between dates, elapsed time calculator",
         path: "/tools/duration-calculator"
       }}
       icon={Timer}

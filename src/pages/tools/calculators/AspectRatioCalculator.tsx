@@ -147,7 +147,7 @@ export default function AspectRatioCalculator() {
       seo={{
         title: "Aspect Ratio Calculator - Calculate and Convert Aspect Ratios",
         description: "Calculate and convert aspect ratios for images and videos online. Free aspect ratio calculator for designers and content creators. Find width or height for any aspect ratio.",
-        keywords: "aspect ratio calculator, aspect ratio, image aspect ratio, video aspect ratio, resolution calculator, aspect ratio converter, free calculator",
+        keywords: "aspect ratio calculator, aspect ratio, image aspect ratio, video aspect ratio, resolution calculator, aspect ratio converter, free calculator, free aspect ratio calculator, aspect ratio calculators online, aspect ratio tool, aspect ratio finder, aspect ratio pixel, calculate aspect ratio, convert aspect ratio",
         path: "/tools/aspect-ratio-calculator"
       }}
       icon={LayoutGrid}
