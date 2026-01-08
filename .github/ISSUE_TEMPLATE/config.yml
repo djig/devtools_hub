@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://github.com/user/devtools_hub#readme
+    about: Check out the README for documentation
+  - name: Discussions
+    url: https://github.com/user/devtools_hub/discussions
+    about: Ask questions and discuss ideas

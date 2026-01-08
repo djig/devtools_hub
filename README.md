@@ -1,10 +1,15 @@
 # DevTools Hub
 
-A modern, responsive developer utility website built with Vite, React, and TypeScript. Features **47+ tools** running entirely in your browser - private, fast, and free.
+[![CI](https://github.com/djig/devtools_hub/actions/workflows/ci.yml/badge.svg)](https://github.com/djig/devtools_hub/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A modern, responsive developer utility website built with Vite, React, and TypeScript. Features a comprehensive collection of tools running entirely in your browser - private, fast, and free.
+
+**Live Demo:** [https://engtoolshub.com](https://engtoolshub.com)
 
 ## Features
 
-- **47+ Developer Tools** across 9 categories
+- **Comprehensive Developer Tools** across 9 categories
 - **100% Private** - All tools run locally in your browser
 - **Dark/Light/System Mode** with automatic persistence
 - **Favorites & Recent Tools** - Track your most-used utilities
@@ -198,12 +203,32 @@ Compatible with:
 
 ## Contributing
 
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+### Quick Start for Contributors
+
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/new-tool`
 3. Make your changes
 4. Ensure all tests pass: `npm run test:run && npm run e2e`
 5. Submit a pull request
 
+## Code of Conduct
+
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+
+## Security
+
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for responsible disclosure guidelines.
+
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Privacy
+
+All tools run entirely in your browser. No data is sent to any external server. Your data stays on your device.
+
+## Support
+
+If you find this project useful, please consider giving it a star on GitHub!
