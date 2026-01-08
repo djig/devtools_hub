@@ -1,0 +1,664 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/pages/tools/developer/HttpStatusCodes.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/pages/tools/developer</a> HttpStatusCodes.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/44</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/28</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/11</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/34</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useEffect, useMemo } from 'react';
+import { Input } from '../../../components/ui/Input';
+import { Card } from '../../../components/ui/Card';
+import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
+import useAppStore from '../../../store/useAppStore';
+import { Search, Server } from 'lucide-react';
+&nbsp;
+interface StatusCode {
+  code: number;
+  name: string;
+  description: string;
+  category: string;
+}
+&nbsp;
+const STATUS_CODES: StatusCode[] = <span class="cstat-no" title="statement not covered" >[</span>
+  // 1xx Informational
+  { code: 100, name: 'Continue', description: 'The server has received the request headers and the client should proceed to send the request body', category: '1xx Informational' },
+  { code: 101, name: 'Switching Protocols', description: 'The requester has asked the server to switch protocols', category: '1xx Informational' },
+  { code: 102, name: 'Processing', description: 'The server has received and is processing the request, but no response is available yet', category: '1xx Informational' },
+  { code: 103, name: 'Early Hints', description: 'Used to return some response headers before final HTTP message', category: '1xx Informational' },
+&nbsp;
+  // 2xx Success
+  { code: 200, name: 'OK', description: 'Standard response for successful HTTP requests', category: '2xx Success' },
+  { code: 201, name: 'Created', description: 'The request has been fulfilled and resulted in a new resource being created', category: '2xx Success' },
+  { code: 202, name: 'Accepted', description: 'The request has been accepted for processing, but the processing has not been completed', category: '2xx Success' },
+  { code: 203, name: 'Non-Authoritative Information', description: 'The server successfully processed the request but is returning information from another source', category: '2xx Success' },
+  { code: 204, name: 'No Content', description: 'The server successfully processed the request but is not returning any content', category: '2xx Success' },
+  { code: 205, name: 'Reset Content', description: 'The server successfully processed the request but requires the requester to reset the document view', category: '2xx Success' },
+  { code: 206, name: 'Partial Content', description: 'The server is delivering only part of the resource due to a range header', category: '2xx Success' },
+&nbsp;
+  // 3xx Redirection
+  { code: 300, name: 'Multiple Choices', description: 'Indicates multiple options for the resource from which the client may choose', category: '3xx Redirection' },
+  { code: 301, name: 'Moved Permanently', description: 'This and all future requests should be directed to the given URI', category: '3xx Redirection' },
+  { code: 302, name: 'Found', description: 'The resource was found but at a different URI', category: '3xx Redirection' },
+  { code: 303, name: 'See Other', description: 'The response to the request can be found under another URI using GET method', category: '3xx Redirection' },
+  { code: 304, name: 'Not Modified', description: 'Indicates that the resource has not been modified since last requested', category: '3xx Redirection' },
+  { code: 307, name: 'Temporary Redirect', description: 'The request should be repeated with another URI but future requests should use the original URI', category: '3xx Redirection' },
+  { code: 308, name: 'Permanent Redirect', description: 'The request and all future requests should be repeated using another URI', category: '3xx Redirection' },
+&nbsp;
+  // 4xx Client Error
+  { code: 400, name: 'Bad Request', description: 'The server cannot process the request due to a client error', category: '4xx Client Error' },
+  { code: 401, name: 'Unauthorized', description: 'Authentication is required and has failed or has not been provided', category: '4xx Client Error' },
+  { code: 402, name: 'Payment Required', description: 'Reserved for future use', category: '4xx Client Error' },
+  { code: 403, name: 'Forbidden', description: 'The request was valid, but the server is refusing action', category: '4xx Client Error' },
+  { code: 404, name: 'Not Found', description: 'The requested resource could not be found', category: '4xx Client Error' },
+  { code: 405, name: 'Method Not Allowed', description: 'A request method is not supported for the requested resource', category: '4xx Client Error' },
+  { code: 406, name: 'Not Acceptable', description: 'The requested resource is capable of generating only content not acceptable according to Accept headers', category: '4xx Client Error' },
+  { code: 407, name: 'Proxy Authentication Required', description: 'The client must first authenticate itself with the proxy', category: '4xx Client Error' },
+  { code: 408, name: 'Request Timeout', description: 'The server timed out waiting for the request', category: '4xx Client Error' },
+  { code: 409, name: 'Conflict', description: 'Indicates that the request could not be processed because of conflict in the request', category: '4xx Client Error' },
+  { code: 410, name: 'Gone', description: 'Indicates that the resource requested is no longer available and will not be available again', category: '4xx Client Error' },
+  { code: 411, name: 'Length Required', description: 'The request did not specify the length of its content', category: '4xx Client Error' },
+  { code: 412, name: 'Precondition Failed', description: 'The server does not meet one of the preconditions specified in the request', category: '4xx Client Error' },
+  { code: 413, name: 'Payload Too Large', description: 'The request is larger than the server is willing or able to process', category: '4xx Client Error' },
+  { code: 414, name: 'URI Too Long', description: 'The URI provided was too long for the server to process', category: '4xx Client Error' },
+  { code: 415, name: 'Unsupported Media Type', description: 'The request entity has a media type which the server does not support', category: '4xx Client Error' },
+  { code: 416, name: 'Range Not Satisfiable', description: 'The client has asked for a portion of the file but the server cannot supply that portion', category: '4xx Client Error' },
+  { code: 417, name: 'Expectation Failed', description: 'The server cannot meet the requirements of the Expect request-header field', category: '4xx Client Error' },
+  { code: 418, name: "I'm a teapot", description: 'This code was defined in 1998 as an April Fools\' joke', category: '4xx Client Error' },
+  { code: 421, name: 'Misdirected Request', description: 'The request was directed at a server that is not able to produce a response', category: '4xx Client Error' },
+  { code: 422, name: 'Unprocessable Entity', description: 'The request was well-formed but was unable to be followed due to semantic errors', category: '4xx Client Error' },
+  { code: 423, name: 'Locked', description: 'The resource that is being accessed is locked', category: '4xx Client Error' },
+  { code: 424, name: 'Failed Dependency', description: 'The request failed because it depended on another request that failed', category: '4xx Client Error' },
+  { code: 425, name: 'Too Early', description: 'Indicates that the server is unwilling to risk processing a request that might be replayed', category: '4xx Client Error' },
+  { code: 426, name: 'Upgrade Required', description: 'The client should switch to a different protocol', category: '4xx Client Error' },
+  { code: 428, name: 'Precondition Required', description: 'The origin server requires the request to be conditional', category: '4xx Client Error' },
+  { code: 429, name: 'Too Many Requests', description: 'The user has sent too many requests in a given amount of time', category: '4xx Client Error' },
+  { code: 431, name: 'Request Header Fields Too Large', description: 'The server is unwilling to process the request because header fields are too large', category: '4xx Client Error' },
+  { code: 451, name: 'Unavailable For Legal Reasons', description: 'A server operator has received a legal demand to deny access to a resource', category: '4xx Client Error' },
+&nbsp;
+  // 5xx Server Error
+  { code: 500, name: 'Internal Server Error', description: 'A generic error message when the server encounters an unexpected condition', category: '5xx Server Error' },
+  { code: 501, name: 'Not Implemented', description: 'The server either does not recognize the request method or lacks the ability to fulfill it', category: '5xx Server Error' },
+  { code: 502, name: 'Bad Gateway', description: 'The server was acting as a gateway or proxy and received an invalid response from the upstream server', category: '5xx Server Error' },
+  { code: 503, name: 'Service Unavailable', description: 'The server is currently unavailable (overloaded or down for maintenance)', category: '5xx Server Error' },
+  { code: 504, name: 'Gateway Timeout', description: 'The server was acting as a gateway or proxy and did not receive a timely response from the upstream server', category: '5xx Server Error' },
+  { code: 505, name: 'HTTP Version Not Supported', description: 'The server does not support the HTTP protocol version used in the request', category: '5xx Server Error' },
+  { code: 506, name: 'Variant Also Negotiates', description: 'Transparent content negotiation for the request results in a circular reference', category: '5xx Server Error' },
+  { code: 507, name: 'Insufficient Storage', description: 'The server is unable to store the representation needed to complete the request', category: '5xx Server Error' },
+  { code: 508, name: 'Loop Detected', description: 'The server detected an infinite loop while processing the request', category: '5xx Server Error' },
+  { code: 510, name: 'Not Extended', description: 'Further extensions to the request are required for the server to fulfill it', category: '5xx Server Error' },
+  { code: 511, name: 'Network Authentication Required', description: 'The client needs to authenticate to gain network access', category: '5xx Server Error' },
+];
+&nbsp;
+export default function <span class="fstat-no" title="function not covered" >HttpStatusCodes() {</span>
+  const [search, setSearch<span class="cstat-no" title="statement not covered" >] = useState('');</span>
+  const { addRecentTool <span class="cstat-no" title="statement not covered" >} = useAppStore();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >    addRecentTool('http-status-codes');</span>
+  }, [addRecentTool]);
+&nbsp;
+  const <span class="cstat-no" title="statement not covered" >filteredCodes = useMemo(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (!search) <span class="cstat-no" title="statement not covered" >return STATUS_CODES;</span></span>
+&nbsp;
+    const searchLower = <span class="cstat-no" title="statement not covered" >search.toLowerCase();</span>
+<span class="cstat-no" title="statement not covered" >    return STATUS_CODES.filter(</span>
+<span class="fstat-no" title="function not covered" >      (s</span>tatus) =&gt;
+<span class="cstat-no" title="statement not covered" >        status.code.toString().includes(searchLower) ||</span>
+        status.name.toLowerCase().includes(searchLower) ||
+        status.description.toLowerCase().includes(searchLower) ||
+        status.category.toLowerCase().includes(searchLower)
+    );
+  }, [search]);
+&nbsp;
+  const <span class="cstat-no" title="statement not covered" >groupedCodes = useMemo(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+    const groups: Record&lt;string, StatusCode[]&gt; = <span class="cstat-no" title="statement not covered" >{};</span>
+<span class="cstat-no" title="statement not covered" >    filteredCodes.forEach(<span class="fstat-no" title="function not covered" >(c</span>ode) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (!groups[code.category]) {</span>
+<span class="cstat-no" title="statement not covered" >        groups[code.category] = [];</span>
+      }
+<span class="cstat-no" title="statement not covered" >      groups[code.category].push(code);</span>
+    });
+<span class="cstat-no" title="statement not covered" >    return groups;</span>
+  }, [filteredCodes]);
+&nbsp;
+  const getCategoryColor = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>ategory: string) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (category.startsWith('1xx')) <span class="cstat-no" title="statement not covered" >return 'bg-blue-100 dark:bg-blue-950 border-blue-300 dark:border-blue-700';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (category.startsWith('2xx')) <span class="cstat-no" title="statement not covered" >return 'bg-green-100 dark:bg-green-950 border-green-300 dark:border-green-700';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (category.startsWith('3xx')) <span class="cstat-no" title="statement not covered" >return 'bg-yellow-100 dark:bg-yellow-950 border-yellow-300 dark:border-yellow-700';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (category.startsWith('4xx')) <span class="cstat-no" title="statement not covered" >return 'bg-orange-100 dark:bg-orange-950 border-orange-300 dark:border-orange-700';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (category.startsWith('5xx')) <span class="cstat-no" title="statement not covered" >return 'bg-red-100 dark:bg-red-950 border-red-300 dark:border-red-700';</span></span>
+<span class="cstat-no" title="statement not covered" >    return 'bg-muted';</span>
+  };
+&nbsp;
+  const getCodeColor = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>ode: number) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (code &lt; 200) <span class="cstat-no" title="statement not covered" >return 'text-blue-700 dark:text-blue-400';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (code &lt; 300) <span class="cstat-no" title="statement not covered" >return 'text-green-700 dark:text-green-400';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (code &lt; 400) <span class="cstat-no" title="statement not covered" >return 'text-yellow-700 dark:text-yellow-400';</span></span>
+<span class="cstat-no" title="statement not covered" >    if (code &lt; 500) <span class="cstat-no" title="statement not covered" >return 'text-orange-700 dark:text-orange-400';</span></span>
+<span class="cstat-no" title="statement not covered" >    return 'text-red-700 dark:text-red-400';</span>
+  };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;ToolPageLayout
+      seo={{
+        title: "HTTP Status Codes - Complete Reference Guide",
+        description: "Browse HTTP status codes with descriptions and examples online. Free HTTP status code reference for web developers. Includes 1xx, 2xx, 3xx, 4xx, and 5xx codes.",
+        keywords: "http status codes, http codes, status code reference, http response codes, 404 error, 200 ok, http status, free reference",
+        path: "/tools/http-status-codes"
+      }}
+      icon={Server}
+      title="HTTP Status Codes"
+      description="Reference guide for HTTP response status codes"
+      category="developer"
+    &gt;
+&nbsp;
+      &lt;Card className="p-4"&gt;
+        &lt;div className="relative"&gt;
+          &lt;Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" /&gt;
+          &lt;Input
+            placeholder="Search by code, name, or description..."
+            value={search}
+            onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setSearch(e.target.value)}</span>
+            className="pl-10"
+          /&gt;
+        &lt;/div&gt;
+      &lt;/Card&gt;
+&nbsp;
+      {Object.entries(groupedCodes).map(<span class="fstat-no" title="function not covered" >([</span>category, codes]) =&gt; (
+<span class="cstat-no" title="statement not covered" >        &lt;Card key={category} className={`p-4 border-2 ${getCategoryColor(category)}`}&gt;</span>
+          &lt;h2 className="text-lg font-bold mb-4"&gt;{category}&lt;/h2&gt;
+          &lt;div className="space-y-3"&gt;
+            {codes.map(<span class="fstat-no" title="function not covered" >(s</span>tatus) =&gt; (
+<span class="cstat-no" title="statement not covered" >              &lt;div</span>
+                key={status.code}
+                className="p-3 rounded-lg bg-background border border-border"
+              &gt;
+                &lt;div className="flex items-start gap-3"&gt;
+                  &lt;span className={`text-2xl font-bold font-mono ${getCodeColor(status.code)}`}&gt;
+                    {status.code}
+                  &lt;/span&gt;
+                  &lt;div className="flex-1"&gt;
+                    &lt;h3 className="font-semibold text-lg"&gt;{status.name}&lt;/h3&gt;
+                    &lt;p className="text-sm text-muted-foreground mt-1"&gt;
+                      {status.description}
+                    &lt;/p&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/Card&gt;
+      ))}
+&nbsp;
+      {filteredCodes.length === 0 &amp;&amp; (
+        &lt;Card className="p-8 text-center text-muted-foreground"&gt;
+          No status codes found matching your search
+        &lt;/Card&gt;
+      )}
+    &lt;/ToolPageLayout&gt;
+  );
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-01-08T00:41:30.869Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    
