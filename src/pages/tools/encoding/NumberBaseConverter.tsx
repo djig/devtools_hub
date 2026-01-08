@@ -24,7 +24,7 @@ export default function NumberBaseConverter() {
         const converted = convertBase(input, fromBase);
         setResults(converted);
         setError('');
-      } catch (err) {
+      } catch {
         setError((err as Error).message);
         setResults(null);
       }

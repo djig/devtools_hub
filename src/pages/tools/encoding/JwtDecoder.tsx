@@ -42,7 +42,7 @@ export default function JwtDecoder() {
 
       setDecoded({ header, payload, signature, isExpired });
       setError('');
-    } catch (err) {
+    } catch {
       setError((err as Error).message);
       setDecoded(null);
     }

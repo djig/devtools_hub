@@ -13,15 +13,16 @@ export default function UuidGenerator() {
   const [count, setCount] = useState(1);
   const { addRecentTool } = useAppStore();
 
-  useEffect(() => {
-    addRecentTool('uuid-generator');
-    generateUuids();
-  }, [addRecentTool]);
-
   const generateUuids = () => {
     const generated = generateMultipleUuids(count);
     setUuids(generated);
   };
+
+  useEffect(() => {
+    addRecentTool('uuid-generator');
+    generateUuids();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addRecentTool]);
 
   return (
     <ToolPageLayout

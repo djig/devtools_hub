@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { LazyExoticComponent, ComponentType } from 'react';
+import type { Theme } from '../constants';
 
 export type ToolCategory =
   | 'formatters'
@@ -12,6 +13,12 @@ export type ToolCategory =
   | 'developer'
   | 'network';
 
+/**
+ * Props type for tool page components
+ * Extend this if tools need common props
+ */
+export type ToolPageProps = Record<string, never>;
+
 export interface Tool {
   id: string;
   name: string;
@@ -20,7 +27,7 @@ export interface Tool {
   path: string;
   icon: LucideIcon;
   keywords: string[];
-  component: LazyExoticComponent<ComponentType<any>>;
+  component: LazyExoticComponent<ComponentType<ToolPageProps>>;
 }
 
 export interface CategoryInfo {
@@ -31,12 +38,18 @@ export interface CategoryInfo {
 }
 
 export interface AppState {
-  theme: 'light' | 'dark' | 'system';
+  // State
+  theme: Theme;
   sidebarOpen: boolean;
   recentTools: string[];
   favoriteTools: string[];
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
+
+  // Actions
+  setTheme: (theme: Theme) => void;
   toggleSidebar: () => void;
   addRecentTool: (toolId: string) => void;
   toggleFavorite: (toolId: string) => void;
 }
+
+// Re-export Theme type for convenience
+export type { Theme } from '../constants';

@@ -5,7 +5,7 @@ export function encodeUrl(text: string): string {
 export function decodeUrl(text: string): string {
   try {
     return decodeURIComponent(text);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid URL encoding');
   }
 }
@@ -17,7 +17,7 @@ export function encodeUrlFull(url: string): string {
 export function decodeUrlFull(url: string): string {
   try {
     return decodeURI(url);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid URL');
   }
 }

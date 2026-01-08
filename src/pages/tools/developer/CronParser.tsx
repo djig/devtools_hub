@@ -30,7 +30,9 @@ export default function CronParser() {
 
   useEffect(() => {
     addRecentTool('cron-parser');
+     
     parseCronExpression(cronExpression);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addRecentTool]);
 
   const describeCron = (parts: CronParts): string => {
@@ -154,7 +156,7 @@ export default function CronParser() {
 
       // Basic validation
       const isValidField = (field: string) => {
-        return /^[\d\*\/\-\,]+$/.test(field);
+        return /^[\d*,/-]+$/.test(field);
       };
 
       if (!parts.every(isValidField)) {
@@ -174,7 +176,7 @@ export default function CronParser() {
       setNextRuns(runs);
 
       setError('');
-    } catch (err) {
+    } catch {
       setError('Failed to parse cron expression');
       setDescription('');
       setNextRuns([]);

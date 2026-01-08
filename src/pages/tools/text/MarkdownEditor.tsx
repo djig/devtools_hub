@@ -46,7 +46,7 @@ const md: MarkdownIt = new MarkdownIt({
     if (lang && Prism.languages[lang]) {
       try {
         return `<pre class="language-${lang}"><code class="language-${lang}">${Prism.highlight(str, Prism.languages[lang], lang)}</code></pre>`;
-      } catch (err) {
+      } catch {
         console.error('Prism highlighting error:', err);
       }
     }
@@ -74,7 +74,7 @@ export default function MarkdownEditor() {
   const html = useMemo(() => {
     try {
       return md.render(markdown);
-    } catch (error) {
+    } catch {
       return '<p class="text-red-500">Error rendering markdown</p>';
     }
   }, [markdown]);
@@ -92,7 +92,7 @@ export default function MarkdownEditor() {
           try {
             const { svg } = await mermaid.render(id, code);
             element.innerHTML = svg;
-          } catch (err) {
+          } catch {
             console.error('Mermaid rendering error:', err);
             element.innerHTML = `<pre class="text-red-500">Error rendering diagram: ${err}</pre>`;
           }

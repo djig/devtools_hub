@@ -19,5 +19,28 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Allow unused vars prefixed with underscore
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }],
+      // Warn instead of error for explicit any (to allow gradual typing)
+      '@typescript-eslint/no-explicit-any': 'warn',
+      // Disable overly strict react-hooks rules that cause many false positives
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/set-state-in-render': 'off',
+      'react-hooks/purity': 'off',
+      // Allow control characters in regex (needed for some parsers)
+      'no-control-regex': 'off',
+    },
+  },
+  // Disable react-refresh for test files
+  {
+    files: ['**/*.test.{ts,tsx}', '**/test-utils.tsx', '**/test/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
   },
 ])

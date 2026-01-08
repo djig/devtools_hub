@@ -17,7 +17,7 @@ const htmlEntitiesReverse: { [key: string]: string } = {
 };
 
 export function encodeHtml(text: string): string {
-  return text.replace(/[&<>"'\/]/g, (char) => htmlEntities[char]);
+  return text.replace(/[&<>"'/]/g, (char) => htmlEntities[char]);
 }
 
 export function decodeHtml(text: string): string {

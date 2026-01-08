@@ -1,49 +1,24 @@
+/**
+ * Tool card component
+ * Displays a tool with icon, name, description, and favorite toggle
+ */
+
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import type { Tool } from '../../types';
 import useAppStore from '../../store/useAppStore';
+import { getIconGradient, getCardGradient } from '../../utils/gradients';
 import { cn } from '../../lib/utils';
 
 interface ToolCardProps {
   tool: Tool;
 }
 
-// Generate a random gradient for each tool based on its ID
-const getToolGradient = (toolId: string): string => {
-  const gradients = [
-    'from-blue-500/20 to-cyan-500/10 hover:from-blue-500/30 hover:to-cyan-500/20',
-    'from-purple-500/20 to-pink-500/10 hover:from-purple-500/30 hover:to-pink-500/20',
-    'from-green-500/20 to-emerald-500/10 hover:from-green-500/30 hover:to-emerald-500/20',
-    'from-orange-500/20 to-amber-500/10 hover:from-orange-500/30 hover:to-amber-500/20',
-    'from-pink-500/20 to-rose-500/10 hover:from-pink-500/30 hover:to-rose-500/20',
-    'from-indigo-500/20 to-violet-500/10 hover:from-indigo-500/30 hover:to-violet-500/20',
-    'from-teal-500/20 to-cyan-500/10 hover:from-teal-500/30 hover:to-cyan-500/20',
-    'from-red-500/20 to-orange-500/10 hover:from-red-500/30 hover:to-orange-500/20',
-  ];
-  const hash = toolId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return gradients[hash % gradients.length];
-};
-
-const getIconGradient = (toolId: string): string => {
-  const gradients = [
-    'from-blue-500 to-cyan-500',
-    'from-purple-500 to-pink-500',
-    'from-green-500 to-emerald-500',
-    'from-orange-500 to-amber-500',
-    'from-pink-500 to-rose-500',
-    'from-indigo-500 to-violet-500',
-    'from-teal-500 to-cyan-500',
-    'from-red-500 to-orange-500',
-  ];
-  const hash = toolId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return gradients[hash % gradients.length];
-};
-
 export function ToolCard({ tool }: ToolCardProps) {
   const { favoriteTools, toggleFavorite } = useAppStore();
   const isFavorite = favoriteTools.includes(tool.id);
   const Icon = tool.icon;
-  const cardGradient = getToolGradient(tool.id);
+  const cardGradient = getCardGradient(tool.id);
   const iconGradient = getIconGradient(tool.id);
 
   return (

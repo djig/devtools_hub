@@ -214,7 +214,7 @@ export default function JsonSchemaValidator() {
         valid: errors.length === 0,
         errors,
       });
-    } catch (error) {
+    } catch {
       setValidationResult({
         valid: false,
         errors: [

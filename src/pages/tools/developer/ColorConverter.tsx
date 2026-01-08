@@ -23,7 +23,7 @@ export default function ColorConverter() {
       setRgb(rgbColor);
       const hslColor = rgbToHsl(rgbColor.r, rgbColor.g, rgbColor.b);
       setHsl(hslColor);
-    } catch (error) {
+    } catch {
       // Invalid hex, don't update
     }
   };

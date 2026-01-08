@@ -45,9 +45,9 @@ export default function SqlFormatter() {
     const trimmedSql = sql.trim();
     let isValid = true;
     let parsedAst: any = null;
-    let queryTypes: string[] = [];
-    let tables: string[] = [];
-    let columns: string[] = [];
+    const queryTypes: string[] = [];
+    const tables: string[] = [];
+    const columns: string[] = [];
     let hasWhere = false;
     let hasJoin = false;
     let complexityScore = 0;
@@ -340,7 +340,7 @@ export default function SqlFormatter() {
       setOutput(formatted);
       const result = parseAndAnalyzeSql(input);
       setAnalysis(result);
-    } catch (err) {
+    } catch {
       setOutput(`Error formatting SQL: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setAnalysis(null);
     }
@@ -356,7 +356,7 @@ export default function SqlFormatter() {
       setOutput(minified);
       const result = parseAndAnalyzeSql(input);
       setAnalysis(result);
-    } catch (err) {
+    } catch {
       setOutput(`Error minifying SQL: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setAnalysis(null);
     }

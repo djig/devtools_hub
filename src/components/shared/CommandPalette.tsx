@@ -1,24 +1,16 @@
-import { useEffect, useState, useCallback } from 'react';
+/**
+ * Command palette component
+ * Provides quick search and navigation for tools
+ */
+
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Clock, Star, ArrowRight } from 'lucide-react';
 import { searchTools, tools } from '../../data/tools';
 import useAppStore from '../../store/useAppStore';
-
-// Get icon gradient based on tool ID (same logic as ToolCard)
-const getIconGradient = (toolId: string): string => {
-  const gradients = [
-    'from-blue-500 to-cyan-500',
-    'from-purple-500 to-pink-500',
-    'from-green-500 to-emerald-500',
-    'from-orange-500 to-amber-500',
-    'from-pink-500 to-rose-500',
-    'from-indigo-500 to-violet-500',
-    'from-teal-500 to-cyan-500',
-    'from-red-500 to-orange-500',
-  ];
-  const hash = toolId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return gradients[hash % gradients.length];
-};
+import { useKeyboardShortcut } from '../../hooks';
+import { getIconGradient } from '../../utils/gradients';
+import { APP_CONFIG } from '../../constants';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -32,7 +24,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
   const recentToolsList = tools.filter(tool => recentTools.includes(tool.id));
   const favoriteToolsList = tools.filter(tool => favoriteTools.includes(tool.id));
-  const searchResults = query ? searchTools(query).slice(0, 8) : [];
+  const searchResults = query ? searchTools(query).slice(0, APP_CONFIG.MAX_SEARCH_RESULTS) : [];
 
   const handleSelectTool = useCallback((toolPath: string) => {
     navigate(toolPath);
@@ -40,32 +32,17 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     setQuery('');
   }, [navigate, onClose]);
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
+  // Register Escape key to close
+  useKeyboardShortcut(
+    { key: 'Escape', enabled: isOpen },
+    onClose
+  );
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        if (isOpen) {
-          onClose();
-        }
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  // Register Cmd/Ctrl+K to toggle close when already open
+  useKeyboardShortcut(
+    { key: 'k', metaKey: true, enabled: isOpen },
+    onClose
+  );
 
   if (!isOpen) return null;
 
@@ -144,7 +121,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       <Star className="h-3 w-3" />
                       Favorites
                     </div>
-                    {favoriteToolsList.slice(0, 5).map((tool) => {
+                    {favoriteToolsList.slice(0, APP_CONFIG.MAX_FAVORITES_DISPLAY).map((tool) => {
                       const Icon = tool.icon;
                       const iconGradient = getIconGradient(tool.id);
                       return (
@@ -175,7 +152,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       <Clock className="h-3 w-3" />
                       Recent
                     </div>
-                    {recentToolsList.slice(0, 5).map((tool) => {
+                    {recentToolsList.slice(0, APP_CONFIG.MAX_FAVORITES_DISPLAY).map((tool) => {
                       const Icon = tool.icon;
                       const iconGradient = getIconGradient(tool.id);
                       return (

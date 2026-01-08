@@ -97,7 +97,7 @@ export default function ImageBase64Converter() {
       img.src = base64;
 
       setFileName('converted-image');
-    } catch (error) {
+    } catch {
       alert('Invalid Base64 string');
     }
   };

@@ -40,7 +40,7 @@ export function convertBase(value: string, fromBase: number): {
       octal: decimal.toString(8),
       hex: decimal.toString(16).toUpperCase(),
     };
-  } catch (error) {
+  } catch {
     throw new Error('Invalid number for the selected base');
   }
 }

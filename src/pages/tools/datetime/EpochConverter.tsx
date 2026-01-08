@@ -45,7 +45,7 @@ export default function EpochConverter() {
       ].join('\n');
 
       setConvertedDate(formatted);
-    } catch (error) {
+    } catch {
       setConvertedDate('Error converting epoch');
     }
   };
@@ -68,7 +68,7 @@ export default function EpochConverter() {
       ].join('\n');
 
       setConvertedEpoch(formatted);
-    } catch (error) {
+    } catch {
       setConvertedEpoch('Error converting date');
     }
   };

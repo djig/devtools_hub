@@ -11,81 +11,78 @@ export default function RegexTester() {
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [testString, setTestString] = useState('');
-  const [error, setError] = useState('');
   const { addRecentTool } = useAppStore();
 
   useEffect(() => {
     addRecentTool('regex-tester');
   }, [addRecentTool]);
 
-  const result = useMemo(() => {
-    if (!pattern || !testString) return null;
+  // Derive both result and error from inputs (no setState in useMemo)
+  const { result, error } = useMemo(() => {
+    if (!pattern || !testString) return { result: null, error: '' };
 
     try {
       const regex = new RegExp(pattern, flags);
       const matches = Array.from(testString.matchAll(regex));
-      setError('');
 
       return {
-        matches,
-        count: matches.length,
-        groups: matches.map((match) => ({
-          fullMatch: match[0],
-          groups: match.slice(1),
-          index: match.index,
-        })),
+        result: {
+          matches,
+          count: matches.length,
+          groups: matches.map((match) => ({
+            fullMatch: match[0],
+            groups: match.slice(1),
+            index: match.index,
+          })),
+        },
+        error: '',
       };
     } catch (err) {
-      setError((err as Error).message);
-      return null;
+      return { result: null, error: (err as Error).message };
     }
   }, [pattern, flags, testString]);
 
   const highlightedText = useMemo(() => {
     if (!result || result.count === 0) return testString;
 
-    try {
-      let lastIndex = 0;
-      const parts: React.ReactElement[] = [];
+    let lastIndex = 0;
+    const parts: React.ReactElement[] = [];
 
-      result.matches.forEach((match, i) => {
-        const matchIndex = match.index!;
-        const matchText = match[0];
+    result.matches.forEach((match, i) => {
+      const matchIndex = match.index!;
+      const matchText = match[0];
 
-        // Add text before match
-        if (matchIndex > lastIndex) {
-          parts.push(
-            <span key={`text-${i}`}>
-              {testString.substring(lastIndex, matchIndex)}
-            </span>
-          );
-        }
-
-        // Add highlighted match
+      // Add text before match
+      if (matchIndex > lastIndex) {
         parts.push(
-          <mark
-            key={`match-${i}`}
-            className="bg-yellow-200 dark:bg-yellow-800 font-semibold"
-          >
-            {matchText}
-          </mark>
-        );
-
-        lastIndex = matchIndex + matchText.length;
-      });
-
-      // Add remaining text
-      if (lastIndex < testString.length) {
-        parts.push(
-          <span key="text-end">{testString.substring(lastIndex)}</span>
+          <span key={`text-${i}`}>
+            {testString.substring(lastIndex, matchIndex)}
+          </span>
         );
       }
 
-      return <>{parts}</>;
-    } catch {
-      return testString;
+      // Add highlighted match
+      parts.push(
+        <mark
+          key={`match-${i}`}
+          className="bg-yellow-200 dark:bg-yellow-800 font-semibold"
+        >
+          {matchText}
+        </mark>
+      );
+
+      lastIndex = matchIndex + matchText.length;
+    });
+
+    // Add remaining text
+    if (lastIndex < testString.length) {
+      parts.push(
+        <span key="text-end">{testString.substring(lastIndex)}</span>
+      );
     }
-  }, [result, pattern, flags, testString]);
+
+    return <>{parts}</>;
+  }, [result, testString]);
 
   const loadSample = () => {
     setPattern('\\b\\w+@\\w+\\.\\w+\\b');

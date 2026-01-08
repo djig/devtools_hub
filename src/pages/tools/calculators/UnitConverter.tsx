@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Input } from '../../../components/ui/Input';
 import { Card } from '../../../components/ui/Card';
 import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
@@ -12,24 +12,24 @@ export default function UnitConverter() {
   const [fromUnit, setFromUnit] = useState('meter');
   const [toUnit, setToUnit] = useState('kilometer');
   const [inputValue, setInputValue] = useState('1');
-  const [outputValue, setOutputValue] = useState('');
   const { addRecentTool } = useAppStore();
 
   useEffect(() => {
     addRecentTool('unit-converter');
   }, [addRecentTool]);
 
-  useEffect(() => {
-    // Reset units when category changes
-    const units = Object.keys(UNIT_CATEGORIES[category].units);
+  // Handle category change - reset units
+  const handleCategoryChange = useCallback((newCategory: UnitCategory) => {
+    const units = Object.keys(UNIT_CATEGORIES[newCategory].units);
+    setCategory(newCategory);
     setFromUnit(units[0]);
     setToUnit(units[1] || units[0]);
-  }, [category]);
+  }, []);
 
-  useEffect(() => {
+  // Derive output value from inputs (no effect needed)
+  const outputValue = useMemo(() => {
     if (!inputValue || isNaN(Number(inputValue))) {
-      setOutputValue('');
-      return;
+      return '';
     }
 
     try {
@@ -39,9 +39,9 @@ export default function UnitConverter() {
         toUnit,
         category
       );
-      setOutputValue(result.toFixed(6).replace(/\.?0+$/, ''));
-    } catch (error) {
-      setOutputValue('Error');
+      return result.toFixed(6).replace(/\.?0+$/, '');
+    } catch {
+      return 'Error';
     }
   }, [inputValue, fromUnit, toUnit, category]);
 
@@ -67,7 +67,7 @@ export default function UnitConverter() {
           {(Object.keys(UNIT_CATEGORIES) as UnitCategory[]).map((cat) => (
             <button
               key={cat}
-              onClick={() => setCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`px-4 py-2 rounded border text-sm font-medium transition-colors ${
                 category === cat
                   ? 'bg-blue-600 text-white border-blue-600 dark:bg-blue-500 dark:border-blue-500'

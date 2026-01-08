@@ -54,7 +54,7 @@ export default function SslDecoder() {
       // Parse ASN.1 structure (basic parsing for common fields)
       const cert = parseX509Certificate(bytes);
       return cert;
-    } catch (err) {
+    } catch {
       throw new Error(`Failed to decode certificate: ${err instanceof Error ? err.message : 'Invalid base64 encoding'}`);
     }
   };
@@ -111,7 +111,7 @@ export default function SslDecoder() {
       const info = parseCertificate(input);
       setCertInfo(info);
       setError('');
-    } catch (err) {
+    } catch {
       setError(`Error parsing certificate: ${err instanceof Error ? err.message : 'Invalid format'}`);
       setCertInfo(null);
     }

@@ -6,7 +6,7 @@ export function jsonToCsv(jsonString: string): string {
     const array = Array.isArray(parsed) ? parsed : [parsed];
     const csv = Papa.unparse(array);
     return csv;
-  } catch (error) {
+  } catch {
     throw new Error('Invalid JSON: ' + (error as Error).message);
   }
 }
@@ -21,7 +21,7 @@ export function csvToJson(csvString: string, spaces: number = 2): string {
       throw new Error(result.errors[0].message);
     }
     return JSON.stringify(result.data, null, spaces);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid CSV: ' + (error as Error).message);
   }
 }

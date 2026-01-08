@@ -113,7 +113,7 @@ export default function RandomDataGenerator() {
       if (typeof window !== 'undefined' && 'gc' in window) {
         try {
           (window as any).gc();
-        } catch (e) {
+        } catch {
           // gc() not available in this environment
         }
       }
@@ -136,7 +136,7 @@ export default function RandomDataGenerator() {
     if (typeof window !== 'undefined' && 'gc' in window) {
       try {
         (window as any).gc();
-      } catch (e) {
+      } catch {
         // gc() not available
       }
     }
@@ -224,11 +224,12 @@ export default function RandomDataGenerator() {
           const v = c === 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
         });
-      case 'date':
+      case 'date': {
         const year = random(2020, 2024);
         const month = random(1, 12);
         const day = random(1, 28);
         return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      }
       case 'url':
         return `https://example.com/${firstName.toLowerCase()}`;
       case 'ipaddress':
@@ -407,7 +408,7 @@ export default function RandomDataGenerator() {
           count: actualCount,
           batchSize: 1000
         });
-      } catch (error) {
+      } catch {
         toast.error('Worker Error', {
           description: 'Web Worker not supported. Generating in main thread...',
         });
@@ -467,7 +468,7 @@ export default function RandomDataGenerator() {
             });
           }, 2000);
         }
-      } catch (error) {
+      } catch {
         toast.error('Generation Failed', {
           description: 'Failed to generate data. Please try with fewer records.',
         });
@@ -571,7 +572,7 @@ export default function RandomDataGenerator() {
 
       // Valid schema
       setSchemaError('');
-    } catch (e) {
+    } catch {
       setSchemaError('Invalid JSON syntax');
     }
   };
@@ -588,7 +589,7 @@ export default function RandomDataGenerator() {
       setSchemaText(tempSchemaText);
       setIsModalOpen(false);
       toast.success('Schema Saved', { description: 'Schema updated successfully' });
-    } catch (e) {
+    } catch {
       toast.error('Invalid JSON', { description: 'Cannot save invalid JSON' });
     }
   };
@@ -605,7 +606,7 @@ export default function RandomDataGenerator() {
       const formatted = JSON.stringify(parsed, null, 2);
       setTempSchemaText(formatted);
       toast.success('Formatted', { description: 'Schema JSON formatted' });
-    } catch (e) {
+    } catch {
       toast.error('Invalid JSON', { description: 'Cannot format invalid JSON' });
     }
   };
@@ -646,7 +647,7 @@ export default function RandomDataGenerator() {
         setTempSchemaText(formatted);
         setSchemaError('');
         toast.success('Schema Imported', { description: `Imported schema with ${parsed.length} fields` });
-      } catch (err) {
+      } catch {
         toast.error('Import Failed', { description: 'Invalid JSON file format' });
       }
     };
@@ -672,7 +673,7 @@ export default function RandomDataGenerator() {
       a.click();
       URL.revokeObjectURL(url);
       toast.success('Schema Exported', { description: 'Schema saved as schema.json' });
-    } catch (e) {
+    } catch {
       toast.error('Export Failed', { description: 'Invalid JSON cannot be exported' });
     }
   };
@@ -827,7 +828,7 @@ export default function RandomDataGenerator() {
           data: exportData,
           schemaText
         });
-      } catch (error) {
+      } catch {
         toast.error('Worker Error', { description: 'Web Worker not supported. Exporting in main thread...' });
         exportInMainThread(format);
       }
@@ -921,7 +922,7 @@ export default function RandomDataGenerator() {
           });
         }, 1000);
       }
-    } catch (e) {
+    } catch {
       toast.error('Export Failed', { description: 'Failed to create ZIP file' });
 
       // Cleanup after error

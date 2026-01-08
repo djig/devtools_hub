@@ -88,7 +88,7 @@ export default function TimezoneConverter() {
       const offset = `UTC${sign}${offsetHours}${offsetMins > 0 ? `:${offsetMins}` : ''}`;
 
       return { time, date: dateStr, offset };
-    } catch (error) {
+    } catch {
       return { time: 'Invalid', date: 'Invalid', offset: 'N/A' };
     }
   };

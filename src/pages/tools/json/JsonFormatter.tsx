@@ -24,7 +24,7 @@ export default function JsonFormatter() {
       const formatted = formatJson(input, spaces);
       setOutput(formatted);
       setError('');
-    } catch (err) {
+    } catch {
       setError((err as Error).message);
       setOutput('');
     }
@@ -35,7 +35,7 @@ export default function JsonFormatter() {
       const minified = minifyJson(input);
       setOutput(minified);
       setError('');
-    } catch (err) {
+    } catch {
       setError((err as Error).message);
       setOutput('');
     }
@@ -75,7 +75,7 @@ export default function JsonFormatter() {
     try {
       await navigator.clipboard.writeText(output);
       toast.success('Copied to clipboard!');
-    } catch (err) {
+    } catch {
       toast.error('Failed to copy to clipboard');
     }
   };

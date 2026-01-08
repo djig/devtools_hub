@@ -29,7 +29,7 @@ export default function JsonXmlConverter() {
         setOutput(result);
       }
       setError('');
-    } catch (err) {
+    } catch {
       setError((err as Error).message);
       setOutput('');
     }
@@ -57,7 +57,7 @@ export default function JsonXmlConverter() {
     try {
       await navigator.clipboard.writeText(output);
       toast.success('Copied to clipboard!');
-    } catch (err) {
+    } catch {
       toast.error('Failed to copy to clipboard');
     }
   };

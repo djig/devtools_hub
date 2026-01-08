@@ -1,14 +1,20 @@
+/**
+ * Tool page layout component
+ * Provides consistent structure for all tool pages
+ */
+
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { toast } from 'sonner';
 import { SEO } from '../../utils/seo';
 import { Breadcrumb } from '../shared/Breadcrumb';
 import type { LucideIcon } from 'lucide-react';
 import type { ToolCategory } from '../../types';
 import { getCategoryColors } from '../../utils/categoryColors';
 import { getToolByPath } from '../../data/tools';
+import { getIconGradient } from '../../utils/gradients';
 import { Star, Share2, Check, MoreVertical } from 'lucide-react';
 import useAppStore from '../../store/useAppStore';
+import { useClipboard } from '../../hooks';
 import { cn } from '../../lib/utils';
 
 interface ToolPageLayoutProps {
@@ -33,22 +39,6 @@ interface ToolPageLayoutProps {
   children: React.ReactNode;
 }
 
-// Get icon gradient based on tool ID (same logic as ToolCard)
-const getIconGradient = (toolId: string): string => {
-  const gradients = [
-    'from-blue-500 to-cyan-500',
-    'from-purple-500 to-pink-500',
-    'from-green-500 to-emerald-500',
-    'from-orange-500 to-amber-500',
-    'from-pink-500 to-rose-500',
-    'from-indigo-500 to-violet-500',
-    'from-teal-500 to-cyan-500',
-    'from-red-500 to-orange-500',
-  ];
-  const hash = toolId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return gradients[hash % gradients.length];
-};
-
 export function ToolPageLayout({
   seo,
   icon: Icon,
@@ -61,7 +51,7 @@ export function ToolPageLayout({
   // Get the tool by its path to retrieve the tool ID
   const tool = getToolByPath(seo.path);
   const { favoriteTools, toggleFavorite } = useAppStore();
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useClipboard({ showToast: true, successMessage: 'Link copied to clipboard!' });
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -107,19 +97,7 @@ export function ToolPageLayout({
 
   const handleShare = async () => {
     const url = window.location.href;
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      toast.success('Link copied to clipboard!', {
-        description: 'Share this tool with others',
-      });
-    } catch (err) {
-      console.error('Failed to copy:', err);
-      toast.error('Failed to copy link', {
-        description: 'Please try again',
-      });
-    }
+    await copy(url);
     setMenuOpen(false);
   };
 
@@ -133,7 +111,6 @@ export function ToolPageLayout({
   return (
     <>
       <SEO
-        // key={seo.path}
         title={seo.title}
         description={seo.description}
         keywords={seo.keywords}

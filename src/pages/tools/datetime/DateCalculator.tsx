@@ -53,7 +53,7 @@ export default function DateCalculator() {
       }
 
       setResult(format(resultDate, 'PPPP'));
-    } catch (error) {
+    } catch {
       setResult('Error calculating date');
     }
   };

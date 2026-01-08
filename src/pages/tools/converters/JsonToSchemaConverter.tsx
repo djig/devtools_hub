@@ -155,7 +155,7 @@ export default function JsonToSchemaConverter() {
       };
       setOutput(JSON.stringify(schema, null, 2));
       setError('');
-    } catch (err) {
+    } catch {
       setError((err as Error).message);
       setOutput('');
     }
@@ -191,7 +191,7 @@ export default function JsonToSchemaConverter() {
     try {
       await navigator.clipboard.writeText(output);
       toast.success('Copied to clipboard!');
-    } catch (err) {
+    } catch {
       toast.error('Failed to copy to clipboard');
     }
   };

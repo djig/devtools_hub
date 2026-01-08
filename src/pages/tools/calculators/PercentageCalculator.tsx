@@ -6,11 +6,21 @@ import { ToolPageLayout } from '../../../components/layouts/ToolPageLayout';
 import useAppStore from '../../../store/useAppStore';
 import { Calculator, Percent } from 'lucide-react';
 
+interface PercentageResults {
+  percentage?: string;
+  difference?: string;
+  percentChange?: string;
+  result?: string;
+  calculation?: string;
+  increase?: string;
+  decrease?: string;
+}
+
 export default function PercentageCalculator() {
   const [value1, setValue1] = useState('');
   const [value2, setValue2] = useState('');
   const [percentage, setPercentage] = useState('');
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<PercentageResults | null>(null);
   const { addRecentTool } = useAppStore();
 
   useEffect(() => {

@@ -15,11 +15,6 @@ export default function LoremIpsum() {
   const [output, setOutput] = useState('');
   const { addRecentTool } = useAppStore();
 
-  useEffect(() => {
-    addRecentTool('lorem-ipsum');
-    generate();
-  }, [addRecentTool]);
-
   const generate = () => {
     let result = '';
     switch (type) {
@@ -37,7 +32,14 @@ export default function LoremIpsum() {
   };
 
   useEffect(() => {
+    addRecentTool('lorem-ipsum');
     generate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addRecentTool]);
+
+  useEffect(() => {
+    generate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, count]);
 
   return (

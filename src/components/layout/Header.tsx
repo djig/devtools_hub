@@ -1,15 +1,28 @@
-import { useState, useEffect } from 'react';
+/**
+ * Application header component
+ * Includes navigation, search, theme toggle, and quick actions
+ */
+
+import { useState } from 'react';
 import { Moon, Sun, Monitor, Search, Home, Star, Clock, Menu } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { CommandPalette } from '../shared/CommandPalette';
 import useAppStore from '../../store/useAppStore';
+import { useKeyboardShortcut, useTheme } from '../../hooks';
 import { Link, useLocation } from 'react-router-dom';
 
 export function Header() {
-  const { theme, setTheme, recentTools, favoriteTools, toggleSidebar } = useAppStore();
+  const { recentTools, favoriteTools, toggleSidebar } = useAppStore();
+  const { theme, setTheme } = useTheme();
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  // Register Cmd/Ctrl+K shortcut to open command palette
+  useKeyboardShortcut(
+    { key: 'k', metaKey: true },
+    () => setIsCommandOpen(true)
+  );
 
   const cycleTheme = () => {
     if (theme === 'light') setTheme('dark');
@@ -18,18 +31,6 @@ export function Header() {
   };
 
   const ThemeIcon = theme === 'light' ? Sun : theme === 'dark' ? Moon : Monitor;
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsCommandOpen(true);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   return (
     <>
