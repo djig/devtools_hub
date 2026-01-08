@@ -340,7 +340,7 @@ export default function SqlFormatter() {
       setOutput(formatted);
       const result = parseAndAnalyzeSql(input);
       setAnalysis(result);
-    } catch {
+    } catch (err) {
       setOutput(`Error formatting SQL: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setAnalysis(null);
     }
@@ -356,7 +356,7 @@ export default function SqlFormatter() {
       setOutput(minified);
       const result = parseAndAnalyzeSql(input);
       setAnalysis(result);
-    } catch {
+    } catch (err) {
       setOutput(`Error minifying SQL: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setAnalysis(null);
     }

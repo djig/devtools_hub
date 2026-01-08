@@ -155,7 +155,7 @@ export default function JsonToSchemaConverter() {
       };
       setOutput(JSON.stringify(schema, null, 2));
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

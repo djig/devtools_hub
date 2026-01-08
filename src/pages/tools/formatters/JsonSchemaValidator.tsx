@@ -214,13 +214,13 @@ export default function JsonSchemaValidator() {
         valid: errors.length === 0,
         errors,
       });
-    } catch {
+    } catch (err) {
       setValidationResult({
         valid: false,
         errors: [
           {
             path: 'Validation',
-            message: (error as Error).message,
+            message: (err as Error).message,
           },
         ],
       });

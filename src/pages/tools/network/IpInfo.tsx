@@ -37,7 +37,7 @@ export default function IpInfo() {
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
       setMyIp(data.ip);
-    } catch {
+    } catch (err) {
       console.error('Failed to fetch your IP:', err);
     }
   };
@@ -85,7 +85,7 @@ export default function IpInfo() {
         setIpData(data);
         setError('');
       }
-    } catch {
+    } catch (err) {
       setError((err as Error).message || 'Failed to fetch IP information');
       setIpData(null);
     } finally {

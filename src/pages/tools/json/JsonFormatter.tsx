@@ -24,7 +24,7 @@ export default function JsonFormatter() {
       const formatted = formatJson(input, spaces);
       setOutput(formatted);
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }
@@ -35,7 +35,7 @@ export default function JsonFormatter() {
       const minified = minifyJson(input);
       setOutput(minified);
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

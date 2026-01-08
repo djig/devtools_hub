@@ -1,1 +1,33 @@
+#!/bin/sh
+
+echo "🔍 Running pre-commit checks..."
+
+# Run lint on staged files
+echo "📝 Linting staged files..."
 npx lint-staged
+
+# Run full lint check
+echo "🔎 Running full lint check..."
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ Lint failed. Please fix errors before committing."
+  exit 1
+fi
+
+# Run TypeScript check and build
+echo "🔨 Running build (TypeScript + Vite)..."
+npm run build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Please fix errors before committing."
+  exit 1
+fi
+
+# Run unit tests
+echo "🧪 Running unit tests..."
+npm run test:run
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Please fix failing tests before committing."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"

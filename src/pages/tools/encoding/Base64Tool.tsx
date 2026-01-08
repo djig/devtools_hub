@@ -25,7 +25,7 @@ export default function Base64Tool() {
       setOutput(encoded);
       setError('');
       setMode('encode');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }
@@ -37,7 +37,7 @@ export default function Base64Tool() {
       setOutput(decoded);
       setError('');
       setMode('decode');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

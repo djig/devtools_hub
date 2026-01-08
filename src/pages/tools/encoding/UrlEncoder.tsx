@@ -27,7 +27,7 @@ export default function UrlEncoder() {
         setOutput(decodeUrl(input));
       }
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

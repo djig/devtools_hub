@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import Editor, { type Monaco } from '@monaco-editor/react';
-import type { editor } from 'monaco-editor';
+import Editor, { type OnMount } from '@monaco-editor/react';
 import { cn } from '../../lib/utils';
 
 interface CodeEditorProps {
@@ -22,9 +21,9 @@ export function CodeEditor({
   className,
   height = '400px',
 }: CodeEditorProps) {
-  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
 
-  const handleEditorMount = (editorInstance: editor.IStandaloneCodeEditor, monaco: Monaco) => {
+  const handleEditorMount: OnMount = (editorInstance, monaco) => {
     editorRef.current = editorInstance;
 
     // Define custom theme matching the app's dark theme

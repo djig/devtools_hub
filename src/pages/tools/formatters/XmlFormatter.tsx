@@ -22,7 +22,7 @@ export default function XmlFormatter() {
       const formatted = formatXml(input);
       setOutput(formatted);
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

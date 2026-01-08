@@ -22,7 +22,7 @@ export default function YamlFormatter() {
       const formatted = formatYaml(input);
       setOutput(formatted);
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }

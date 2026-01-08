@@ -1,16 +1,16 @@
 export function encodeBase64(input: string): string {
   try {
     return btoa(unescape(encodeURIComponent(input)));
-  } catch {
-    throw new Error('Failed to encode: ' + (error as Error).message);
+  } catch (err) {
+    throw new Error('Failed to encode: ' + (err as Error).message);
   }
 }
 
 export function decodeBase64(input: string): string {
   try {
     return decodeURIComponent(escape(atob(input)));
-  } catch {
-    throw new Error('Failed to decode: ' + (error as Error).message);
+  } catch (err) {
+    throw new Error('Failed to decode: ' + (err as Error).message);
   }
 }
 

@@ -29,7 +29,7 @@ export default function JsonXmlConverter() {
         setOutput(result);
       }
       setError('');
-    } catch {
+    } catch (err) {
       setError((err as Error).message);
       setOutput('');
     }
