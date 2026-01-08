@@ -194,6 +194,26 @@ export const tools: Tool[] = [
     keywords: ['json', 'schema', 'generate', 'convert'],
     component: lazy(() => import('../pages/tools/converters/JsonToSchemaConverter')),
   },
+  {
+    id: 'json-typescript-converter',
+    name: 'JSON → TypeScript',
+    description: 'Generate TypeScript interfaces and types from JSON',
+    category: 'converters',
+    path: '/tools/json-typescript-converter',
+    icon: FileCode,
+    keywords: ['json', 'typescript', 'interface', 'type', 'generate', 'convert', 'ts'],
+    component: lazy(() => import('../pages/tools/converters/JsonToTypeScriptConverter')),
+  },
+  {
+    id: 'markdown-html-converter',
+    name: 'Markdown ↔ HTML',
+    description: 'Convert between Markdown and HTML with GFM support',
+    category: 'converters',
+    path: '/tools/markdown-html-converter',
+    icon: FileText,
+    keywords: ['markdown', 'html', 'convert', 'md', 'gfm', 'github'],
+    component: lazy(() => import('../pages/tools/converters/MarkdownHtmlConverter')),
+  },
 
   // ========== ENCODERS/DECODERS ==========
   {
