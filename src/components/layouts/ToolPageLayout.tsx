@@ -1,10 +1,12 @@
 /**
  * Tool page layout component
  * Provides consistent structure for all tool pages
+ * Features liquid glass effects and smooth animations
  */
 
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { SEO } from '../../utils/seo';
 import { Breadcrumb } from '../shared/Breadcrumb';
 import type { LucideIcon } from 'lucide-react';
@@ -16,6 +18,8 @@ import { Star, Share2, Check, MoreVertical } from 'lucide-react';
 import useAppStore from '../../store/useAppStore';
 import { useClipboard } from '../../hooks';
 import { cn } from '../../lib/utils';
+import { LiquidBlob } from '../liquid';
+import { liquidTransition } from '../../utils/motion';
 
 interface ToolPageLayoutProps {
   // SEO props
@@ -48,6 +52,7 @@ export function ToolPageLayout({
   actions,
   children,
 }: ToolPageLayoutProps) {
+  const shouldReduceMotion = useReducedMotion();
   // Get the tool by its path to retrieve the tool ID
   const tool = getToolByPath(seo.path);
   const { favoriteTools, toggleFavorite } = useAppStore();
@@ -118,12 +123,36 @@ export function ToolPageLayout({
       />
       <div className="space-y-6">
         {/* Compact Hero Section with Breadcrumb & Actions */}
-        <div className={cn(
-          'group relative overflow-hidden rounded-xl border shadow-sm transition-all duration-500',
-          colors ? `bg-gradient-to-br ${colors.gradientFrom} ${colors.gradientTo} border-current/10` : 'bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20',
-          'hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1 hover:scale-[1.01]',
-          menuOpen && 'shadow-2xl shadow-primary/20 -translate-y-1 scale-[1.01]'
-        )}>
+        <motion.div
+          className={cn(
+            'group relative overflow-hidden rounded-2xl border shadow-sm transition-all duration-500',
+            'bg-white/30 dark:bg-black/20 backdrop-blur-2xl',
+            colors ? `border-white/20 dark:border-border/40` : 'border-white/20 dark:border-primary/20',
+            'hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1 hover:scale-[1.01]',
+            menuOpen && 'shadow-2xl shadow-primary/20 -translate-y-1 scale-[1.01]'
+          )}
+          initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={liquidTransition}
+        >
+          {/* Liquid blob background */}
+          <LiquidBlob
+            color1={colors ? colors.gradientFrom : 'from-primary/30'}
+            color2={colors ? colors.gradientTo : 'to-purple-500/30'}
+            size="lg"
+            className="absolute -top-20 -right-20 opacity-30"
+          />
+          <LiquidBlob
+            color1={colors ? colors.gradientTo.replace('to-', 'from-') : 'from-purple-500/30'}
+            color2={colors ? colors.gradientFrom.replace('from-', 'to-') : 'to-primary/30'}
+            size="md"
+            className="absolute -bottom-10 -left-10 opacity-20"
+            delay={2}
+          />
+
+          {/* Multi-layer glass effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-50 pointer-events-none" />
+          <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-white/5 pointer-events-none" />
           <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(white,transparent_85%)]" />
           <div className="relative">
             {/* Breadcrumb Navigation */}
@@ -221,10 +250,16 @@ export function ToolPageLayout({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Tool Content */}
-        {children}
+        <motion.div
+          initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...liquidTransition, delay: 0.1 }}
+        >
+          {children}
+        </motion.div>
       </div>
     </>
   );

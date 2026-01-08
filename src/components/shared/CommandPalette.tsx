@@ -3,7 +3,7 @@
  * Provides quick search and navigation for tools
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Clock, Star, ArrowRight } from 'lucide-react';
 import { searchTools, tools } from '../../data/tools';
@@ -21,6 +21,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const { recentTools, favoriteTools } = useAppStore();
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const recentToolsList = tools.filter(tool => recentTools.includes(tool.id));
   const favoriteToolsList = tools.filter(tool => favoriteTools.includes(tool.id));
@@ -32,11 +33,21 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     setQuery('');
   }, [navigate, onClose]);
 
-  // Register Escape key to close
-  useKeyboardShortcut(
-    { key: 'Escape', enabled: isOpen },
-    onClose
-  );
+  // Handle Escape key - direct listener for reliability
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape, true);
+    return () => document.removeEventListener('keydown', handleEscape, true);
+  }, [isOpen, onClose]);
 
   // Register Cmd/Ctrl+K to toggle close when already open
   useKeyboardShortcut(
@@ -44,19 +55,25 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     onClose
   );
 
+  // Handle click outside modal
+  const handleBackdropClick = useCallback((e: React.MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose();
+    }
+  }, [onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 animate-in fade-in duration-200"
-        onClick={onClose}
-      />
-
+    <div
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={handleBackdropClick}
+    >
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4">
-        <div className="w-full max-w-2xl bg-background border border-border rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden">
+      <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4 pointer-events-none">
+        <div
+          ref={modalRef}
+          className="w-full max-w-2xl bg-background border border-border rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden pointer-events-auto">
           {/* Search Input */}
           <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
             <Search className="h-5 w-5 text-muted-foreground" />
@@ -202,6 +219,6 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

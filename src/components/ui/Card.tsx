@@ -1,11 +1,32 @@
 import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+const cardVariants = cva(
+  'rounded-lg border text-card-foreground transition-all duration-300',
+  {
+    variants: {
+      variant: {
+        default: 'bg-card shadow-sm',
+        glass: 'bg-white/30 dark:bg-black/20 backdrop-blur-xl border-white/20 dark:border-border/50 shadow-lg',
+        'glass-deep': 'bg-white/40 dark:bg-black/30 backdrop-blur-2xl border-white/30 dark:border-border/40 shadow-xl',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+
+export interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('rounded-lg border bg-card text-card-foreground shadow-sm', className)}
+      className={cn(cardVariants({ variant }), className)}
       {...props}
     />
   )
@@ -52,4 +73,5 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 );
 CardFooter.displayName = 'CardFooter';
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
+// eslint-disable-next-line react-refresh/only-export-components
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, cardVariants };

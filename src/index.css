@@ -24,6 +24,15 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+
+    /* Liquid glass variables */
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    --glass-bg-hover: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-hover: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --glass-blur: 24px;
+    --liquid-transition: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
@@ -46,6 +55,13 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+
+    /* Dark mode liquid glass variables */
+    --glass-bg: rgba(0, 0, 0, 0.2);
+    --glass-bg-hover: rgba(0, 0, 0, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-hover: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -56,6 +72,67 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Liquid Glass Card */
+  .liquid-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: all var(--liquid-transition);
+  }
+
+  .liquid-glass:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+  }
+
+  /* Glass shine overlay */
+  .glass-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-shine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity var(--liquid-transition);
+  }
+
+  .glass-shine:hover::before {
+    opacity: 0.8;
+  }
+
+  /* Refraction effect layer */
+  .glass-refraction {
+    position: relative;
+  }
+
+  .glass-refraction::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    border-radius: inherit;
+    pointer-events: none;
   }
 }
 
@@ -75,5 +152,35 @@
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/50;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-blob-morph,
+    .animate-blob-morph-slow,
+    .animate-gradient-shift,
+    .animate-float,
+    .animate-float-slow,
+    .animate-pulse-glow,
+    .animate-shimmer,
+    .animate-refraction {
+      animation: none !important;
+    }
+
+    * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Mobile performance - reduce animations */
+  @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .animate-blob-morph,
+    .animate-blob-morph-slow {
+      animation-duration: 40s;
+    }
+
+    .animate-gradient-shift {
+      animation-duration: 25s;
+    }
   }
 }
