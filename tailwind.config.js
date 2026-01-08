@@ -60,11 +60,56 @@ export default {
           "0%": { transform: "translateY(10px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        // Liquid glass animations
+        "blob-morph": {
+          "0%, 100%": { borderRadius: "60% 40% 30% 70%/60% 30% 70% 40%" },
+          "25%": { borderRadius: "30% 60% 70% 40%/50% 60% 30% 60%" },
+          "50%": { borderRadius: "50% 60% 30% 60%/30% 40% 70% 60%" },
+          "75%": { borderRadius: "60% 40% 60% 40%/70% 30% 50% 60%" },
+        },
+        "gradient-shift": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "33%": { transform: "translateY(-15px) rotate(2deg)" },
+          "66%": { transform: "translateY(5px) rotate(-2deg)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "0.4", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
+        },
+        "shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        "refraction": {
+          "0%, 100%": { filter: "hue-rotate(0deg)" },
+          "50%": { filter: "hue-rotate(15deg)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.2s ease-in-out",
         "zoom-in-95": "zoom-in-95 0.2s ease-in-out",
         "slide-in": "slide-in-from-bottom 0.3s ease-out",
+        // Liquid glass animations
+        "blob-morph": "blob-morph 25s ease-in-out infinite",
+        "blob-morph-slow": "blob-morph 35s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 15s ease infinite",
+        "float": "float 20s ease-in-out infinite",
+        "float-slow": "float 30s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 4s ease-in-out infinite",
+        "shimmer": "shimmer 2s ease-in-out infinite",
+        "refraction": "refraction 8s ease-in-out infinite",
+      },
+      backdropBlur: {
+        "3xl": "64px",
+        "4xl": "96px",
+      },
+      backgroundSize: {
+        "200%": "200% 200%",
+        "300%": "300% 300%",
       },
     },
   },

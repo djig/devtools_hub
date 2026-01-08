@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, Clock, ChevronDown, ChevronRight, Home, PanelLeftClose, PanelLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { categories, tools } from '../../data/tools';
@@ -81,23 +82,34 @@ export function Sidebar() {
   return (
     <>
       {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
-          onClick={toggleSidebar}
-        />
-      )}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-background/60 backdrop-blur-md lg:hidden"
+            onClick={toggleSidebar}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Sidebar */}
       <aside
         ref={sidebarRef}
         className={cn(
-          'fixed left-0 top-14 z-40 h-[calc(100vh-3.5rem)] border-r bg-background transition-all lg:translate-x-0',
+          'fixed left-0 top-14 z-40 h-[calc(100vh-3.5rem)] border-r border-white/20 dark:border-border/40 shadow-lg',
+          'bg-white/70 dark:bg-background/80 backdrop-blur-xl',
+          'transition-all duration-300 ease-out lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         style={{ width: window.innerWidth >= 1024 ? `${effectiveWidth}px` : '280px' }}
       >
         <div className="flex h-full flex-col relative">
+          {/* Glass shine overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent pointer-events-none" />
+
           {/* Mobile Header */}
           <div className="flex items-center justify-between p-4 lg:hidden">
             <span className="font-semibold">Menu</span>

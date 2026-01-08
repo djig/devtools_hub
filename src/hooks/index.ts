@@ -17,3 +17,5 @@ export { useTheme } from './useTheme';
 export type { UseThemeReturn } from './useTheme';
 
 export { useToolTracking } from './useToolTracking';
+
+export { useReducedMotion } from './useReducedMotion';
