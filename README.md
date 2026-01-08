@@ -1,268 +1,209 @@
 # DevTools Hub
 
-A modern, responsive developer utility website built with Vite, React, and TypeScript. All **47 tools** registered and **15 fully functional** tools ready to use!
+A modern, responsive developer utility website built with Vite, React, and TypeScript. Features **47+ tools** running entirely in your browser - private, fast, and free.
 
-## ✨ Features
+## Features
 
-- **47 Developer Tools** across 9 categories (15 working, 32 coming soon)
+- **47+ Developer Tools** across 9 categories
+- **100% Private** - All tools run locally in your browser
 - **Dark/Light/System Mode** with automatic persistence
-- **Fully Offline** - All tools run locally in your browser
 - **Favorites & Recent Tools** - Track your most-used utilities
-- **Real-time Search** - Find tools instantly
+- **Real-time Search** - Find tools instantly with Command Palette (Cmd+K)
 - **Responsive Design** - Perfect on desktop, tablet, and mobile
-- **Fast & Modern** - Built with Vite, optimized bundle splitting
-- **Type-Safe** - Full TypeScript coverage
+- **Fast & Modern** - Built with Vite, React 19, and TypeScript
+- **Comprehensive Testing** - Unit tests, E2E tests with Playwright
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development server (http://localhost:5173)
+# Start development server
 npm run dev
 
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
+# Run tests
+npm run test:run
+
+# Run E2E tests
+npm run e2e
 ```
 
-## ✅ Currently Implemented Tools (15)
+## Available Scripts
 
-### 📝 Formatters & Validators
-- **JSON Formatter** - Format, validate, minify JSON with configurable indentation
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server (http://localhost:5173) |
+| `npm run build` | TypeScript check + production build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Run ESLint with auto-fix |
+| `npm run test` | Run unit tests in watch mode |
+| `npm run test:run` | Run unit tests once |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run e2e` | Run Playwright E2E tests (headless) |
+| `npm run e2e:headed` | Run E2E tests with browser visible |
+| `npm run e2e:ui` | Run E2E tests with Playwright UI |
 
-### 🔄 Converters
-- **JSON ↔ YAML Converter** - Bidirectional conversion with format validation
-- **JSON ↔ XML Converter** - Convert between JSON and XML
-- **JSON ↔ CSV Converter** - Array/object to CSV conversion
-
-### 🔐 Encoders/Decoders
-- **Base64 Encoder/Decoder** - Encode and decode Base64 strings
-- **JWT Decoder** - Decode JWT tokens with expiration status
-
-### ✍️ Text Tools
-- **Case Converter** - camelCase, snake_case, kebab-case, PascalCase, and more
-- **Text Counter** - Count characters, words, lines, sentences, paragraphs
-- **Lorem Ipsum Generator** - Generate placeholder text (words/sentences/paragraphs)
-- **Line Sorter** - Sort and deduplicate text lines
-
-### ⚡ Generators
-- **UUID Generator** - Generate UUIDs (v4) with bulk support
-- **Hash Generator** - MD5, SHA-1, SHA-256, SHA-512 hashes
-- **QR Code Generator** - Generate and download QR codes
-
-### 📅 Date & Time
-- **Epoch Converter** - Unix timestamp converter with live clock
-
-### 🧮 Calculators
-- **Percentage Calculator** - Calculate percentages, increase, decrease
-
-## 🔜 Coming Soon Tools (32)
-
-All tools below are **registered and routable** with "Coming Soon" pages:
+## Tool Categories
 
 ### Formatters & Validators
-- JSON Diff, XML Formatter, YAML Formatter, SQL Formatter
+- JSON Formatter & Validator
+- XML Formatter
+- YAML Formatter
+- SQL Formatter
+- JSON Schema Validator
+- JSON Diff
+
+### Converters
+- JSON to YAML / YAML to JSON
+- JSON to XML / XML to JSON
+- JSON to CSV / CSV to JSON
+- JSON to Schema
 
 ### Encoders/Decoders
-- URL Encoder, HTML Entity Encoder, Unicode Converter, Number Base Converter
+- Base64 Encoder/Decoder
+- URL Encoder/Decoder
+- JWT Decoder
+- HTML Entity Encoder/Decoder
+- Number Base Converter
 
 ### Text Tools
-- Text Diff, Markdown Editor, Regex Tester
+- Case Converter (camelCase, snake_case, etc.)
+- Text Counter
+- Lorem Ipsum Generator
+- Line Sorter
+- Text Diff
+- Markdown Editor
+- Regex Tester
 
 ### Generators
+- UUID Generator
+- Hash Generator (MD5, SHA-1, SHA-256, SHA-512)
+- QR Code Generator
 - Random Data Generator
 
 ### Date & Time
-- Timezone Converter, Date Calculator, Duration Calculator
+- Epoch Converter
+- Timezone Converter
+- Date Calculator
+- Duration Calculator
 
 ### Calculators
-- Unit Converter, Aspect Ratio Calculator
+- Percentage Calculator
+- Unit Converter
+- Aspect Ratio Calculator
 
 ### Developer Tools
-- Color Converter, CSS/JS/HTML Minifiers, Cron Parser, HTTP Status Codes,
-  User Agent Parser, Image to Base64, Meta Tag Generator
+- Color Converter
+- CSS/JS/HTML Minifiers
+- Cron Parser
+- HTTP Status Codes
+- Image to Base64
+- Meta Tag Generator
 
 ### Network & Security
-- IP Address Info, CIDR Calculator, SSL Certificate Decoder, CSP Generator
+- IP Address Info
+- SSL Certificate Decoder
+- CSP Generator
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Vite 5.x** - Lightning-fast build tool
-- **React 18.x** - UI library with TypeScript
-- **React Router v6** - Client-side routing
+- **Vite 7.x** - Lightning-fast build tool
+- **React 19** - UI library with TypeScript
+- **React Router v7** - Client-side routing
 - **Tailwind CSS v3** - Utility-first styling
 - **Zustand** - Lightweight state management
-- **Lucide React** - Beautiful icon library
-- **crypto-js** - Hash generation
-- **js-yaml** - YAML parsing
-- **fast-xml-parser** - XML parsing
-- **papaparse** - CSV parsing
-- **qrcode.react** - QR code generation
-- **date-fns** - Date utilities
+- **Vitest** - Unit testing framework
+- **Playwright** - E2E testing framework
+- **Husky** - Git hooks for pre-commit checks
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
 ├── components/
 │   ├── layout/          # Header, Sidebar, Footer, Layout
-│   ├── ui/              # Button, Input, Card, Textarea (shadcn-inspired)
-│   └── shared/          # CopyButton, InputOutput, ToolCard, ComingSoon
+│   ├── ui/              # Button, Input, Card, Textarea
+│   └── shared/          # CopyButton, ToolCard, ErrorBoundary
 ├── pages/
-│   ├── tools/           # All 47 tool implementations
-│   │   ├── json/        # JSON tools
-│   │   ├── converters/  # Format converters
-│   │   ├── encoding/    # Encoding tools
-│   │   ├── text/        # Text utilities
-│   │   ├── generators/  # Generators
-│   │   ├── datetime/    # Date/time tools
-│   │   ├── calculators/ # Calculators
-│   │   ├── developer/   # Developer tools
-│   │   ├── formatters/  # Additional formatters
-│   │   └── network/     # Network & security tools
-│   ├── Home.tsx         # Main page with tool grid
-│   └── Category.tsx     # Category listing pages
+│   └── tools/           # All tool implementations
 ├── hooks/               # Custom React hooks
-├── utils/               # Utility functions for tools
-├── store/               # Zustand store (theme, favorites, recent)
-├── types/               # TypeScript type definitions
-├── data/                # Tool registry (47 tools)
-└── lib/                 # Utility functions (cn, etc.)
+├── utils/               # Utility functions
+│   ├── converters/      # Format conversion utilities
+│   ├── formatters/      # Code formatting utilities
+│   ├── generators/      # UUID, hash generation
+│   └── text/            # Text manipulation utilities
+├── store/               # Zustand store
+├── types/               # TypeScript definitions
+├── data/                # Tool registry
+├── test/                # Test setup and utilities
+└── e2e/                 # Playwright E2E tests
 ```
 
-## 🎨 Key Features in Detail
+## Testing
 
-### Theme System
-- **3 modes**: Light, Dark, System (auto-detects OS preference)
-- **Persistent**: Saved to localStorage
-- **Smooth transitions**: CSS variable-based theming
+### Unit Tests
 
-### Tool Management
-- **Favorites**: Star tools for quick access
-- **Recent Tools**: Automatically tracks last 10 used tools
-- **Search**: Real-time fuzzy search across names, descriptions, and keywords
-- **Categories**: Organized into 9 logical groups
+```bash
+# Run all unit tests
+npm run test:run
 
-### Performance
-- **Code Splitting**: Each tool lazy-loaded separately
-- **Optimized Bundles**: Main bundle 95 KB gzipped
-- **Fast Navigation**: React Router with suspense
-- **Efficient Re-renders**: Zustand for state management
+# Run with coverage
+npm run test:coverage
 
-## 📝 Adding New Tools
-
-To implement any "Coming Soon" tool:
-
-### 1. Create Utility Functions
-
-```typescript
-// src/utils/text/markdown.ts
-export function markdownToHtml(markdown: string): string {
-  // Implementation
-  return html;
-}
+# Run in watch mode
+npm run test
 ```
 
-### 2. Implement Tool Component
+### E2E Tests
 
-```typescript
-// src/pages/tools/text/MarkdownEditor.tsx
-import { useState, useEffect } from 'react';
-import { Textarea } from '../../../components/ui/Textarea';
-import useAppStore from '../../../store/useAppStore';
+```bash
+# Run headless
+npm run e2e
 
-export default function MarkdownEditor() {
-  const [input, setInput] = useState('');
-  const { addRecentTool } = useAppStore();
+# Run with browser visible
+npm run e2e:headed
 
-  useEffect(() => {
-    addRecentTool('markdown-editor');
-  }, [addRecentTool]);
-
-  // Tool implementation
-  return (/* JSX */);
-}
+# Run with Playwright UI
+npm run e2e:ui
 ```
 
-### 3. Tool Automatically Works!
+## Pre-commit Hooks
 
-The tool is already registered in `src/data/tools.ts` with:
-- ✅ Routing configured
-- ✅ Search keywords
-- ✅ Category assignment
-- ✅ Icon and metadata
-- ✅ Lazy loading setup
+The project uses Husky for pre-commit hooks that run:
+1. **lint-staged** - ESLint fix on staged files
+2. **npm run lint** - Full lint check
+3. **npm run build** - TypeScript + Vite build
+4. **npm run test:run** - Unit tests
 
-## 🏗️ Build Output
-
-```
-✓ Built in 1.67s
-✓ 47 tools registered
-✓ 15 tools fully functional
-✓ Main bundle: 298 KB (95 KB gzipped)
-✓ Tool chunks: 0.2-71 KB each (lazy loaded)
-```
-
-## 🚢 Deployment
+## Deployment
 
 Build and deploy to any static host:
 
 ```bash
 npm run build
-# Deploy dist/ folder to:
+# Deploy dist/ folder
 ```
 
-- **Vercel**: `vercel --prod`
-- **Netlify**: Drag & drop `dist/` folder
-- **GitHub Pages**: Push `dist/` to gh-pages branch
-- **Cloudflare Pages**: Connect repository
-- **AWS S3 + CloudFront**: Upload `dist/` to S3 bucket
+Compatible with:
+- Vercel
+- Netlify
+- GitHub Pages
+- Cloudflare Pages
+- AWS S3 + CloudFront
 
-## 📚 Documentation
-
-- **README.md** - This file (overview & quick start)
-- **PROJECT_STATUS.md** - Detailed implementation status
-- **IMPLEMENTATION_GUIDE.md** - Guide for adding new tools
-
-## 🎯 Development Roadmap
-
-The architecture is ready for:
-- ✅ All 47 tools registered and routable
-- ✅ 15 production-ready tools
-- 🔜 32 tools with "Coming Soon" placeholders (easy to implement)
-- 🔜 Monaco Editor integration for code tools
-- 🔜 PWA support for offline usage
-- 🔜 Export/import tool settings
-- 🔜 Tool history and templates
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/new-tool`
-3. Implement the tool following existing patterns
-4. Test thoroughly: `npm run build`
+3. Make your changes
+4. Ensure all tests pass: `npm run test:run && npm run e2e`
 5. Submit a pull request
 
-## 📄 License
+## License
 
 MIT
-
-## 🙏 Acknowledgments
-
-- Built with [Vite](https://vitejs.dev/)
-- UI components inspired by [shadcn/ui](https://ui.shadcn.com/)
-- Icons from [Lucide](https://lucide.dev/)
-- Design system with [Tailwind CSS](https://tailwindcss.com/)
-
----
-
-**Status**: ✅ Production Ready
-**Tools**: 15 Working | 32 Coming Soon | 47 Total
-**Build**: Successful (1.67s)
-**Bundle**: 95 KB gzipped
-
-Ready to use, easy to expand! 🚀
