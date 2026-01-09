@@ -25,47 +25,36 @@ export function ListRowButton({ tool, index = 0 }: ListRowButtonProps) {
   return (
     <Link to={tool.path} className="group block w-full">
       <motion.div
-        className="relative"
-        initial={shouldReduceMotion ? {} : { opacity: 0, x: -10 }}
+        className="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200"
+        initial={shouldReduceMotion ? {} : { opacity: 0, x: -5 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.25, delay: index * 0.03 }}
-        whileHover={shouldReduceMotion ? {} : { x: 4 }}
+        whileHover={shouldReduceMotion ? {} : { x: 2 }}
         whileTap={{ scale: 0.98 }}
+        style={{
+          background: 'rgba(255, 255, 255, 0.03)',
+        }}
       >
-        {/* Row container */}
+        {/* Icon - colorful background */}
         <div
-          className="relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group-hover:bg-gray-100 dark:group-hover:bg-white/5"
+          className="flex items-center justify-center flex-shrink-0 rounded-md shadow-sm"
           style={{
-            background: 'rgba(255, 255, 255, 0.02)',
+            width: '28px',
+            height: '28px',
+            background: iconColor,
           }}
         >
-          {/* Icon container */}
-          <div
-            className="flex items-center justify-center flex-shrink-0 rounded-lg transition-transform duration-200 group-hover:scale-110"
-            style={{
-              width: '32px',
-              height: '32px',
-              background: `linear-gradient(135deg, ${iconColor}, ${iconColor}cc)`,
-              boxShadow: `0 2px 8px ${iconColor}40`,
-            }}
-          >
-            <Icon className="h-4 w-4 text-white" strokeWidth={2.5} />
-          </div>
-
-          {/* Tool name */}
-          <span className="flex-1 text-gray-700 dark:text-white/90 font-medium text-sm truncate">
-            {tool.name}
-          </span>
-
-          {/* Chevron */}
-          <ChevronRight
-            className="h-4 w-4 text-gray-400 dark:text-white/30 transition-all duration-200 group-hover:text-gray-600 dark:group-hover:text-white/60 group-hover:translate-x-1"
-          />
+          <Icon className="h-4 w-4 text-white" strokeWidth={2} />
         </div>
 
-        {/* Bottom border (except last item) */}
-        <div
-          className="absolute bottom-0 left-12 right-3 h-px bg-gray-200 dark:bg-white/5"
+        {/* Tool name */}
+        <span className="flex-1 text-gray-700 dark:text-white/80 font-medium text-sm truncate">
+          {tool.name}
+        </span>
+
+        {/* Chevron */}
+        <ChevronRight
+          className="h-4 w-4 text-gray-400 dark:text-white/30 transition-all duration-200 group-hover:text-gray-600 dark:group-hover:text-white/50 group-hover:translate-x-1"
         />
       </motion.div>
     </Link>

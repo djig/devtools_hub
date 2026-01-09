@@ -22,13 +22,13 @@ const categoryIOSColors: Record<string, string> = {
 // Category order - optimized for masonry layout visual balance
 const categoryOrder = [
   'converters',   // 6 tools - mini-card (1st row, 1st column)
+  'datetime',     // 4 tools - circle-badge (1st row, 2nd column)
+  'formatters',   // 6 tools - mini-card (2nd row, 1st column)
+  'encoders',     // 6 tools - compact-chip
   'calculators',  // 3 tools - icon-grid
+  'generators',   // 4 tools - icon-grid
   'text',         // 7 tools - glow-pill
   'network',      // 4 tools - status-badge
-  'formatters',   // 6 tools - mini-card
-  'generators',   // 4 tools - icon-grid
-  'encoders',     // 6 tools - compact-chip
-  'datetime',     // 4 tools - circle-badge
   'developer',    // 9 tools - list-row (bottom)
 ];
 
