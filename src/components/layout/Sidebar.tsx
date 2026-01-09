@@ -251,34 +251,23 @@ export function Sidebar() {
 
                     return (
                       <div key={category.id}>
-                        <div className="flex items-center gap-0.5">
-                          <button
-                            onClick={() => toggleCategory(category.id)}
-                            className="flex items-center gap-2 rounded-lg px-1 py-2 text-sm transition-colors hover:bg-accent"
-                          >
-                            {isExpanded ? (
-                              <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
-                            ) : (
-                              <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-                            )}
-                          </button>
-                          <Link
-                            to={`/category/${category.id}`}
-                            onClick={() => window.innerWidth < 1024 && toggleSidebar()}
-                            className={cn(
-                              "flex items-center gap-2 flex-1 rounded-lg px-2 py-2 text-sm transition-colors hover:bg-accent",
-                              location.pathname === `/category/${category.id}` && 'bg-accent text-accent-foreground'
-                            )}
-                          >
-                            <Icon className="h-4 w-4 shrink-0 text-muted-foreground" />
-                            <span className="truncate font-medium flex-1 text-left">
-                              {category.name}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {categoryTools.length}
-                            </span>
-                          </Link>
-                        </div>
+                        <button
+                          onClick={() => toggleCategory(category.id)}
+                          className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent"
+                        >
+                          {isExpanded ? (
+                            <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          )}
+                          <Icon className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          <span className="truncate font-medium flex-1 text-left">
+                            {category.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {categoryTools.length}
+                          </span>
+                        </button>
 
                         {isExpanded && (
                           <div className="space-y-0.5 ml-6 mt-1">
@@ -342,17 +331,17 @@ export function Sidebar() {
                 {categories.map((category) => {
                   const Icon = category.icon;
                   return (
-                    <Link
+                    <div
                       key={category.id}
-                      to={`/category/${category.id}`}
-                      className={cn(
-                        'w-10 h-10 flex items-center justify-center rounded-lg transition-colors hover:bg-accent',
-                        location.pathname === `/category/${category.id}` && 'bg-accent text-accent-foreground'
-                      )}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg transition-colors hover:bg-accent cursor-pointer"
                       title={category.name}
+                      onClick={() => {
+                        setIsCollapsed(false);
+                        toggleCategory(category.id);
+                      }}
                     >
                       <Icon className="h-5 w-5 text-muted-foreground" />
-                    </Link>
+                    </div>
                   );
                 })}
               </div>

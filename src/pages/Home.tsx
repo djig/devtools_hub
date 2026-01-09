@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { categories, tools } from '../data/tools';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { SEO } from '../utils/seo';
-import { staggerContainer, fadeInUp, liquidTransition } from '../utils/motion';
+import { liquidTransition } from '../utils/motion';
 import { LiquidBackground, ParticleField, TiltCard, CursorSpotlight } from '../components/liquid';
+import { CategoryToolGrid } from '../components/ios';
 
 // iOS system colors for categories
 const categoryIOSColors: Record<string, string> = {
@@ -19,64 +19,59 @@ const categoryIOSColors: Record<string, string> = {
   network: '#30D158',
 };
 
+// Category order for visual balance (larger categories paired with smaller)
+const categoryOrder = [
+  'developer',    // 9 tools
+  'calculators',  // 3 tools
+  'text',         // 7 tools
+  'generators',   // 4 tools
+  'converters',   // 6 tools
+  'datetime',     // 4 tools
+  'formatters',   // 6 tools
+  'network',      // 4 tools
+  'encoders',     // 6 tools
+];
+
 // Enhanced color schemes with glow colors
 const categoryColors: Record<
   string,
-  { gradient: string; glow: string; glowColor: string; ring: string }
+  { gradient: string; glowColor: string }
 > = {
   formatters: {
     gradient: 'from-blue-500 to-cyan-400',
-    glow: 'shadow-blue-500/50',
-    glowColor: 'rgba(59, 130, 246, 0.6)',
-    ring: 'ring-blue-400/50',
+    glowColor: 'rgba(59, 130, 246, 0.5)',
   },
   converters: {
     gradient: 'from-purple-500 to-pink-500',
-    glow: 'shadow-purple-500/50',
-    glowColor: 'rgba(168, 85, 247, 0.6)',
-    ring: 'ring-purple-400/50',
+    glowColor: 'rgba(168, 85, 247, 0.5)',
   },
   encoders: {
     gradient: 'from-emerald-500 to-teal-400',
-    glow: 'shadow-emerald-500/50',
-    glowColor: 'rgba(16, 185, 129, 0.6)',
-    ring: 'ring-emerald-400/50',
+    glowColor: 'rgba(16, 185, 129, 0.5)',
   },
   text: {
     gradient: 'from-orange-500 to-amber-400',
-    glow: 'shadow-orange-500/50',
-    glowColor: 'rgba(249, 115, 22, 0.6)',
-    ring: 'ring-orange-400/50',
+    glowColor: 'rgba(249, 115, 22, 0.5)',
   },
   generators: {
     gradient: 'from-pink-500 to-rose-400',
-    glow: 'shadow-pink-500/50',
-    glowColor: 'rgba(236, 72, 153, 0.6)',
-    ring: 'ring-pink-400/50',
+    glowColor: 'rgba(236, 72, 153, 0.5)',
   },
   datetime: {
     gradient: 'from-indigo-500 to-violet-500',
-    glow: 'shadow-indigo-500/50',
-    glowColor: 'rgba(99, 102, 241, 0.6)',
-    ring: 'ring-indigo-400/50',
+    glowColor: 'rgba(99, 102, 241, 0.5)',
   },
   calculators: {
     gradient: 'from-teal-500 to-cyan-400',
-    glow: 'shadow-teal-500/50',
-    glowColor: 'rgba(20, 184, 166, 0.6)',
-    ring: 'ring-teal-400/50',
+    glowColor: 'rgba(20, 184, 166, 0.5)',
   },
   developer: {
     gradient: 'from-red-500 to-orange-500',
-    glow: 'shadow-red-500/50',
-    glowColor: 'rgba(239, 68, 68, 0.6)',
-    ring: 'ring-red-400/50',
+    glowColor: 'rgba(239, 68, 68, 0.5)',
   },
   network: {
     gradient: 'from-lime-500 to-green-500',
-    glow: 'shadow-lime-500/50',
-    glowColor: 'rgba(132, 204, 22, 0.6)',
-    ring: 'ring-lime-400/50',
+    glowColor: 'rgba(132, 204, 22, 0.5)',
   },
 };
 
@@ -102,39 +97,37 @@ export default function Home() {
         {/* Extra sparkle particles */}
         <ParticleField count={20} color="rgba(255, 255, 255, 0.5)" minSize={1} maxSize={3} />
 
-        <div className="space-y-8 relative z-10">
-          {/* Hero Title */}
+        <div className="space-y-6 relative z-10">
+          {/* Hero Title - Compact */}
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-6"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 backdrop-blur-xl mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 backdrop-blur-xl mb-4"
               whileHover={{ scale: 1.05 }}
             >
-              <Sparkles className="w-4 h-4 text-purple-500 dark:text-purple-400" />
-              <span className="text-sm font-medium text-purple-600 dark:text-purple-300">47+ Tools Available</span>
+              <Sparkles className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
+              <span className="text-xs font-medium text-purple-600 dark:text-purple-300">47+ Tools Available</span>
             </motion.div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-gray-900 via-purple-700 to-gray-900 dark:from-white dark:via-purple-200 dark:to-white bg-clip-text text-transparent drop-shadow-2xl">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-gray-900 via-purple-700 to-gray-900 dark:from-white dark:via-purple-200 dark:to-white bg-clip-text text-transparent">
                 Developer Tools
               </span>
             </h1>
-            <p className="text-lg text-gray-600 dark:text-white/60 max-w-2xl mx-auto">
+            <p className="text-sm text-gray-600 dark:text-white/60 max-w-xl mx-auto">
               Fast, secure, and private. All tools run locally in your browser.
             </p>
           </motion.div>
 
-          {/* Category Cards Grid */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-          >
-            {categories.map((category, index) => {
+          {/* iOS Control Center Style Grid - Clean 2 columns with breathing room */}
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 items-start">
+            {categoryOrder.map((categoryId, index) => {
+              const category = categories.find(c => c.id === categoryId);
+              if (!category) return null;
+
               const categoryTools = tools.filter(
                 (tool) => tool.category === category.id
               );
@@ -145,177 +138,129 @@ export default function Home() {
               return (
                 <motion.div
                   key={category.id}
-                  variants={fadeInUp}
-                  transition={{ ...liquidTransition, delay: index * 0.08 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ ...liquidTransition, delay: index * 0.06 }}
                 >
-                  <Link
-                    to={`/category/${category.id}`}
-                    className="group relative block h-full"
-                  >
-                    {/* Outer glow on hover */}
-                    <div className={`absolute -inset-1 rounded-[28px] bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`} />
+                  <div className="group relative">
+                    {/* Subtle outer glow on hover */}
+                    <div
+                      className="absolute -inset-2 rounded-[24px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
+                      style={{ background: `${iosColor}15` }}
+                    />
 
                     <TiltCard
-                      maxTilt={shouldReduceMotion ? 0 : 8}
-                      scale={1.02}
+                      maxTilt={shouldReduceMotion ? 0 : 4}
+                      scale={1.01}
                       glareEnabled={!shouldReduceMotion}
-                      glareColor="rgba(255, 255, 255, 0.15)"
-                      className="h-full"
+                      glareColor="rgba(255, 255, 255, 0.05)"
                     >
-                      {/* iOS Glass Card */}
-                      <motion.div
-                        className="relative overflow-hidden h-full ios-glass-card rounded-[26px]"
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ ...liquidTransition, delay: index * 0.05 }}
+                      {/* Clean Glass Card */}
+                      <div
+                        className="relative overflow-hidden rounded-2xl"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.03)',
+                          backdropFilter: 'blur(40px)',
+                          WebkitBackdropFilter: 'blur(40px)',
+                          border: '1px solid rgba(255, 255, 255, 0.06)',
+                          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+                        }}
                       >
-                        {/* Cursor-following spotlight */}
+                        {/* Subtle spotlight on hover */}
                         <CursorSpotlight
                           color={colors.glowColor}
-                          size={250}
-                          intensity={0.5}
+                          size={200}
+                          intensity={0.2}
                           enabled={!shouldReduceMotion}
                         />
 
-                        {/* Animated shimmer */}
-                        <div className="absolute inset-0 overflow-hidden rounded-[26px]">
-                          <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-                            initial={{ x: '-100%' }}
-                            whileHover={{ x: '200%' }}
-                            transition={{ duration: 0.6, ease: 'easeInOut' }}
-                          />
-                        </div>
+                        {/* Top shine */}
+                        <div
+                          className="absolute inset-x-0 top-0 h-px"
+                          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }}
+                        />
 
-                        {/* Content */}
-                        <div className="relative z-10 p-5">
-                          {/* Icon and Badge Row */}
+                        {/* Content with good padding */}
+                        <div className="relative z-10 p-4">
+                          {/* Category Header */}
                           <div className="flex items-center justify-between mb-4">
-                            {/* Circular Icon - Colored background */}
-                            <motion.div
-                              className="relative"
-                              whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
-                              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                            >
+                            <div className="flex items-center gap-2.5">
                               <div
                                 className="flex items-center justify-center"
                                 style={{
-                                  width: '48px',
-                                  height: '48px',
-                                  borderRadius: '50%',
-                                  background: iosColor,
-                                  boxShadow: `0 4px 12px ${iosColor}40`,
+                                  width: '28px',
+                                  height: '28px',
+                                  borderRadius: '8px',
+                                  background: `${iosColor}20`,
+                                  border: `1px solid ${iosColor}30`,
                                 }}
                               >
                                 <Icon
-                                  className="h-6 w-6 text-white"
+                                  className="h-4 w-4"
+                                  style={{ color: iosColor }}
                                   strokeWidth={2}
                                 />
                               </div>
-                            </motion.div>
-
-                            {/* Tool count badge - iOS style */}
-                            <motion.div
-                              className="flex items-center justify-center"
-                              style={{
-                                width: '32px',
-                                height: '32px',
-                                borderRadius: '50%',
-                                background: iosColor,
-                                boxShadow: `0 2px 8px ${iosColor}50`,
-                              }}
-                              whileHover={{ scale: 1.1 }}
-                            >
-                              <span className="text-white font-bold text-sm">
-                                {categoryTools.length}
-                              </span>
-                            </motion.div>
-                          </div>
-
-                          {/* Title & Description */}
-                          <div className="space-y-1.5 mb-4">
-                            <h3
-                              className="font-semibold text-gray-900 dark:text-white leading-tight"
-                              style={{ fontSize: '17px', letterSpacing: '-0.4px' }}
-                            >
-                              {category.name}
-                            </h3>
-                            <p
-                              className="leading-relaxed line-clamp-2 text-gray-600 dark:text-white/55"
-                              style={{ fontSize: '14px' }}
-                            >
-                              {category.description}
-                            </p>
-                          </div>
-
-                          {/* Footer */}
-                          <div className="flex items-center justify-between pt-3 border-t border-gray-200/30 dark:border-white/10">
+                              <h3 className="font-semibold text-white/90 text-sm">
+                                {category.name}
+                              </h3>
+                            </div>
+                            {/* Tool count badge */}
                             <span
-                              className="font-medium capitalize text-gray-500 dark:text-white/40"
-                              style={{ fontSize: '12px' }}
+                              className="text-white/40 text-xs font-medium px-2 py-0.5 rounded-full"
+                              style={{ background: 'rgba(255,255,255,0.05)' }}
                             >
-                              {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'} available
+                              {categoryTools.length}
                             </span>
-
-                            {/* Arrow button */}
-                            <motion.div
-                              className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-                              style={{
-                                width: '28px',
-                                height: '28px',
-                                borderRadius: '50%',
-                                background: iosColor,
-                                boxShadow: `0 2px 8px ${iosColor}40`,
-                              }}
-                              initial={{ x: -10, opacity: 0 }}
-                              whileHover={{ scale: 1.1, x: 0 }}
-                            >
-                              <ArrowRight className="h-4 w-4 text-white" />
-                            </motion.div>
                           </div>
+
+                          {/* Tools with comfortable spacing */}
+                          <CategoryToolGrid tools={categoryTools} className="gap-2" />
                         </div>
-                      </motion.div>
+                      </div>
                     </TiltCard>
-                  </Link>
+                  </div>
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
 
-          {/* Stats Section - iOS style */}
+          {/* Stats Section - Compact iOS style */}
           <motion.div
-            className="pt-16"
-            initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
+            className="pt-8"
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...liquidTransition, delay: 0.6 }}
+            transition={{ ...liquidTransition, delay: 0.5 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
               {[
-                { value: '47+', label: 'Developer Tools', color: '#007AFF' },
-                { value: '100%', label: 'Private & Secure', color: '#BF5AF2' },
-                { value: '0ms', label: 'Server Latency', color: '#30D158' },
-              ].map((stat, index) => (
+                { value: '47+', label: 'Tools', color: '#007AFF' },
+                { value: '100%', label: 'Private', color: '#BF5AF2' },
+                { value: '0ms', label: 'Latency', color: '#30D158' },
+              ].map((stat) => (
                 <motion.div
                   key={stat.label}
                   className="relative group"
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.03, y: -3 }}
+                  whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -2 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <div
-                    className="relative p-6 transition-all duration-300 ios-glass-card rounded-[22px]"
+                    className="relative px-5 py-3 rounded-full flex items-center gap-2"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      backdropFilter: 'blur(20px)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                    }}
                   >
-                    <motion.div
-                      className="text-4xl md:text-5xl font-black mb-1"
+                    <span
+                      className="text-xl font-black"
                       style={{ color: stat.color }}
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.3 + index * 0.1, type: 'spring' }}
                     >
                       {stat.value}
-                    </motion.div>
-                    <div className="text-gray-600 dark:text-white/55" style={{ fontSize: '14px' }}>
+                    </span>
+                    <span className="text-white/60 text-xs font-medium">
                       {stat.label}
-                    </div>
+                    </span>
                   </div>
                 </motion.div>
               ))}
