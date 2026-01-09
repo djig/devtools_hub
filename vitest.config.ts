@@ -28,6 +28,7 @@ export default defineConfig({
         'src/components/ui/**',
         'src/components/shared/**',
         'src/components/liquid/**',
+        'src/components/ios/**',
         'src/data/**',
         'src/App.tsx',
         'src/types/**',
@@ -41,6 +42,7 @@ export default defineConfig({
         // Exclude visual/animation utilities - configuration only
         'src/utils/motion.ts',
         'src/utils/toolColors.ts',
+        'src/utils/iosColors.ts',
       ],
       thresholds: {
         // Thresholds for utils, hooks, store, and lib

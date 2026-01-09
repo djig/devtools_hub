@@ -34,7 +34,7 @@ export function ListRowButton({ tool, index = 0 }: ListRowButtonProps) {
       >
         {/* Row container */}
         <div
-          className="relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group-hover:bg-white/5"
+          className="relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group-hover:bg-gray-100 dark:group-hover:bg-white/5"
           style={{
             background: 'rgba(255, 255, 255, 0.02)',
           }}
@@ -53,19 +53,19 @@ export function ListRowButton({ tool, index = 0 }: ListRowButtonProps) {
           </div>
 
           {/* Tool name */}
-          <span className="flex-1 text-white/90 font-medium text-sm truncate">
+          <span className="flex-1 text-gray-700 dark:text-white/90 font-medium text-sm truncate">
             {tool.name}
           </span>
 
           {/* Chevron */}
           <ChevronRight
-            className="h-4 w-4 text-white/30 transition-all duration-200 group-hover:text-white/60 group-hover:translate-x-1"
+            className="h-4 w-4 text-gray-400 dark:text-white/30 transition-all duration-200 group-hover:text-gray-600 dark:group-hover:text-white/60 group-hover:translate-x-1"
           />
         </div>
 
         {/* Bottom border (except last item) */}
         <div
-          className="absolute bottom-0 left-12 right-3 h-px bg-white/5"
+          className="absolute bottom-0 left-12 right-3 h-px bg-gray-200 dark:bg-white/5"
         />
       </motion.div>
     </Link>

@@ -21,15 +21,15 @@ const categoryIOSColors: Record<string, string> = {
 
 // Category order - optimized for masonry layout visual balance
 const categoryOrder = [
-  'text',         // 7 tools - glow-pill
+  'converters',   // 6 tools - mini-card (1st row, 1st column)
   'calculators',  // 3 tools - icon-grid
-  'converters',   // 6 tools - mini-card
-  'network',      // 4 tools - status-badge (moved up)
+  'text',         // 7 tools - glow-pill
+  'network',      // 4 tools - status-badge
   'formatters',   // 6 tools - mini-card
   'generators',   // 4 tools - icon-grid
   'encoders',     // 6 tools - compact-chip
   'datetime',     // 4 tools - circle-badge
-  'developer',    // 9 tools - list-row (moved to bottom)
+  'developer',    // 9 tools - list-row (bottom)
 ];
 
 // Variant assignments for each category - creates visual variety
@@ -217,14 +217,13 @@ export default function Home() {
                                   strokeWidth={2}
                                 />
                               </div>
-                              <h3 className="font-semibold text-white/90 text-sm">
+                              <h3 className="font-semibold text-gray-800 dark:text-white/90 text-sm">
                                 {category.name}
                               </h3>
                             </div>
                             {/* Tool count badge */}
                             <span
-                              className="text-white/40 text-xs font-medium px-2 py-0.5 rounded-full"
-                              style={{ background: 'rgba(255,255,255,0.05)' }}
+                              className="text-gray-500 dark:text-white/40 text-xs font-medium px-2 py-0.5 rounded-full bg-gray-200/50 dark:bg-white/5"
                             >
                               {categoryTools.length}
                             </span>

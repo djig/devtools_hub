@@ -37,28 +37,31 @@ export function CircleBadgeButton({ tool, index = 0 }: CircleBadgeButtonProps) {
       >
         {/* Circular badge */}
         <div className="relative">
-          {/* Glow ring */}
+          {/* Glow ring - visible by default */}
           <div
-            className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-60 blur-md transition-opacity duration-300"
-            style={{ background: iconColor }}
+            className="absolute -inset-2 rounded-full blur-md transition-all duration-300 group-hover:blur-lg group-hover:opacity-70"
+            style={{
+              background: iconColor,
+              opacity: 0.4,
+            }}
           />
 
-          {/* Outer ring */}
+          {/* Outer ring - enhanced gradient */}
           <div
             className="relative flex items-center justify-center rounded-full transition-all duration-300"
             style={{
               width: '52px',
               height: '52px',
-              background: `conic-gradient(from 180deg, ${iconColor}40, ${iconColor}10, ${iconColor}40)`,
+              background: `conic-gradient(from 180deg, ${iconColor}60, ${iconColor}25, ${iconColor}60)`,
               padding: '2px',
             }}
           >
-            {/* Inner circle */}
+            {/* Inner circle - enhanced */}
             <div
               className="flex items-center justify-center rounded-full w-full h-full"
               style={{
-                background: `linear-gradient(145deg, rgba(30,30,35,0.9), rgba(20,20,25,0.95))`,
-                boxShadow: `inset 0 2px 4px rgba(0,0,0,0.3), 0 4px 12px ${iconColor}30`,
+                background: `linear-gradient(145deg, ${iconColor}20, rgba(20,20,25,0.95))`,
+                boxShadow: `inset 0 2px 4px rgba(0,0,0,0.3), 0 4px 16px ${iconColor}40`,
               }}
             >
               <Icon
@@ -69,12 +72,13 @@ export function CircleBadgeButton({ tool, index = 0 }: CircleBadgeButtonProps) {
             </div>
           </div>
 
-          {/* Animated ring on hover */}
+          {/* Animated ring - visible by default */}
           <motion.div
-            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
+            className="absolute inset-0 rounded-full transition-opacity duration-300 group-hover:opacity-100"
             style={{
-              border: `2px solid ${iconColor}`,
+              border: `2px solid ${iconColor}80`,
               borderTopColor: 'transparent',
+              opacity: 0.6,
             }}
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -83,7 +87,7 @@ export function CircleBadgeButton({ tool, index = 0 }: CircleBadgeButtonProps) {
 
         {/* Label below */}
         <span
-          className="text-white/70 font-medium text-center transition-colors group-hover:text-white max-w-[80px] truncate"
+          className="text-gray-600 dark:text-white/70 font-medium text-center transition-colors group-hover:text-gray-900 dark:group-hover:text-white max-w-[80px] truncate"
           style={{ fontSize: '10px' }}
         >
           {tool.name}
