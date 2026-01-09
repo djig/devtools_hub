@@ -24,65 +24,38 @@ export function CompactChipButton({ tool, index = 0 }: CompactChipButtonProps) {
   return (
     <Link to={tool.path} className="group">
       <motion.div
-        className="relative"
-        initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200"
+        initial={shouldReduceMotion ? {} : { opacity: 0, x: -5 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.2, delay: index * 0.03 }}
-        whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        style={{
+          background: 'rgba(255, 255, 255, 0.04)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.06)',
+        }}
       >
-        {/* Chip - enhanced with default glow */}
+        {/* Icon - colorful background */}
         <div
-          className="relative flex items-center gap-2 px-3 py-2 rounded-lg overflow-hidden transition-all duration-200 group-hover:bg-white/8"
+          className="flex items-center justify-center rounded-md shadow-sm"
           style={{
-            background: `linear-gradient(90deg, ${iconColor}08, rgba(255, 255, 255, 0.03))`,
-            border: `1px solid ${iconColor}20`,
-            boxShadow: `0 2px 8px ${iconColor}15`,
+            width: '28px',
+            height: '28px',
+            background: iconColor,
           }}
         >
-          {/* Left color accent bar - visible by default */}
-          <div
-            className="absolute left-0 top-1 bottom-1 w-0.5 rounded-full transition-all duration-200 group-hover:w-1"
-            style={{
-              background: iconColor,
-              boxShadow: `0 0 12px ${iconColor}80`,
-            }}
-          />
-
-          {/* Icon with background */}
-          <div
-            className="flex items-center justify-center transition-all duration-200 group-hover:scale-110 rounded-md"
-            style={{
-              width: '24px',
-              height: '24px',
-              marginLeft: '4px',
-              background: `${iconColor}15`,
-            }}
-          >
-            <Icon
-              style={{ color: iconColor }}
-              className="h-4 w-4"
-              strokeWidth={2}
-            />
-          </div>
-
-          {/* Text */}
-          <span
-            className="text-gray-700 dark:text-white/90 font-medium whitespace-nowrap transition-colors group-hover:text-gray-900 dark:group-hover:text-white"
-            style={{ fontSize: '12px' }}
-          >
-            {tool.name}
-          </span>
-
-          {/* Glow - visible by default */}
-          <div
-            className="absolute inset-0 transition-opacity duration-200 pointer-events-none group-hover:opacity-100"
-            style={{
-              background: `linear-gradient(90deg, ${iconColor}15, transparent)`,
-              opacity: 0.6,
-            }}
-          />
+          <Icon className="h-4 w-4 text-white" strokeWidth={2} />
         </div>
+
+        {/* Text */}
+        <span
+          className="text-gray-700 dark:text-white/80 font-medium whitespace-nowrap"
+          style={{ fontSize: '12px' }}
+        >
+          {tool.name}
+        </span>
       </motion.div>
     </Link>
   );

@@ -23,62 +23,37 @@ export function GlowPillButton({ tool, index = 0 }: GlowPillButtonProps) {
   return (
     <Link to={tool.path} className="group">
       <motion.div
-        className="relative"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full"
         initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: index * 0.03 }}
-        whileHover={shouldReduceMotion ? {} : {
-          scale: 1.08,
-          y: -2,
-          transition: { type: 'spring', stiffness: 400, damping: 17 }
+        whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        style={{
+          background: 'rgba(255, 255, 255, 0.06)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
         }}
-        whileTap={{ scale: 0.95 }}
       >
-        {/* Outer glow - visible by default */}
+        {/* Icon - colorful background */}
         <div
-          className="absolute -inset-1 rounded-full blur-md transition-all duration-300 group-hover:blur-lg group-hover:opacity-70"
-          style={{ background: iconColor, opacity: 0.35 }}
-        />
-
-        {/* Inner glow ring */}
-        <div
-          className="absolute -inset-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: `linear-gradient(135deg, ${iconColor}40, transparent, ${iconColor}20)` }}
-        />
-
-        {/* Pill Button */}
-        <div
-          className="relative flex items-center gap-2 pl-1.5 pr-3 py-1.5 rounded-full"
+          className="flex items-center justify-center flex-shrink-0 rounded-full shadow-md"
           style={{
-            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3))',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            boxShadow: `0 4px 12px rgba(0, 0, 0, 0.2), 0 0 20px ${iconColor}15, inset 0 1px 0 rgba(255, 255, 255, 0.1)`,
+            width: '24px',
+            height: '24px',
+            background: iconColor,
           }}
         >
-          <motion.div
-            className="flex items-center justify-center flex-shrink-0"
-            whileHover={shouldReduceMotion ? {} : { rotate: [0, -5, 5, 0] }}
-            transition={{ duration: 0.3 }}
-            style={{
-              width: '26px',
-              height: '26px',
-              borderRadius: '50%',
-              background: `linear-gradient(135deg, ${iconColor}, ${iconColor}dd)`,
-              boxShadow: `0 2px 8px ${iconColor}50, inset 0 1px 0 rgba(255,255,255,0.3)`,
-            }}
-          >
-            <Icon className="h-3.5 w-3.5 text-white drop-shadow-sm" strokeWidth={2.5} />
-          </motion.div>
-
-          <span
-            className="text-white font-semibold whitespace-nowrap"
-            style={{ fontSize: '12px', letterSpacing: '-0.2px', textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}
-          >
-            {tool.name}
-          </span>
+          <Icon className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
         </div>
+
+        <span
+          className="text-gray-200 dark:text-white/90 font-medium whitespace-nowrap"
+          style={{ fontSize: '12px' }}
+        >
+          {tool.name}
+        </span>
       </motion.div>
     </Link>
   );
