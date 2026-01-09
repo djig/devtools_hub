@@ -27,12 +27,20 @@ export default defineConfig({
         'src/components/layouts/**',
         'src/components/ui/**',
         'src/components/shared/**',
+        'src/components/liquid/**',
         'src/data/**',
         'src/App.tsx',
         'src/types/**',
         'src/hooks/index.ts',
         'src/hooks/useToolTracking.ts',
+        // Exclude visual/browser-specific hooks - covered by E2E tests
+        'src/hooks/useMousePosition.ts',
+        'src/hooks/use3DTilt.ts',
+        'src/hooks/useParallax.ts',
         'src/utils/seo.tsx',
+        // Exclude visual/animation utilities - configuration only
+        'src/utils/motion.ts',
+        'src/utils/toolColors.ts',
       ],
       thresholds: {
         // Thresholds for utils, hooks, store, and lib
