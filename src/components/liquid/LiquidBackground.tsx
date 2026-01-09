@@ -1,4 +1,6 @@
 import { LiquidBlob } from './LiquidBlob';
+import { AuroraBackground } from './AuroraBackground';
+import { ParticleField } from './ParticleField';
 import { cn } from '../../lib/utils';
 
 interface LiquidBackgroundProps {
@@ -6,6 +8,16 @@ interface LiquidBackgroundProps {
   className?: string;
   variant?: 'hero' | 'card' | 'page';
   colorScheme?: 'primary' | 'accent' | 'gradient';
+  /** Enable aurora effect (default: false) */
+  aurora?: boolean;
+  /** Aurora colors (optional) */
+  auroraColors?: string[];
+  /** Enable floating particles (default: false) */
+  particles?: boolean;
+  /** Number of particles (default: 30) */
+  particleCount?: number;
+  /** Enable parallax effect (default: false) */
+  parallax?: boolean;
 }
 
 const colorSchemes = {
@@ -26,13 +38,25 @@ const colorSchemes = {
   },
 };
 
+// Aurora color presets based on color scheme
+const auroraPresets = {
+  primary: ['#3b82f6', '#8b5cf6', '#06b6d4'],
+  accent: ['#ec4899', '#f97316', '#ef4444'],
+  gradient: ['#3b82f6', '#10b981', '#8b5cf6'],
+};
+
 export function LiquidBackground({
   children,
   className,
   variant = 'page',
   colorScheme = 'primary',
+  aurora = false,
+  auroraColors,
+  particles = false,
+  particleCount = 30,
 }: LiquidBackgroundProps) {
   const colors = colorSchemes[colorScheme];
+  const defaultAuroraColors = auroraColors || auroraPresets[colorScheme];
 
   const variantConfig = {
     hero: {
@@ -52,8 +76,17 @@ export function LiquidBackground({
 
   return (
     <div className={cn('relative overflow-hidden', className)}>
-      {/* Blob layer */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Aurora layer (z-0) */}
+      {aurora && (
+        <AuroraBackground
+          colors={defaultAuroraColors}
+          speed={variant === 'hero' ? 'slow' : 'medium'}
+          className="z-0"
+        />
+      )}
+
+      {/* Blob layer (z-10) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
         <LiquidBlob
           {...colors.blob1}
           size={blobSize}
@@ -81,8 +114,16 @@ export function LiquidBackground({
         )}
       </div>
 
-      {/* Content layer */}
-      <div className="relative z-10">{children}</div>
+      {/* Particle layer (z-20) */}
+      {particles && (
+        <ParticleField
+          count={particleCount}
+          className="z-20"
+        />
+      )}
+
+      {/* Content layer (z-30) */}
+      <div className="relative z-30">{children}</div>
     </div>
   );
 }
