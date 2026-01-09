@@ -31,3 +31,27 @@ export function getCardGradient(toolId: string): string {
   const hash = hashString(toolId);
   return CARD_GRADIENTS[hash % CARD_GRADIENTS.length];
 }
+
+/**
+ * Spotlight colors that match the icon gradients
+ */
+const SPOTLIGHT_COLORS = [
+  'rgba(59, 130, 246, 0.4)',   // blue
+  'rgba(139, 92, 246, 0.4)',   // purple
+  'rgba(236, 72, 153, 0.4)',   // pink
+  'rgba(245, 158, 11, 0.4)',   // amber
+  'rgba(16, 185, 129, 0.4)',   // emerald
+  'rgba(6, 182, 212, 0.4)',    // cyan
+  'rgba(244, 63, 94, 0.4)',    // rose
+  'rgba(99, 102, 241, 0.4)',   // indigo
+];
+
+/**
+ * Get a consistent spotlight color based on tool ID
+ * @param toolId - The unique identifier of the tool
+ * @returns An rgba color string for the spotlight
+ */
+export function getSpotlightColor(toolId: string): string {
+  const hash = hashString(toolId);
+  return SPOTLIGHT_COLORS[hash % SPOTLIGHT_COLORS.length];
+}
