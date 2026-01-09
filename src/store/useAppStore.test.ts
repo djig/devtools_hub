@@ -13,7 +13,7 @@ describe('useAppStore', () => {
     act(() => {
       useAppStore.setState({
         theme: 'dark',
-        sidebarOpen: true,
+        sidebarOpen: false,
         recentTools: [],
         favoriteTools: [],
       });
@@ -41,20 +41,20 @@ describe('useAppStore', () => {
   });
 
   describe('sidebar', () => {
-    it('has default sidebarOpen of true', () => {
-      expect(useAppStore.getState().sidebarOpen).toBe(true);
+    it('has default sidebarOpen of false', () => {
+      expect(useAppStore.getState().sidebarOpen).toBe(false);
     });
 
     it('toggleSidebar toggles sidebar state', () => {
       act(() => {
         useAppStore.getState().toggleSidebar();
       });
-      expect(useAppStore.getState().sidebarOpen).toBe(false);
+      expect(useAppStore.getState().sidebarOpen).toBe(true);
 
       act(() => {
         useAppStore.getState().toggleSidebar();
       });
-      expect(useAppStore.getState().sidebarOpen).toBe(true);
+      expect(useAppStore.getState().sidebarOpen).toBe(false);
     });
   });
 

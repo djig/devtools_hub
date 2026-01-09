@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Moon, Sun, Monitor, Search, Home, Star, Clock, Menu, Command } from 'lucide-react';
+import { Moon, Sun, Monitor, Search, Home, Star, Clock, Command } from 'lucide-react';
 import { CommandPalette } from '../shared/CommandPalette';
 import useAppStore from '../../store/useAppStore';
 import { useKeyboardShortcut, useTheme } from '../../hooks';
@@ -13,7 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FlowingGradient } from '../liquid';
 
 export function Header() {
-  const { recentTools, favoriteTools, toggleSidebar } = useAppStore();
+  const { recentTools, favoriteTools } = useAppStore();
   const { theme, setTheme } = useTheme();
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const location = useLocation();
@@ -55,17 +55,8 @@ export function Header() {
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
 
           <div className="container flex h-16 items-center justify-between gap-4">
-            {/* Left: Hamburger Menu + Logo */}
+            {/* Left: Logo */}
             <div className="flex items-center gap-3 shrink-0">
-              <motion.button
-                onClick={toggleSidebar}
-                className="lg:hidden p-2 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/20 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Menu className="h-5 w-5 text-gray-600 dark:text-white/70" />
-              </motion.button>
-
               <Link to="/" className="flex items-center gap-3 group">
                 <motion.div
                   className="relative"

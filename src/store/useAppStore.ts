@@ -15,7 +15,7 @@ const useAppStore = create<AppState>()(
     (set) => ({
       // Initial state
       theme: 'dark',
-      sidebarOpen: true,
+      sidebarOpen: false,
       recentTools: [],
       favoriteTools: [],
 

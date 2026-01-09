@@ -49,7 +49,7 @@ export function GlowPillButton({ tool, index = 0 }: GlowPillButtonProps) {
         </div>
 
         <span
-          className="text-gray-200 dark:text-white/90 font-medium whitespace-nowrap"
+          className="text-gray-700 dark:text-white/90 font-medium whitespace-nowrap"
           style={{ fontSize: '12px' }}
         >
           {tool.name}

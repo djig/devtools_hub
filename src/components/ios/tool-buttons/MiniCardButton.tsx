@@ -57,7 +57,7 @@ export function MiniCardButton({ tool, index = 0 }: MiniCardButtonProps) {
 
           {/* Text */}
           <span
-            className="text-gray-200 dark:text-white/90 font-medium truncate"
+            className="text-gray-700 dark:text-white/90 font-medium truncate"
             style={{ fontSize: '13px' }}
           >
             {tool.name}
