@@ -6,6 +6,19 @@ import { SEO } from '../utils/seo';
 import { staggerContainer, fadeInUp, liquidTransition } from '../utils/motion';
 import { LiquidBackground, ParticleField, TiltCard, CursorSpotlight } from '../components/liquid';
 
+// iOS system colors for categories
+const categoryIOSColors: Record<string, string> = {
+  formatters: '#007AFF',
+  converters: '#BF5AF2',
+  encoders: '#30D158',
+  text: '#FF9F0A',
+  generators: '#FF375F',
+  datetime: '#5E5CE6',
+  calculators: '#64D2FF',
+  developer: '#FF453A',
+  network: '#30D158',
+};
+
 // Enhanced color schemes with glow colors
 const categoryColors: Record<
   string,
@@ -116,7 +129,7 @@ export default function Home() {
 
           {/* Category Cards Grid */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
@@ -127,6 +140,7 @@ export default function Home() {
               );
               const Icon = category.icon;
               const colors = categoryColors[category.id] || categoryColors.formatters;
+              const iosColor = categoryIOSColors[category.id] || '#007AFF';
 
               return (
                 <motion.div
@@ -139,17 +153,18 @@ export default function Home() {
                     className="group relative block h-full"
                   >
                     {/* Outer glow on hover */}
-                    <div className={`absolute -inset-1 rounded-2xl bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`} />
+                    <div className={`absolute -inset-1 rounded-[28px] bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`} />
 
                     <TiltCard
-                      maxTilt={shouldReduceMotion ? 0 : 12}
+                      maxTilt={shouldReduceMotion ? 0 : 8}
                       scale={1.02}
                       glareEnabled={!shouldReduceMotion}
-                      glareColor="rgba(255, 255, 255, 0.2)"
+                      glareColor="rgba(255, 255, 255, 0.15)"
                       className="h-full"
                     >
+                      {/* iOS Glass Card */}
                       <motion.div
-                        className="relative overflow-hidden rounded-2xl backdrop-blur-2xl border border-gray-200 dark:border-white/10 p-5 transition-all duration-500 group-hover:border-gray-300 dark:group-hover:border-white/30 bg-white/80 dark:bg-black/20 group-hover:bg-white dark:group-hover:bg-black/30 h-full"
+                        className="relative overflow-hidden h-full ios-glass-card rounded-[26px]"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ ...liquidTransition, delay: index * 0.05 }}
@@ -163,7 +178,7 @@ export default function Home() {
                         />
 
                         {/* Animated shimmer */}
-                        <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                        <div className="absolute inset-0 overflow-hidden rounded-[26px]">
                           <motion.div
                             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
                             initial={{ x: '-100%' }}
@@ -173,55 +188,85 @@ export default function Home() {
                         </div>
 
                         {/* Content */}
-                        <div className="relative z-10">
+                        <div className="relative z-10 p-5">
                           {/* Icon and Badge Row */}
                           <div className="flex items-center justify-between mb-4">
-                            {/* Rounded Square Icon */}
+                            {/* Circular Icon - Colored background */}
                             <motion.div
                               className="relative"
-                              whileHover={shouldReduceMotion ? {} : { scale: 1.1, rotate: 6 }}
+                              whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
                               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                             >
-                              {/* Outer glow */}
-                              <div className={`absolute -inset-1 rounded-xl bg-gradient-to-r ${colors.gradient} opacity-30 blur-lg group-hover:opacity-60 transition-all duration-500`} />
-
-                              {/* Icon container */}
-                              <div className={`relative p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-xl ${colors.glow}`}>
-                                <Icon className="h-6 w-6 text-white drop-shadow-lg" strokeWidth={2} />
+                              <div
+                                className="flex items-center justify-center"
+                                style={{
+                                  width: '48px',
+                                  height: '48px',
+                                  borderRadius: '50%',
+                                  background: iosColor,
+                                  boxShadow: `0 4px 12px ${iosColor}40`,
+                                }}
+                              >
+                                <Icon
+                                  className="h-6 w-6 text-white"
+                                  strokeWidth={2}
+                                />
                               </div>
                             </motion.div>
 
-                            {/* Tool count badge */}
+                            {/* Tool count badge - iOS style */}
                             <motion.div
-                              className="relative"
+                              className="flex items-center justify-center"
+                              style={{
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                                background: iosColor,
+                                boxShadow: `0 2px 8px ${iosColor}50`,
+                              }}
                               whileHover={{ scale: 1.1 }}
                             >
-                              <div className={`absolute -inset-1 rounded-full bg-gradient-to-r ${colors.gradient} opacity-40 blur-md`} />
-                              <div className={`relative w-8 h-8 rounded-full bg-gradient-to-r ${colors.gradient} text-white font-bold text-sm shadow-lg ${colors.glow} flex items-center justify-center`}>
+                              <span className="text-white font-bold text-sm">
                                 {categoryTools.length}
-                              </div>
+                              </span>
                             </motion.div>
                           </div>
 
                           {/* Title & Description */}
-                          <div className="space-y-2 mb-4">
-                            <h3 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-gray-900 group-hover:to-gray-600 dark:group-hover:from-white dark:group-hover:to-white/80 transition-all duration-300">
+                          <div className="space-y-1.5 mb-4">
+                            <h3
+                              className="font-semibold text-gray-900 dark:text-white leading-tight"
+                              style={{ fontSize: '17px', letterSpacing: '-0.4px' }}
+                            >
                               {category.name}
                             </h3>
-                            <p className="text-sm text-gray-500 dark:text-white/40 leading-relaxed line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-white/60 transition-colors duration-300">
+                            <p
+                              className="leading-relaxed line-clamp-2 text-gray-600 dark:text-white/55"
+                              style={{ fontSize: '14px' }}
+                            >
                               {category.description}
                             </p>
                           </div>
 
-                          {/* Footer with arrow */}
-                          <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-white/10">
-                            <span className="text-xs font-medium text-gray-400 dark:text-white/30 group-hover:text-gray-600 dark:group-hover:text-white/50 transition-colors capitalize">
+                          {/* Footer */}
+                          <div className="flex items-center justify-between pt-3 border-t border-gray-200/30 dark:border-white/10">
+                            <span
+                              className="font-medium capitalize text-gray-500 dark:text-white/40"
+                              style={{ fontSize: '12px' }}
+                            >
                               {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'} available
                             </span>
 
                             {/* Arrow button */}
                             <motion.div
-                              className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg ${colors.glow}`}
+                              className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                              style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                background: iosColor,
+                                boxShadow: `0 2px 8px ${iosColor}40`,
+                              }}
                               initial={{ x: -10, opacity: 0 }}
                               whileHover={{ scale: 1.1, x: 0 }}
                             >
@@ -229,9 +274,6 @@ export default function Home() {
                             </motion.div>
                           </div>
                         </div>
-
-                        {/* Bottom gradient accent */}
-                        <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                       </motion.div>
                     </TiltCard>
                   </Link>
@@ -240,44 +282,40 @@ export default function Home() {
             })}
           </motion.div>
 
-          {/* Stats Section */}
+          {/* Stats Section - iOS style */}
           <motion.div
             className="pt-16"
             initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...liquidTransition, delay: 0.6 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
               {[
-                { value: '47+', label: 'Developer Tools', gradient: 'from-blue-400 to-cyan-400', glow: 'shadow-blue-500/30' },
-                { value: '100%', label: 'Private & Secure', gradient: 'from-purple-400 to-pink-400', glow: 'shadow-purple-500/30' },
-                { value: '0ms', label: 'Server Latency', gradient: 'from-emerald-400 to-teal-400', glow: 'shadow-emerald-500/30' },
+                { value: '47+', label: 'Developer Tools', color: '#007AFF' },
+                { value: '100%', label: 'Private & Secure', color: '#BF5AF2' },
+                { value: '0ms', label: 'Server Latency', color: '#30D158' },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
                   className="relative group"
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -5 }}
+                  whileHover={shouldReduceMotion ? {} : { scale: 1.03, y: -3 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
-                  {/* Glow effect */}
-                  <div className={`absolute -inset-2 rounded-3xl bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500`} />
-
-                  <div className="relative p-8 rounded-3xl bg-white/80 dark:bg-black/20 backdrop-blur-xl border border-gray-200 dark:border-white/10 group-hover:border-gray-300 dark:group-hover:border-white/20 transition-all duration-300">
-                    {/* Animated number */}
+                  <div
+                    className="relative p-6 transition-all duration-300 ios-glass-card rounded-[22px]"
+                  >
                     <motion.div
-                      className={`text-5xl md:text-6xl font-black bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}
+                      className="text-4xl md:text-5xl font-black mb-1"
+                      style={{ color: stat.color }}
                       initial={{ scale: 0.5, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.3 + index * 0.1, type: 'spring' }}
                     >
                       {stat.value}
                     </motion.div>
-                    <div className="text-sm font-medium text-gray-500 dark:text-white/50 group-hover:text-gray-700 dark:group-hover:text-white/70 transition-colors">
+                    <div className="text-gray-600 dark:text-white/55" style={{ fontSize: '14px' }}>
                       {stat.label}
                     </div>
-
-                    {/* Decorative corner accent */}
-                    <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${stat.gradient} opacity-10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2`} />
                   </div>
                 </motion.div>
               ))}
