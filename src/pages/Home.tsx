@@ -19,18 +19,33 @@ const categoryIOSColors: Record<string, string> = {
   network: '#30D158',
 };
 
-// Category order for visual balance (larger categories paired with smaller)
+// Category order - optimized for masonry layout visual balance
 const categoryOrder = [
-  'developer',    // 9 tools
-  'calculators',  // 3 tools
-  'text',         // 7 tools
-  'generators',   // 4 tools
-  'converters',   // 6 tools
-  'datetime',     // 4 tools
-  'formatters',   // 6 tools
-  'network',      // 4 tools
-  'encoders',     // 6 tools
+  'text',         // 7 tools - glow-pill
+  'calculators',  // 3 tools - icon-grid
+  'converters',   // 6 tools - mini-card
+  'network',      // 4 tools - status-badge (moved up)
+  'formatters',   // 6 tools - mini-card
+  'generators',   // 4 tools - icon-grid
+  'encoders',     // 6 tools - compact-chip
+  'datetime',     // 4 tools - circle-badge
+  'developer',    // 9 tools - list-row (moved to bottom)
 ];
+
+// Variant assignments for each category - creates visual variety
+import type { ToolButtonVariant } from '../components/ios/tool-buttons';
+
+const categoryVariants: Record<string, ToolButtonVariant> = {
+  developer: 'list-row',        // Many tools - easy to scan
+  calculators: 'icon-grid',     // Few tools - prominent icons
+  text: 'glow-pill',            // Original style - reference
+  generators: 'icon-grid',      // Recognizable icons
+  converters: 'mini-card',      // Widget-like cards
+  datetime: 'circle-badge',     // Clock/time inspired
+  formatters: 'mini-card',      // Widget-like cards
+  network: 'status-badge',      // Network status inspired
+  encoders: 'compact-chip',     // Code editor tags
+};
 
 // Enhanced color schemes with glow colors
 const categoryColors: Record<
@@ -122,8 +137,8 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* iOS Control Center Style Grid - Clean 2 columns with breathing room */}
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 items-start">
+          {/* iOS Control Center Style Grid - Masonry 2 columns, no vertical gaps */}
+          <div className="max-w-5xl mx-auto columns-1 md:columns-2 gap-4 space-y-4">
             {categoryOrder.map((categoryId, index) => {
               const category = categories.find(c => c.id === categoryId);
               if (!category) return null;
@@ -138,6 +153,7 @@ export default function Home() {
               return (
                 <motion.div
                   key={category.id}
+                  className="break-inside-avoid"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ ...liquidTransition, delay: index * 0.06 }}
@@ -214,8 +230,11 @@ export default function Home() {
                             </span>
                           </div>
 
-                          {/* Tools with comfortable spacing */}
-                          <CategoryToolGrid tools={categoryTools} className="gap-2" />
+                          {/* Tools - variant based on category */}
+                          <CategoryToolGrid
+                            tools={categoryTools}
+                            variant={categoryVariants[category.id]}
+                          />
                         </div>
                       </div>
                     </TiltCard>
