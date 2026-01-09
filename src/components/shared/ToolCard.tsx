@@ -1,6 +1,6 @@
 /**
- * Tool card component - iOS Control Center Ultrathin style
- * Frosted glass effect matching iOS exactly
+ * Tool card component - iOS Control Center style
+ * Supports both wide (horizontal) and square (vertical) layouts
  */
 
 import { Link } from 'react-router-dom';
@@ -15,9 +15,10 @@ import { TiltCard, CursorSpotlight } from '../liquid';
 interface ToolCardProps {
   tool: Tool;
   index?: number;
+  size?: 'square' | 'wide';
 }
 
-export function ToolCard({ tool, index = 0 }: ToolCardProps) {
+export function ToolCard({ tool, index = 0, size = 'wide' }: ToolCardProps) {
   const { favoriteTools, toggleFavorite } = useAppStore();
   const isFavorite = favoriteTools.includes(tool.id);
   const Icon = tool.icon;
@@ -38,11 +39,18 @@ export function ToolCard({ tool, index = 0 }: ToolCardProps) {
     return '#007AFF';
   };
 
+  const iconColor = getIconColor();
+  const isSquare = size === 'square';
+
   return (
-    <Link to={tool.path} className="group relative block">
+    <Link to={tool.path} className="group relative block h-full">
       {/* Outer glow on hover */}
       <div
-        className={`absolute -inset-1 rounded-[52px] bg-gradient-to-r ${colors.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`}
+        className={cn(
+          'absolute -inset-1 bg-gradient-to-r opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500',
+          colors.gradient,
+          isSquare ? 'rounded-[24px]' : 'rounded-[52px]'
+        )}
       />
 
       <TiltCard
@@ -54,14 +62,19 @@ export function ToolCard({ tool, index = 0 }: ToolCardProps) {
       >
         <motion.div
           className={cn(
-            'relative overflow-hidden',
-            // Layout - horizontal like iOS
-            'flex items-center gap-3',
-            'px-3 py-2.5',
-            // Transition
+            'relative overflow-hidden h-full',
             'transition-all duration-200',
-            // iOS Glass styling
-            'ios-glass-pill rounded-[50px]',
+            isSquare ? [
+              // Square layout - vertical, centered
+              'flex flex-col items-center justify-center',
+              'p-4',
+              'ios-glass-card rounded-[22px]',
+            ] : [
+              // Wide layout - horizontal
+              'flex items-center gap-3',
+              'px-3 py-2.5',
+              'ios-glass-pill rounded-[50px]',
+            ]
           )}
           initial={shouldReduceMotion ? {} : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -70,13 +83,16 @@ export function ToolCard({ tool, index = 0 }: ToolCardProps) {
           {/* Cursor-following spotlight */}
           <CursorSpotlight
             color={colors.spotlight}
-            size={150}
+            size={isSquare ? 200 : 150}
             intensity={0.4}
             enabled={!shouldReduceMotion}
           />
 
           {/* Animated shimmer */}
-          <div className="absolute inset-0 overflow-hidden rounded-[50px]">
+          <div className={cn(
+            'absolute inset-0 overflow-hidden',
+            isSquare ? 'rounded-[22px]' : 'rounded-[50px]'
+          )}>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               initial={{ x: '-100%' }}
@@ -85,55 +101,105 @@ export function ToolCard({ tool, index = 0 }: ToolCardProps) {
             />
           </div>
 
-          {/* Circular Icon - Colored background */}
-          <div
-            className="flex items-center justify-center flex-shrink-0 relative z-10"
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              background: getIconColor(),
-              boxShadow: `0 4px 12px ${getIconColor()}40`,
-            }}
-          >
-            <Icon
-              className="h-5 w-5 text-white"
-              strokeWidth={2.5}
-            />
-          </div>
+          {isSquare ? (
+            // Square layout content
+            <>
+              {/* Favorite button - top right */}
+              <motion.button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleFavorite(tool.id);
+                }}
+                className={cn(
+                  'absolute top-2 right-2 p-1.5 rounded-full transition-colors duration-200 z-20',
+                  isFavorite ? 'text-yellow-400' : 'text-gray-400 dark:text-white/35'
+                )}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Star className={cn('h-4 w-4', isFavorite && 'fill-current')} />
+              </motion.button>
 
-          {/* Text content */}
-          <div className="flex-1 min-w-0 py-0.5 relative z-10">
-            <h3
-              className="font-semibold text-gray-900 dark:text-white leading-tight truncate"
-              style={{ fontSize: '15px', letterSpacing: '-0.24px' }}
-            >
-              {tool.name}
-            </h3>
-            <p
-              className="leading-tight truncate mt-0.5 text-gray-600 dark:text-white/55"
-              style={{ fontSize: '13px' }}
-            >
-              {tool.description}
-            </p>
-          </div>
+              {/* Circular Icon - Colored background */}
+              <div
+                className="flex items-center justify-center relative z-10 mb-3"
+                style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '50%',
+                  background: iconColor,
+                  boxShadow: `0 4px 12px ${iconColor}40`,
+                }}
+              >
+                <Icon
+                  className="h-6 w-6 text-white"
+                  strokeWidth={2.5}
+                />
+              </div>
 
-          {/* Favorite button */}
-          <motion.button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleFavorite(tool.id);
-            }}
-            className={cn(
-              'p-1.5 rounded-full transition-colors duration-200 z-20 flex-shrink-0 relative',
-              isFavorite ? 'text-yellow-400' : 'text-gray-400 dark:text-white/35'
-            )}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <Star className={cn('h-5 w-5', isFavorite && 'fill-current')} />
-          </motion.button>
+              {/* Name only for square */}
+              <h3
+                className="font-semibold text-gray-900 dark:text-white leading-tight text-center line-clamp-2 relative z-10"
+                style={{ fontSize: '14px', letterSpacing: '-0.24px' }}
+              >
+                {tool.name}
+              </h3>
+            </>
+          ) : (
+            // Wide layout content
+            <>
+              {/* Circular Icon - Colored background */}
+              <div
+                className="flex items-center justify-center flex-shrink-0 relative z-10"
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: iconColor,
+                  boxShadow: `0 4px 12px ${iconColor}40`,
+                }}
+              >
+                <Icon
+                  className="h-5 w-5 text-white"
+                  strokeWidth={2.5}
+                />
+              </div>
+
+              {/* Text content */}
+              <div className="flex-1 min-w-0 py-0.5 relative z-10">
+                <h3
+                  className="font-semibold text-gray-900 dark:text-white leading-tight truncate"
+                  style={{ fontSize: '15px', letterSpacing: '-0.24px' }}
+                >
+                  {tool.name}
+                </h3>
+                <p
+                  className="leading-tight truncate mt-0.5 text-gray-600 dark:text-white/55"
+                  style={{ fontSize: '13px' }}
+                >
+                  {tool.description}
+                </p>
+              </div>
+
+              {/* Favorite button */}
+              <motion.button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleFavorite(tool.id);
+                }}
+                className={cn(
+                  'p-1.5 rounded-full transition-colors duration-200 z-20 flex-shrink-0 relative',
+                  isFavorite ? 'text-yellow-400' : 'text-gray-400 dark:text-white/35'
+                )}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Star className={cn('h-5 w-5', isFavorite && 'fill-current')} />
+              </motion.button>
+            </>
+          )}
         </motion.div>
       </TiltCard>
     </Link>

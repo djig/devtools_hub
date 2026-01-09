@@ -4,12 +4,11 @@
  */
 
 import { Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { Layout } from './components/layout/Layout';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import Home from './pages/Home';
-import Category from './pages/Category';
 import Favorites from './pages/Favorites';
 import Recent from './pages/Recent';
 import { tools } from './data/tools';
@@ -34,7 +33,8 @@ function AppRoutes() {
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/category/:category" element={<Category />} />
+          {/* Redirect old category URLs to home */}
+          <Route path="/category/:category" element={<Navigate to="/" replace />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/recent" element={<Recent />} />
           {tools.map((tool) => {
