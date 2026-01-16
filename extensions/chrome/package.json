@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "clean": "rm -rf dist"
+    "package": "npm run build && cd dist && zip -r ../devtools-hub-chrome.zip .",
+    "clean": "rm -rf dist *.zip"
   },
   "dependencies": {
     "react": "^19.2.1",
