@@ -1,5 +1,9 @@
 import { test, expect, chromium, BrowserContext } from '@playwright/test';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let context: BrowserContext;
 
@@ -35,7 +39,7 @@ test.describe('DevTools Hub Chrome Extension', () => {
     await expect(popup.locator('text=Converters')).toBeVisible();
     await expect(popup.locator('text=Encoders')).toBeVisible();
     await expect(popup.locator('text=Generators')).toBeVisible();
-    await expect(popup.locator('text=Text')).toBeVisible();
+    await expect(popup.getByRole('button', { name: 'Text' })).toBeVisible();
   });
 
   test('can format JSON in popup', async () => {
