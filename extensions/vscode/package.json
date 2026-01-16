@@ -1,0 +1,259 @@
+{
+  "name": "devtools-hub",
+  "displayName": "DevTools Hub",
+  "description": "Developer utilities: Format, convert, encode/decode data instantly",
+  "version": "1.0.0",
+  "publisher": "devtools-hub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devtools-hub/devtools-hub"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "devtools-hub.formatJson",
+        "title": "DevTools Hub: Format JSON"
+      },
+      {
+        "command": "devtools-hub.minifyJson",
+        "title": "DevTools Hub: Minify JSON"
+      },
+      {
+        "command": "devtools-hub.formatYaml",
+        "title": "DevTools Hub: Format YAML"
+      },
+      {
+        "command": "devtools-hub.formatXml",
+        "title": "DevTools Hub: Format XML"
+      },
+      {
+        "command": "devtools-hub.formatJavaScript",
+        "title": "DevTools Hub: Format JavaScript"
+      },
+      {
+        "command": "devtools-hub.formatCss",
+        "title": "DevTools Hub: Format CSS"
+      },
+      {
+        "command": "devtools-hub.formatHtml",
+        "title": "DevTools Hub: Format HTML"
+      },
+      {
+        "command": "devtools-hub.jsonToYaml",
+        "title": "DevTools Hub: JSON → YAML"
+      },
+      {
+        "command": "devtools-hub.yamlToJson",
+        "title": "DevTools Hub: YAML → JSON"
+      },
+      {
+        "command": "devtools-hub.jsonToXml",
+        "title": "DevTools Hub: JSON → XML"
+      },
+      {
+        "command": "devtools-hub.xmlToJson",
+        "title": "DevTools Hub: XML → JSON"
+      },
+      {
+        "command": "devtools-hub.jsonToCsv",
+        "title": "DevTools Hub: JSON → CSV"
+      },
+      {
+        "command": "devtools-hub.csvToJson",
+        "title": "DevTools Hub: CSV → JSON"
+      },
+      {
+        "command": "devtools-hub.jsonToTypeScript",
+        "title": "DevTools Hub: JSON → TypeScript"
+      },
+      {
+        "command": "devtools-hub.markdownToHtml",
+        "title": "DevTools Hub: Markdown → HTML"
+      },
+      {
+        "command": "devtools-hub.htmlToMarkdown",
+        "title": "DevTools Hub: HTML → Markdown"
+      },
+      {
+        "command": "devtools-hub.encodeBase64",
+        "title": "DevTools Hub: Encode Base64"
+      },
+      {
+        "command": "devtools-hub.decodeBase64",
+        "title": "DevTools Hub: Decode Base64"
+      },
+      {
+        "command": "devtools-hub.encodeUrl",
+        "title": "DevTools Hub: URL Encode"
+      },
+      {
+        "command": "devtools-hub.decodeUrl",
+        "title": "DevTools Hub: URL Decode"
+      },
+      {
+        "command": "devtools-hub.generateUuid",
+        "title": "DevTools Hub: Generate UUID"
+      },
+      {
+        "command": "devtools-hub.generateMd5",
+        "title": "DevTools Hub: Generate MD5 Hash"
+      },
+      {
+        "command": "devtools-hub.generateSha256",
+        "title": "DevTools Hub: Generate SHA-256 Hash"
+      },
+      {
+        "command": "devtools-hub.toCamelCase",
+        "title": "DevTools Hub: To camelCase"
+      },
+      {
+        "command": "devtools-hub.toPascalCase",
+        "title": "DevTools Hub: To PascalCase"
+      },
+      {
+        "command": "devtools-hub.toSnakeCase",
+        "title": "DevTools Hub: To snake_case"
+      },
+      {
+        "command": "devtools-hub.toKebabCase",
+        "title": "DevTools Hub: To kebab-case"
+      },
+      {
+        "command": "devtools-hub.toUppercase",
+        "title": "DevTools Hub: To UPPERCASE"
+      },
+      {
+        "command": "devtools-hub.toLowercase",
+        "title": "DevTools Hub: To lowercase"
+      },
+      {
+        "command": "devtools-hub.showQuickPick",
+        "title": "DevTools Hub: Show All Tools"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "devtools-hub.submenu",
+          "group": "devtools-hub"
+        }
+      ],
+      "devtools-hub.submenu": [
+        {
+          "command": "devtools-hub.formatJson",
+          "group": "1_formatters"
+        },
+        {
+          "command": "devtools-hub.minifyJson",
+          "group": "1_formatters"
+        },
+        {
+          "command": "devtools-hub.jsonToYaml",
+          "group": "2_converters"
+        },
+        {
+          "command": "devtools-hub.yamlToJson",
+          "group": "2_converters"
+        },
+        {
+          "command": "devtools-hub.encodeBase64",
+          "group": "3_encoders"
+        },
+        {
+          "command": "devtools-hub.decodeBase64",
+          "group": "3_encoders"
+        },
+        {
+          "command": "devtools-hub.generateUuid",
+          "group": "4_generators"
+        },
+        {
+          "command": "devtools-hub.toCamelCase",
+          "group": "5_text"
+        },
+        {
+          "command": "devtools-hub.toSnakeCase",
+          "group": "5_text"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "devtools-hub.submenu",
+        "label": "DevTools Hub"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "devtools-hub.formatJson",
+        "key": "ctrl+shift+j",
+        "mac": "cmd+shift+j",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "devtools-hub.generateUuid",
+        "key": "ctrl+shift+u",
+        "mac": "cmd+shift+u",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "devtools-hub.showQuickPick",
+        "key": "ctrl+shift+d",
+        "mac": "cmd+shift+d",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "DevTools Hub",
+      "properties": {
+        "devtools-hub.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show DevTools Hub in the status bar"
+        },
+        "devtools-hub.jsonIndent": {
+          "type": "number",
+          "default": 2,
+          "description": "Number of spaces for JSON indentation"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "npm run build -- --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "fast-xml-parser": "^5.3.2",
+    "papaparse": "^5.5.3",
+    "markdown-it": "^14.1.0",
+    "turndown": "^7.2.2",
+    "js-beautify": "^1.15.4",
+    "crypto-js": "^4.2.0",
+    "uuid": "^13.0.0"
+  }
+}

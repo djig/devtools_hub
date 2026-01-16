@@ -1,0 +1,156 @@
+name: Publish Extensions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'extensions/**'
+      - '.github/workflows/publish-extensions.yml'
+  workflow_dispatch:
+    inputs:
+      publish_chrome:
+        description: 'Publish Chrome Extension'
+        required: false
+        type: boolean
+        default: true
+      publish_vscode:
+        description: 'Publish VS Code Extension'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  # Build and test all extensions first
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install extension dependencies
+        run: |
+          cd extensions/core && npm ci
+          cd ../chrome && npm ci
+          cd ../vscode && npm ci
+
+      - name: Build core package
+        run: cd extensions/core && npm run build
+
+      - name: Test core package
+        run: cd extensions/core && npm test
+
+      - name: Build Chrome extension
+        run: cd extensions/chrome && npm run build
+
+      - name: Build VS Code extension
+        run: cd extensions/vscode && npm run build
+
+      - name: Test VS Code extension
+        run: cd extensions/vscode && npm test
+
+      - name: Upload Chrome extension artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension
+          path: extensions/chrome/dist/
+
+      - name: Upload VS Code extension artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-extension
+          path: extensions/vscode/dist/
+
+  # Publish Chrome Extension to Chrome Web Store
+  publish-chrome:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_chrome == 'true')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Download Chrome extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: chrome-extension
+          path: extensions/chrome/dist/
+
+      - name: Create ZIP for Chrome Web Store
+        run: |
+          cd extensions/chrome/dist
+          zip -r ../devtools-hub-chrome.zip .
+
+      - name: Upload to Chrome Web Store
+        uses: mnao305/chrome-extension-upload@v5.0.0
+        with:
+          file-path: extensions/chrome/devtools-hub-chrome.zip
+          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          publish: true
+
+  # Publish VS Code Extension to Marketplace
+  publish-vscode:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_vscode == 'true')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install extension dependencies
+        run: |
+          cd extensions/core && npm ci
+          cd ../vscode && npm ci
+
+      - name: Build core package
+        run: cd extensions/core && npm run build
+
+      - name: Build VS Code extension
+        run: cd extensions/vscode && npm run build
+
+      - name: Install vsce
+        run: npm install -g @vscode/vsce
+
+      - name: Package VS Code extension
+        run: |
+          cd extensions/vscode
+          vsce package --no-dependencies
+
+      - name: Publish to VS Code Marketplace
+        run: |
+          cd extensions/vscode
+          vsce publish -p ${{ secrets.VSCE_PAT }} --no-dependencies
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-vsix
+          path: extensions/vscode/*.vsix
